@@ -12,20 +12,69 @@
 
 </head>
 
-<body class="container-fluid">
+<body>
 
-<header class="container-fluid col-md-8 bg-light">
+<div class="container-fluid">
 
-    <label>Pesquisar </label>&nbsp;&nbsp;
-    <input type="text" class="text-sm-left" required autofocus> &nbsp;&nbsp;
-    <input class="btn btn-group" type="image" src="../_img/lupa.png" value="enviar" width="64" height="64">
+    <div class="row">
+        <div class="col-sm-3"></div>
 
-</header>
-<hr class="border-bottom border-dark col-md-8">
-<section class="container-fluid col-md-8 bg-secondary">
-    <p>asjdhaksgdasgdkgasdgasgdash</p>
+        <div class="col-sm-7">
+            <form class="form-group">
+
+                <input  class="col-sm-8" type="text" placeholder="Digite um item para pesquisar" class="form-control" style=top:20px;>
+                <button class="btn btn-group btn-primary" style=top:20px;>Pesquisar</button>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<hr class="border-bottom border-dark">
+
+<div  id="sec" class="container-fluid p-2">
+    <div class="row">
+
+        <div class="col-sm-8"> </div>
+
+        <div class="col-sm-4">
+
+           <label for="sel"> <strong>Listar por:</strong></label>
+
+            <select id="sel" class="custom-select">
+                <option v-for="opt in categories"> {{opt.choice}}</option>
+            </select>
+
+        </div>
+
+    </div>
+</div>
+
+<section class="bg-secondary">
+
+    <img class="img-fluid img-thumbnail" alt="Futebol" src="../_img/futebol.jpg">
 
 </section>
+
+<script>
+    var sec = new Vue({
+
+        el:"#sec",
+        data:{
+
+            categories:[
+                {choice: "Menor preço"},
+                {choice: "Maior preço"},
+                {choice: "Recentes"},
+                {choice: "Antigos"},
+                {choice: "Mais vendidos"}
+            ]
+        }
+
+    });
+</script>
+
 
 
 </body>
