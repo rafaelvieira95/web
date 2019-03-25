@@ -2,8 +2,10 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+
     <title>1000Sport :: Home</title>
 
+    <meta content="width=device-width, initial-scale=1" name="viewport">
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
     <script src="../_js/jquery.min.js"></script>
     <script src="../_js/popper.min.js"></script>
@@ -12,6 +14,65 @@
 
 </head>
 <body>
+
+<div class="container-fluid">
+
+    <div class="row">
+
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+
+        <nav class="col-lg-9 col-md-9 col-sm-9 col-xs-2">
+
+            <input class="col-lg-6 col-md-6 col-sm-5 col-xs-6 text-left" type="text" placeholder="Digite um item para pesquisar" required autofocus style=top:10px;>
+
+            <button class="btn btn-primary col-lg-2 col-md-2 col-sm-3 col-xs-2" style=top:10px;>Pesquisar</button>
+        </nav>
+
+        <a class="col-lg-2 col-md-2 col-sm-2 col-xs-2 align-content-end" class="alert-link" href="login.html" style=top:20px;>Fazer Login</a>
+    </div>
+
+</div>
+
+<div id="menu" class="container-fluid">
+
+    <div class="row">
+
+        <section class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-xs-3" style=top:60px;>
+
+            <nav class="navbar bg-light">
+                <ul class="navbar-nav">
+                <li class="nav-item" v-for="menu in options"><a class="nav-link" href="#">{{menu.item}}</a> </li>
+                </ul>
+            </nav>
+
+        </section>
+
+      <aside class="col-xl-9 col-lg-9 col-md-8 col-sm-8 col-xs-8" style=top:80px;>
+
+
+       </aside>
+
+    </div>
+</div>
+
+<script>
+
+    var menu = new Vue({
+        el:"#menu",
+        data:{
+
+            options:[{item:"Futebol"},
+                {item:"Handball"},
+                {item:"Futsal"},
+                {item:"Basquete"},
+                {item:"Tênis"},
+                {item:"Acessórios"}
+            ]
+        }
+    });
+
+</script>
+
 
 
 
