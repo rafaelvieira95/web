@@ -11,15 +11,13 @@
     <script src="../_js/popper.min.js"></script>
     <script src="../bootstrap/js/bootstrap.min.js"></script>
     <script src="../_js/vue.js"></script>
+    <!--link rel="stylesheet" href="../_css/style.css"-->
 
 </head>
-<body>
 
-<div class="container-fluid">
+<body  class="bg-light">
 
-    <div class="row">
-
-        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+<div id="menu" class="container-fluid">
 
         <nav class="col-lg-9 col-md-9 col-sm-9 col-xs-2">
 
@@ -29,17 +27,10 @@
         </nav>
 
         <a class="col-lg-2 col-md-2 col-sm-2 col-xs-2 align-content-end" class="alert-link" href="login.html" style=top:20px;>Fazer Login</a>
-    </div>
 
-</div>
+        <section class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-xs-3 border-right" style=top:60px;>
 
-<div id="menu" class="container-fluid">
-
-    <div class="row">
-
-        <section class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-xs-3" style=top:60px;>
-
-            <nav class="navbar bg-light">
+            <nav class="navbar">
                 <ul class="navbar-nav">
                 <li class="nav-item" v-for="menu in options"><a class="nav-link" href="#">{{menu.item}}</a> </li>
                 </ul>
@@ -47,28 +38,78 @@
 
         </section>
 
-      <aside class="col-xl-9 col-lg-9 col-md-8 col-sm-8 col-xs-8" style=top:80px;>
+
+        <aside class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12" style=top:80px;>
+
+            <ul id="foto-camisa" class="list-group">
+                <li id="foto-01">
+                    <div class="col-xl-3 col-lg-3 col-md-2 col-sm-2 col-xs-2 list-group-item"> <img :src="items[0].src" width="300px" height="320px">
+                        <span>Camisa do Corinthians</span>
+                    </div>
+                </li>
+                <li id="foto-02">
+                    <div class="col-xl-3 col-lg-3 col-md-2 col-sm-2 col-xs-2 list-group-item"> <img :src="items[1].src" width="300px" height="320px">
+                        <span>Camisa do São Paulo</span>
+                    </div>
+                </li>
+
+                <li id="foto-03">
+                    <div class="col-xl-3 col-lg-3 col-md-2 col-sm-2 col-xs-2 list-group-item"> <img :src="items[2].src" width="300px" height="320px">
+                        <span>Camisa do Flamengo</span>
+                    </div>
+                </li>
 
 
-       </aside>
+            </ul>
 
-    </div>
+        </aside>
 </div>
-
 <script>
 
     var menu = new Vue({
-        el:"#menu",
-        data:{
 
-            options:[{item:"Futebol"},
-                {item:"Handball"},
-                {item:"Futsal"},
-                {item:"Basquete"},
-                {item:"Tênis"},
-                {item:"Acessórios"}
-            ]
+        el:"#menu",
+
+        data: {
+            options: [{item: "Futebol"},
+                {item: "Handball"},
+                {item: "Futsal"},
+                {item: "Basquete"},
+                {item: "Tênis"},
+                {item: "Acessórios"}
+            ],
+            shirt: {
+                id: 0,
+                title: "",
+                brand: "",
+                version: "",
+                club: "",
+                season: "",
+                occasion: "",
+                gk: false,
+                src:""
+            },
+            items:[
+                {id: 0, title: 'Camisa do Corinthians', brand: 'Nike',version: 'Copa do Brasil',
+                    club: 'Corinthians', season: 2019, occasion: 'Partida', gk: false,src:"../_img/corinthians-frente.jpg"},
+
+           {id: 1, title: 'Camisa do São Paulo', brand: 'Adidas',version: 'Copa do Brasil',
+               club: 'São Paulo', season: 2019,occasion: 'Partida', gk: false,src:"../_img/saopaulo-frente.jpg"},
+
+           {id: 2, title: 'Camisa do Flamengo', brand: 'Adidas',version: 'Libertadores',
+               club: 'Flamengo', season: 2019, occasion: 'Partida', gk: false,src:"../_img/flamengo-frente.jpg"},
+
+           {id: 3, title: 'Camisa do Palmeiras', brand: 'Puma',version: 'Copa do Brasil',
+               club: 'Palmeiras', season: 2019, occasion: 'Partida', gk: false,src:"../_img/palmeiras-frente.jpg"},
+
+            {id: 4, title: 'Camisa do Vasco', brand: 'Diadora',version: 'Copa do Brasil',
+                    club: 'Vasco', season: 2019, occasion: 'Partida', gk: false,src:"../_img/vasco-frente.jpg"},
+
+           {id: 5, title: 'Camisa do Cruzeiro', brand: 'Umbro',version: 'Libertadores',
+                    club: 'Cruzeiro', season: 2019, occasion: 'Partida', gk: false,src:"../_img/cruzeiro-frente.jpg"}]
+
         }
+
     });
 
 </script>

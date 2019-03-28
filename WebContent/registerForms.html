@@ -1,5 +1,7 @@
 <!DOCTYPE html>
+
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -12,19 +14,16 @@
     <script src="../_js/vue.js"></script>
 
 </head>
-<body>
 
-<div id="apresentacao" class="container-fluid">
-  <br> <br>
-</div>
+<body>
 
 <div id="camisa" class="container-fluid bg-transparent">
 
-    <div class="row p-2">
+    <div class="row p-2 form-control bg-light">
 
-        <div class="form-group col-sm-auto">
+        <div class="col-sm-auto">
             <label class="badge badge-dark p-2" >Título:</label>
-            <input type="text" class="form-control">
+            <input type="text" v-model="shirt.title">
         </div>
 
     </div>
@@ -37,65 +36,172 @@
         </div>
     </div>
 
-    <div class="row p-2">
+
+
+    <div class="row p-2 form-control bg-light">
 
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 
             <label class="badge badge-dark p-2">Marca:</label>
-            <input type="text" class="col-xl-3 col-lg-3 col-md-3 col-sm-4 col-12">
+            <input type="text" v-model="shirt.brand" class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
 
             <label class="badge badge-dark p-2" >Versão da camisa:</label>
-            <input type="text" class="col-xl-3 col-lg-3 col-md-3 col-sm-4 col-12">
+            <input type="text" v-model="shirt.version" class="col-xl-3 col-lg-3 col-md-3 col-sm-4 col-12">
 
         </div>
 
     </div>
 
 
-    <div class="row p-2">
+    <div class="row p-2 form-control bg-light">
 
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 
             <label class="badge badge-dark p-2">Time:</label>
 
-            <select class="custom-select col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
+            <select v-model="shirt.club" class="custom-select col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
 
-                <option>Corinthians</option>
-                <option>São Paulo</option>
-                <option>Flamengo</option>
-                <option>Santos</option>
-
+                <option v-for="team in teams">{{team.name}}</option>
             </select>
 
             <label class="badge badge-dark p-2">Temporada:</label>
-            <input type="text" class="col-xl-3 col-lg-3 col-md-3 col-sm-4 col-12">
+            <input type="text" v-model="shirt.season" class="col-xl-3 col-lg-3 col-md-3 col-sm-4 col-12">
 
         </div>
 
     </div>
 
-    <div class="row p-2">
+    <div class="row p-2 form-control bg-light ">
 
-        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 p-2">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 p-1">
 
             <label class="badge badge-dark p-2">Tipo Ocasião:</label>
 
-            <select class="custom-select col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
-
-                <option>Selecione</option>
-                <option>Treinamento</option>
-                <option>Partida</option>
+            <select v-model="shirt.occasion" class="custom-select ccol-xl-3 col-lg-3 col-md-3 col-sm-4 col-12">
+                <option v-for="i in mood">{{i.game}}</option>
             </select>
 
             <label class="badge badge-dark p-2">Camisa de Goleiro:</label>
-            <input type="checkbox" class="custom-checkbox col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1">
+            <input type="checkbox" v-model="shirt.gk" class="custom-checkbox col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1">
 
-        </div>
-
+          </div>
     </div>
 
+    <div class="row">
+        <div class="col-sm-auto" style=margin-top:150px;>
+            <button type="button" @click.prevent="save" class="btn btn-primary p-2" > Continuar </button>
+        </div>
+    </div>
 </div>
+<script>
+
+    var reg = new Vue({
+
+        el: "#camisa",
+
+        data: {
+
+            arrayShirt: [],
+            index: 0,
+
+            shirt: {
+                id: 0,
+                title: "",
+                brand: "",
+                version: "",
+                club: "",
+                season: "",
+                occasion: "",
+                gk: false
+            },
+
+            teams: [
+                {name: "Corinthians"},
+                {name: "Flamengo"},
+                {name: "São Paulo"},
+                {name: "Cruzeiro"},
+                {name: "Fluminense"},
+                {name: "Bahia"},
+                {name: "Palmeiras"},
+                {name: "Vasco"}
+            ],
+
+            mood:[
+                {game:"Selecione"},
+                {game:"Partida"},
+                {game:"Treinamento"}
+
+            ]
+
+        },
+            methods:{
+
+                persistData() {
+                    let parsed = JSON.stringify(this.arrayShirt);
+                    localStorage.setItem('shirts',parsed)
+                } ,
+
+                save: function(){
+
+                    var id = this.shirt.id;
+                    var title = this.shirt.title;
+                    var brand = this.shirt.brand;
+                    var version = this.shirt.version;
+                    var club = this.shirt.club;
+                    var season = this.shirt.season;
+                    var occasion = this.shirt.occasion;
+                    var gk = this.shirt.gk;
+
+                    this.index = this.arrayShirt.length;
+
+                    if(this.index === 0) {
+
+                        this.arrayShirt.push({
+                            id: id,
+                            title: title,
+                            brand: brand,
+                            version: version,
+                            club: club,
+                            season: season,
+                            occasion: occasion,
+                            gk: gk
+                        });
+
+                        this.index = this.index + this.arrayShirt.length;
+
+                    }else{
+
+                        id = this.index;
+                        this.arrayShirt[this.index] = {
+                            id: id,
+                            title: title,
+                            brand: brand,
+                            version: version,
+                            club: club,
+                            season: season,
+                            occasion: occasion,
+                            gk: gk
+                        };
+
+                        this.index = this.arrayShirt.length;
+                    }
+
+                    this.persistData();
+                    this.messageAlert();
+                },
+
+                messageAlert: function () {
+
+                    alert("Produto Cadastrado com Sucesso!")
+                }
+            }
+
+    });
+
+</script>
+
 
 
 </body>
+
 </html>

@@ -1,7 +1,10 @@
 <!DOCTYPE html>
+
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
+
     <title>1000Sport :: Cadastro</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,11 +13,13 @@
     <script src="../_js/popper.min.js"></script>
     <script src="../bootstrap/js/bootstrap.min.js"></script>
     <script src="../_js/vue.js"></script>
+
+
 </head>
 
 <body>
 
-<div class="container-fluid">
+<div id="campo-cad" class="container-fluid">
 
     <div class="row">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 jumbotron-fluid text-center bg-primary">
@@ -23,17 +28,20 @@
             </header>
         </div>
 
-         <ul class="pagination justify-content-center col-md-auto" style=margin-top:10px;>
+         <ul class="pagination justify-content-center col-sm-auto"  style=margin-top:10px;>
 
             <li class="page-item"> <a class="page-link"> Escolha seu Produto </a></li>
             <li class="page-item"> <a class="page-link"> Descreva seu Produto</a>  </li>
-            <li class="page-item"> <a class="page-link"> Informação de preço e quantidade</a>  </li>
+            <li class="page-item"> <a class="page-link"> Informação de preço e quantidade</a></li>
             <li class="page-item"> <a class="page-link"> Confirme seu cadastro</a> </li>
-        </ul>
 
+        </ul>
+         <div class="col-sm-1" style=margin-top:25px;>
+           <a class="alert-link col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3" href="index.html" > Voltar </a>
+        </div>
     </div>
 
-    <div class="row">
+    <div  class="row">
 
         <div class="col-md-auto">
             <label> Produto: </label>
@@ -41,8 +49,8 @@
 
         <div>
            <select class="custom-select">
-               <option onclick="apresenta()"> Nenhum </option>
-               <option onclick="camisa()"> Camisa </option>
+               <option @click.prevent="apresenta"> Nenhum </option>
+               <option @click.prevent="camisa"> Camisa </option>
            </select>
         </div>
         <div class="col-md-auto">
@@ -56,49 +64,67 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row" style=margin-top:20px;>
 
-        <div id="campo-cad" class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-
-            <div class="row">
-                <div class="jumbotron-fluid">
-                    <h5> <strong> Clique em um Produto e os campos irão aparecer!</strong> </h5>
-                </div>
-            </div>
+        <div v-if="ativo">
+            <h4 class="jumbotron-fluid"><strong> Clique em um dos Produtos e o cadastro será gerado! </strong></h4>
 
         </div>
 
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 border-0" v-if="ativo == false">
+            <iframe :src="campoCamisa" class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 border-0" width="800px" height="600px" scrolling="yes"></iframe>
+        </div>
+     </div>
+
   </div>
-</div>
-
-<div class="container-fluid">
-<div class="row">
-    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-        <button class="btn btn-primary p-2 col-xl-2 col-lg-2 col-md-2 col-sm-3 col-4"> Continuar </button>
-        <a class="alert-link col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2" href="register.html"> Voltar</a>
-    </div>
-</div>
-
-</div>
 
 
 <script>
 
-    function apresenta() {
 
-        var campoApresentacao = '<iframe class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 border-0" width="500px" height="35px" src="registerForms.html#apresentacao" scrolling="no" name="div-form"></iframe>'
 
-        document.getElementById("campo-cad").innerHTML = campoApresentacao;
+    var app = new Vue({
 
-    }
+       el: "#campo-cad",
+        data:{
 
-    function camisa() {
+            campoCamisa: "registerForms.html#camisa",
+            ativo: true,
+            index: 0,
+            items:[],
 
-        var campoCamisa = '<iframe class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 border-0" width="800px" height="600px" src="registerForms.html#camisa" scrolling="yes" name="div-form"></iframe>'
-        document.getElementById("campo-cad").innerHTML = campoCamisa;
-    }
+            created(){
+               // this.view()
+               // this.localStorage()
+                alert('Isso é um avisooooo')
+                //this.items = JSON.parse(localStorage.getItem('shirts'))
+            },
+
+        },
+
+        methods:{
+
+            localStorage: function(){
+
+                let parse = JSON.stringify(this.items)
+                localStorage.setItem("shirts",parse)
+            },
+
+            camisa: function(){
+                this.ativo = false
+            },
+            apresenta: function(){
+                this.ativo = true
+            },
+
+
+
+        }
+    });
+
 
 </script>
+
 
 </body>
 
