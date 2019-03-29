@@ -19,6 +19,8 @@
 
 <div id="camisa" class="container-fluid bg-transparent">
 
+    <form @submit="validaCadastro" action="#">
+
     <div class="row p-2 form-control bg-light">
 
         <div class="col-sm-auto">
@@ -85,13 +87,16 @@
             <input type="checkbox" v-model="shirt.gk" class="custom-checkbox col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1">
 
           </div>
+
     </div>
 
     <div class="row">
         <div class="col-sm-auto" style=margin-top:150px;>
-            <button type="button" @click.prevent="save" class="btn btn-primary p-2" > Continuar </button>
+            <button type="submit" class="btn btn-primary p-2" > Continuar </button>
+            <p style=color:darkred;>{{log}} </p>
         </div>
     </div>
+    </form>
 </div>
 <script>
 
@@ -101,17 +106,15 @@
 
         data: {
 
-            arrayShirt: [],
-            index: 0,
-
+            log:'',
             shirt: {
                 id: 0,
-                title: "",
-                brand: "",
-                version: "",
-                club: "",
-                season: "",
-                occasion: "",
+                title: '',
+                brand: '',
+                version: '',
+                club: '',
+                season: '',
+                occasion: '',
                 gk: false
             },
 
@@ -134,65 +137,21 @@
             ]
 
         },
-            methods:{
+            methods: {
 
-                persistData() {
-                    let parsed = JSON.stringify(this.arrayShirt);
-                    localStorage.setItem('shirts',parsed)
-                } ,
 
-                save: function(){
+                validaCadastro: function(event) {
 
-                    var id = this.shirt.id;
-                    var title = this.shirt.title;
-                    var brand = this.shirt.brand;
-                    var version = this.shirt.version;
-                    var club = this.shirt.club;
-                    var season = this.shirt.season;
-                    var occasion = this.shirt.occasion;
-                    var gk = this.shirt.gk;
+                    if(this.shirt.title && this.shirt.brand && this.shirt.version && this.shirt.season) return true;
 
-                    this.index = this.arrayShirt.length;
-
-                    if(this.index === 0) {
-
-                        this.arrayShirt.push({
-                            id: id,
-                            title: title,
-                            brand: brand,
-                            version: version,
-                            club: club,
-                            season: season,
-                            occasion: occasion,
-                            gk: gk
-                        });
-
-                        this.index = this.index + this.arrayShirt.length;
-
-                    }else{
-
-                        id = this.index;
-                        this.arrayShirt[this.index] = {
-                            id: id,
-                            title: title,
-                            brand: brand,
-                            version: version,
-                            club: club,
-                            season: season,
-                            occasion: occasion,
-                            gk: gk
-                        };
-
-                        this.index = this.arrayShirt.length;
+                    if(!this.shirt.title || !this.shirt.brand || !this.shirt.version || !this.shirt.season)
+                    {
+                        this.log ='Volte e preencha todos os campos!'
+                        event.preventDefault()
                     }
 
-                    this.persistData();
-                    this.messageAlert();
-                },
 
-                messageAlert: function () {
 
-                    alert("Produto Cadastrado com Sucesso!")
                 }
             }
 

@@ -91,24 +91,11 @@
             campoCamisa: "registerForms.html#camisa",
             ativo: true,
             index: 0,
-            items:[],
-
-            created(){
-               // this.view()
-               // this.localStorage()
-                alert('Isso é um avisooooo')
-                //this.items = JSON.parse(localStorage.getItem('shirts'))
-            },
+            items:[]
 
         },
 
         methods:{
-
-            localStorage: function(){
-
-                let parse = JSON.stringify(this.items)
-                localStorage.setItem("shirts",parse)
-            },
 
             camisa: function(){
                 this.ativo = false

@@ -1,11 +1,8 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-
-    <title>1000Sport :: Home</title>
-
+    <title>1000Sport:: Camisa do Corinthians </title>
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
     <script src="../_js/jquery.min.js"></script>
@@ -13,13 +10,14 @@
     <script src="../bootstrap/js/bootstrap.min.js"></script>
     <script src="../_js/vue.js"></script>
     <link rel="stylesheet" href="../_css/style.css">
+    <link rel="stylesheet" href="../_css/product.css">
 
 </head>
 
 <body id="corpo">
 
-<div id="app">
 
+<div id="app">
     <header id="cabecalho">
         <input class="text-left" type="text" placeholder="Digite um item para pesquisar" required autofocus>
 
@@ -37,48 +35,50 @@
 
 
 </div>
-<section  id="menu">
 
-    <ul id="foto-camisa">
-        <li id="foto-01">
-            <img @mouseover="trocaFoto(0,'corinthians-costas.jpg')" @mouseout="ativaFoto(0,'corinthians-frente.jpg')" :src="items[0].src" width="200px" height="220px">
-            <span><a class="alert-link" href="infoProduct.html"> Camisa do Corinthians ano {{items[0].season}} </a></span>
 
-        </li>
-        <li id="foto-02">
-            <img @mouseover="trocaFoto(1,'saopaulo-costas.jpg')" @mouseout="ativaFoto(1,'saopaulo-frente.jpg')" :src="items[1].src" width="200px" height="220px">
-            <span>Camisa do São Paulo ano {{items[1].season}}</span>
 
-        </li>
+<section id="info">
 
-        <li id="foto-03">
-            <img @mouseover="trocaFoto(2,'flamengo-costas.jpg')" @mouseout="ativaFoto(2,'flamengo-frente.jpg')" :src="items[2].src" width="200px" height="220px">
-            <span>Camisa do Flamengo ano {{items[2].season}}</span>
+    <ul id="fotos">
 
-        </li>
-
-        <li id="foto-04">
-            <img @mouseover="trocaFoto(3,'palmeiras-costas.jpg')" @mouseout="ativaFoto(3,'palmeiras-frente.jpg')" :src="items[3].src" width="200px" height="220px">
-            <span>Camisa do Palmeiras ano {{items[3].season}}</span>
-
-        </li>
-
-        <li id="foto-05">
-            <img @mouseover="trocaFoto(4,'vasco-costas.jpg')" @mouseout="ativaFoto(4,'vasco-frente.jpg')" :src="items[4].src" width="200px" height="220px">
-            <span>Camisa do Vasco ano {{items[4].season}}</span>
-
-        </li>
-
-        <li id="foto-06">
-            <img @mouseover="trocaFoto(5,'cruzeiro-costas.jpg')" @mouseout="ativaFoto(5,'cruzeiro-frente.jpg')" :src="items[5].src" width="200px" height="220px">
-            <span>Camisa do Cruzeiro ano {{items[5].season}} </span>
-        </li>
-
+        <li id="foto-01"> <img onclick="alteraFoto('../_img/corinthians-frente.jpg')" src="../_img/corinthians-frente.jpg"  width="128px" height="150px"> </li>
+        <li id="foto-02"> <img onclick="alteraFoto('../_img/corinthians-costas.jpg')" src="../_img/corinthians-costas.jpg"  width="128px" height="150px"> </li>
+        <li id="foto-03"> <img onclick="alteraFoto('../_img/corinthians-perfil.jpg')" src="../_img/corinthians-perfil.jpg"  width="128px" height="150px"> </li>
+        <li id="foto-04"> <img onclick="alteraFoto('../_img/corinthians-escudo.jpg')" src="../_img/corinthians-escudo.jpg"  width="128px" height="150px"> </li>
 
     </ul>
 
 </section>
 
+<aside>
+    <ul id="foto-ampliada">
+
+        <li> <img id="foto-01-ampliada" src="../_img/corinthians-frente.jpg"  width="500px" height=520px"></li>
+    </ul>
+</aside>
+
+<article id="menu">
+
+   <h2>Descrição</h2>
+
+    <label>Título</label>: {{items[0].title}} <br>
+    <label>Marca: </label> {{items[0].brand}} <br>
+    <label> Versão:</label> {{items[0].version}} <br>
+    <label> Clube:</label> {{items[0].club}}<br>
+    <label> Temporada:</label> {{items[0].season}}<br>
+    <label> Ocasião: </label>{{items[0].occasion}}<br>
+    <label>Valor: </label>R$ 240,00
+
+</article>
+
+<script type="application/javascript">
+
+    function alteraFoto(foto) {
+        document.getElementById("foto-01-ampliada").src = foto;
+    }
+
+</script>
 
 
 <script>
@@ -133,34 +133,11 @@
                 {id: 5, title: 'Camisa do Cruzeiro', brand: 'Umbro',version: 'Libertadores',
                     club: 'Cruzeiro', season: 2019, occasion: 'Partida', gk: false,src:"../_img/cruzeiro-frente.jpg"}]
 
-        },
-
-        methods:
-            {
-                trocaFoto(id,name){
-                    this.items[id].src = "../_img/" +name;
-
-                },
-
-                ativaFoto(id,name){
-                    this.items[id].src = "../_img/" +name;
-                }
-
-
-
-            },
-        filters:
-            {
-                lowerCase(str){
-                    return str.toLowerCase();
-                }
-            }
+        }
 
     });
 
 </script>
 
-
 </body>
-
 </html>

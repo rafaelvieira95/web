@@ -21,15 +21,19 @@
 <div class="row text-center">
     <div class="col-sm-4"></div>
 
-    <div>
+    <div >
 
-    <form class="form-signin" style=top:140px;>
+    <form id="app" class="form-signin"  @submit="validaCampo" action="index.html"  style=top:140px;>
 
         <img class="mb-4" src="../_img/logo_temp.png" alt="" width="256" height="100">
-        <input id="email" type="text" placeholder="example@provider.com" class="form-control" required autofocus><br>
-        <input id="pswd" type="password" placeholder="Senha" class="form-control" required> <br> <br>
 
-        <button id="btn" type="button" class="btn btn-lg btn-primary btn-block">Login</button><br><br>
+        <input id="email" v-model="email" type="text" placeholder="example@provider.com" class="form-control" autofocus><br>
+
+        <input id="pswd" type="password" v-model="senha" placeholder="Senha" class="form-control" > <br> <br>
+
+        <button id="btn" type="submit" class="btn btn-lg btn-primary btn-block"> Login</button><br><br>
+
+        <p v-model="log" style=color:darkred>{{log}}</p>
 
         <a class="text-danger text-md-center">Esqueceu sua senha?</a> <br><br>
         <a class="text-info text-md-center">Não é parceiro? clique cadastre sua Empresa!</a>
@@ -40,6 +44,47 @@
     </div>
     <div class="col-sm-4"></div>
 </div>
+
+
+<script>
+
+    var app = new Vue({
+
+
+        el: "#app",
+        data:{
+            log: '',
+            senha:'',
+            email:''
+        },
+        methods: {
+
+            validaCampo: function (event) {
+
+                if(this.email && this.senha) return true;
+
+                if (!this.senha  && !this.email) {
+                    this.log = 'preencha os dois campos!'
+
+                }else
+
+                if (!this.email) {
+                    this.log = 'informe seu email!';
+                }else
+
+                if (!this.senha) {
+                    this.log = 'Informe sua senha!';
+                }
+                event.preventDefault()
+            }
+
+        }
+    });
+
+</script>
+
+
+
 </body>
 
 </html>
