@@ -12,7 +12,7 @@
     <script src="../_js/popper.min.js"></script>
     <script src="../bootstrap/js/bootstrap.min.js"></script>
     <script src="../_js/vue.js"></script>
-
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/vue/1.0.25/vue.min.js"></script>
 </head>
 
 <body class="bg-white">
@@ -23,13 +23,13 @@
 
     <div>
 
-    <form class="form-signin" style=top:140px;>
+    <form action="index.html" class="form-signin" style=top:140px;>
 
         <img class="mb-4" src="../_img/logo_temp.png" alt="" width="256" height="100">
-        <input id="email" type="text" placeholder="example@provider.com" class="form-control" required autofocus><br>
-        <input id="pswd" type="password" placeholder="Senha" class="form-control" required> <br> <br>
+        <input id="email" type="text" placeholder="example@provider.com" class="form-control" required autofocus v-model="email"><br>
+        <input id="pswd" type="password" placeholder="Senha" class="form-control" required v-model="password"> <br> <br>
 
-        <button id="btn" type="button" class="btn btn-lg btn-primary btn-block">Login</button><br><br>
+        <button id="btn" type="button" class="btn btn-lg btn-primary btn-block" v-bind:disabled="!(this.email != '' && this.password != '')">Login</button><br><br>
 
         <a class="text-danger text-md-center">Esqueceu sua senha?</a> <br><br>
         <a class="text-info text-md-center">Não é parceiro? clique cadastre sua Empresa!</a>
@@ -40,6 +40,17 @@
     </div>
     <div class="col-sm-4"></div>
 </div>
+
+<script>
+	new Vue({
+		el: 'body',
+		data: {
+			email: '',
+			password: ''
+		}
+	})
+</script>
+
 </body>
 
 </html>
