@@ -12,29 +12,40 @@
     <link rel="stylesheet" href="../_css/style.css">
     <link rel="stylesheet" href="../_css/product.css">
 
+      <style>
+
+          body#corpo {
+              background-image:url("../_img/futebol.jpg");
+          }
+      </style>
+
 </head>
 
-<body id="corpo">
+<body id="corpo" class="bg-light">
 
 
-<div id="app">
-    <header id="cabecalho">
+<div id="interface" class="bg-light">
+
+    <header id="app">
+
+        <img class="figure-img" src="../_img/logo_temp.png">
         <input class="text-left" type="text" placeholder="Digite um item para pesquisar" required autofocus>
 
-        <button class="btn btn-primary" style=top:10px;> Pesquisar </button>
+        <button class="btn btn-primary"> Pesquisar </button>
 
+        <a class="alert-link" href="register.html">Cadastrar</a>
         <a class="alert-link" href="login.html">Fazer Login</a>
 
-        <nav class="nav">
-
-            <ul class="navbar">
-                <li class="nav-item" v-for="menu in options"><a class="nav-link" href="#">{{menu.item}}</a> </li>
-            </ul>
-        </nav>
     </header>
 
 
-</div>
+    <nav id="nav">
+
+        <ul class="nav nav-tabs font-weight-bold">
+            <li class="nav-item" v-for="menu in options"><a class="nav-link" href="#">{{menu.item}}</a> </li>
+        </ul>
+
+    </nav>
 
 
 
@@ -56,23 +67,22 @@
 
         <li> <img id="foto-01-ampliada" src="../_img/corinthians-frente.jpg"  width="500px" height=520px"></li>
     </ul>
+
+
+    <div id="desc" class="jumbotron-fluid">
+     <h2>Descrição</h2>
+
+      <label> Título: </label>: {{items[0].title}} <br>
+      <label> Marca: </label> {{items[0].brand}} <br>
+       <label> Versão: </label> {{items[0].version}} <br>
+      <label> Clube: </label> {{items[0].club}}<br>
+      <label> Temporada: </label> {{items[0].season}}<br>
+      <label> Ocasião: </label>{{items[0].occasion}}<br>
+      <label> Valor: </label>R$ {{items[0].price}}
+    </div>
 </aside>
 
-<article id="menu">
-
-   <h2>Descrição</h2>
-
-    <label>Título</label>: {{items[0].title}} <br>
-    <label>Marca: </label> {{items[0].brand}} <br>
-    <label> Versão:</label> {{items[0].version}} <br>
-    <label> Clube:</label> {{items[0].club}}<br>
-    <label> Temporada:</label> {{items[0].season}}<br>
-    <label> Ocasião: </label>{{items[0].occasion}}<br>
-    <label>Valor: </label>R$ 240,00
-
-</article>
-
-<script type="application/javascript">
+    <script type="application/javascript">
 
     function alteraFoto(foto) {
         document.getElementById("foto-01-ampliada").src = foto;
@@ -85,7 +95,7 @@
 
     var app = new Vue({
 
-        el:"#app",
+        el:"#nav",
         data: {
             options:
                 [
@@ -100,7 +110,7 @@
 
     var menu = new Vue({
 
-        el:"#menu",
+        el:"#desc",
         data:{
 
             shirt: {
@@ -112,32 +122,34 @@
                 season: "",
                 occasion: "",
                 gk: false,
+                price:0.0,
                 src:""
             },
             items:[
                 {id: 0, title: 'Camisa do Corinthians', brand: 'Nike',version: 'Copa do Brasil',
-                    club: 'Corinthians', season: 2019, occasion: 'Partida', gk: false,src:"../_img/corinthians-frente.jpg"},
+                    club: 'Corinthians', season: 2019, occasion: 'Partida', gk: false, price:240.0, src:"../_img/corinthians-frente.jpg"},
 
                 {id: 1, title: 'Camisa do São Paulo', brand: 'Adidas',version: 'Copa do Brasil',
-                    club: 'São Paulo', season: 2019,occasion: 'Partida', gk: false,src:"../_img/saopaulo-frente.jpg"},
+                    club: 'São Paulo', season: 2019,occasion: 'Partida', gk: false,price:220.0, src:"../_img/saopaulo-frente.jpg"},
 
                 {id: 2, title: 'Camisa do Flamengo', brand: 'Adidas',version: 'Libertadores',
-                    club: 'Flamengo', season: 2019, occasion: 'Partida', gk: false,src:"../_img/flamengo-frente.jpg"},
+                    club: 'Flamengo', season: 2019, occasion: 'Partida', gk: false,price:225.0,src:"../_img/flamengo-frente.jpg"},
 
                 {id: 3, title: 'Camisa do Palmeiras', brand: 'Puma',version: 'Copa do Brasil',
-                    club: 'Palmeiras', season: 2019, occasion: 'Partida', gk: false,src:"../_img/palmeiras-frente.jpg"},
+                    club: 'Palmeiras', season: 2019, occasion: 'Partida', gk: false,price:215.90,src:"../_img/palmeiras-frente.jpg"},
 
                 {id: 4, title: 'Camisa do Vasco', brand: 'Diadora',version: 'Copa do Brasil',
-                    club: 'Vasco', season: 2019, occasion: 'Partida', gk: false,src:"../_img/vasco-frente.jpg"},
+                    club: 'Vasco', season: 2019, occasion: 'Partida', gk: false,price:230.0,src:"../_img/vasco-frente.jpg"},
 
                 {id: 5, title: 'Camisa do Cruzeiro', brand: 'Umbro',version: 'Libertadores',
-                    club: 'Cruzeiro', season: 2019, occasion: 'Partida', gk: false,src:"../_img/cruzeiro-frente.jpg"}]
+                    club: 'Cruzeiro', season: 2019, occasion: 'Partida', gk: false,price:225.0,src:"../_img/cruzeiro-frente.jpg"}]
 
         }
 
     });
 
 </script>
+</div>
 
 </body>
 </html>

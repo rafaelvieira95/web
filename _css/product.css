@@ -1,25 +1,32 @@
 
 section#info ul{
-    width: 130px;
+    width: 140px;
     list-style: none;
-    margin-left: -20px;
     border: 1px solid #dddddd;
 }
 
 section#info li{
-   padding: 5px;
+    padding: 3px;
+    margin-left:-37px;
 }
 
 
 aside ul{
-    width: 700px;
+    width: 600px;
     position: absolute;
     list-style: none;
     display: block;
     float: right;
     padding: 10px;
     margin-left: 180px;
-    top: 100px;
+    top: 200px;
+
+}
+
+div#desc{
+    display: block;
+    position: relative;
+    margin-left: 350px;
 
 }
 
@@ -35,6 +42,6 @@ ul#foto-ampliada li{
 }
 ul#foto-ampliada li:hover{
 
-    transform: scale(1.4);
+    transform: scale(1.35);
 
 }

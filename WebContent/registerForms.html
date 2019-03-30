@@ -96,7 +96,9 @@
             <p style=color:darkred;>{{log}} </p>
         </div>
     </div>
+
     </form>
+
 </div>
 <script>
 
@@ -142,12 +144,16 @@
 
                 validaCadastro: function(event) {
 
-                    if(this.shirt.title && this.shirt.brand && this.shirt.version && this.shirt.season) return true;
+                    if(this.shirt.title && this.shirt.brand && this.shirt.version && this.shirt.season) {
+                        this.log = 'Produto cadastrado!';
+                        return true;
+                    }
 
                     if(!this.shirt.title || !this.shirt.brand || !this.shirt.version || !this.shirt.season)
                     {
-                        this.log ='Volte e preencha todos os campos!'
+                        this.log ='Volte e preencha todos os campos!';
                         event.preventDefault()
+
                     }
 
 
