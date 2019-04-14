@@ -14,165 +14,135 @@
     <script src="../_js/vue.js"></script>
     <link rel="stylesheet" href="../_css/style.css">
 
-
-
 </head>
 
 <body id="corpo"class="bg-light">
 
 
-
-<div id="interface" class="bg-light">
-
-    <header id="app" class="bg-white">
-
-        <img class="figure-img" src="../_img/logo_temp.png">
-
-        <input class="text-left" type="text" placeholder="Digite um item para pesquisar" required autofocus>
-
-        <button class="btn btn-primary"> Pesquisar </button>
-
-        <a class="alert-link" href="register.html">Cadastrar</a>
-        <a class="alert-link" href="login.html">Fazer Login</a>
-
-    </header>
+<div id="interface">
 
 
-   <nav id="nav">
-   <ul class="nav nav-tabs font-weight-bold">
-       <li class="nav-item" v-for="menu in options"><a class="nav-link" href="#">{{menu.item}}</a> </li>
-   </ul>
+    <nav id="nav" class="navbar navbar-nav navbar-expand-sm bg-white navbar-dark">
 
-   </nav>
+        <ul class="nav navbar-nav font-weight-bold">
+            <a  href="#"><img class="navbar-brand figure-img" width="200px" height="100px" src="../_img/logo_temp.png"></a>
+            <li class="nav-item" v-for="menu in options"><a class="nav-link" href="#" style="color:#005cbf">{{menu.item}}</a> </li>
+        </ul>
 
-<section  id="menu">
+    </nav>
 
-    <ul id="foto-camisa">
-        <li id="foto-01">
-            <img @mouseover="trocaFoto(0,'corinthians-costas.jpg')" @mouseout="ativaFoto(0,'corinthians-frente.jpg')" :src="items[0].src" width="200px" height="220px">
-            <span><a id="red-01" class="alert-link" href="infoProduct.html"> Camisa do Corinthians ano {{items[0].season}}
-               </a> <p class="text-info text-center"> <strong> Valor à vista R$  {{items[0].price}}</strong> </p></span>
+    <input class="text-md-left" type="text" placeholder="Digite um item para pesquisar" required autofocus>
 
-        </li>
-        <li id="foto-02">
-            <img @mouseover="trocaFoto(1,'saopaulo-costas.jpg')" @mouseout="ativaFoto(1,'saopaulo-frente.jpg')" :src="items[1].src" width="200px" height="220px">
-            <span>Camisa do São Paulo ano {{items[1].season}}
-                <p class="text-info text-center"> <strong> Valor à vista R$  {{items[1].price}}</strong> </p></span>
+    <button class="btn btn-primary btn-group-md"> Pesquisar </button>
 
-        </li>
+    <a class="alert-link align-baseline" href="register.html">Cadastrar</a>
 
-        <li id="foto-03">
-            <img @mouseover="trocaFoto(2,'flamengo-costas.jpg')" @mouseout="ativaFoto(2,'flamengo-frente.jpg')" :src="items[2].src" width="200px" height="220px">
-            <span>Camisa do Flamengo ano {{items[2].season}}
-                <p class="text-info text-center"> <strong> Valor à vista R$  {{items[2].price}}</strong> </p></span>
+    <a class="alert-link align-baseline" href="login.html">Fazer Login</a>
 
 
-        </li>
+    <section  id="menu">
 
-        <li id="foto-04">
-            <img @mouseover="trocaFoto(3,'palmeiras-costas.jpg')" @mouseout="ativaFoto(3,'palmeiras-frente.jpg')" :src="items[3].src" width="200px" height="220px">
-            <span>Camisa do Palmeiras ano {{items[3].season}}
-            <p class="text-info text-center"> <strong> Valor à vista R$  {{items[3].price}}</strong> </p></span>
+        <ul id="foto-camisa">
+            <li v-for="it in items">
+                <img @mouseover= 'trocaFoto(it.id,it.back)' @mouseout='trocaFoto(it.id,it.front)' :src= it.src width="200px" height="220px">
+                <a class="card-link" href="infoProduct.html"> {{it.title}} </a>
+                <span>
+                <p class="text-justify font-italic"> <strong> Temporada {{it.season}} à vista R$ {{it.price}} em até 10 x {{it.price / 10}} </strong> </p>
+                </span>
+            </li>
 
-        </li>
+        </ul>
 
-        <li id="foto-05">
-            <img @mouseover="trocaFoto(4,'vasco-costas.jpg')" @mouseout="ativaFoto(4,'vasco-frente.jpg')" :src="items[4].src" width="200px" height="220px">
-            <span>Camisa do Vasco ano {{items[4].season}}
-                <p class="text-info text-center"> <strong> Valor à vista R$  {{items[4].price}}</strong> </p></span>
-
-        </li>
-
-        <li id="foto-06">
-            <img @mouseover="trocaFoto(5,'cruzeiro-costas.jpg')" @mouseout="ativaFoto(5,'cruzeiro-frente.jpg')" :src="items[5].src" width="200px" height="220px">
-            <span>Camisa do Cruzeiro ano {{items[5].season}}
-               <p class="text-info text-center"> <strong> Valor à vista R$  {{items[5].price}}</strong> </p></span>
-        </li>
+    </section>
 
 
-    </ul>
+    <script>
 
-</section>
+        var app = new Vue({
 
+            el:"#nav",
+            data: {
+                options:
+                    [
+                        {item: "Futebol"},
+                        {item: "Handball"},
+                        {item: "Futsal"},
+                        {item: "Basquete"},
+                        {item: "Tênis"},
+                        {item: "Acessórios"}]
+            }
+        });
 
+        var menu = new Vue({
 
-<script>
+            el:"#menu",
+            data:{
 
-    var app = new Vue({
-
-        el:"#nav",
-        data: {
-            options:
-                [
-                    {item: "Futebol"},
-                    {item: "Handball"},
-                    {item: "Futsal"},
-                    {item: "Basquete"},
-                    {item: "Tênis"},
-                    {item: "Acessórios"}]
-        }
-    });
-
-    var menu = new Vue({
-
-        el:"#menu",
-        data:{
-
-            shirt: {
-                id: 0,
-                title: "",
-                brand: "",
-                version: "",
-                club: "",
-                season: "",
-                occasion: "",
-                gk: false,
-                price:0.0,
-                src:""
-            },
-            items:[
-                {id: 0, title: 'Camisa do Corinthians', brand: 'Nike',version: 'Copa do Brasil',
-                    club: 'Corinthians', season: 2019, occasion: 'Partida', gk: false, price:240.0, src:"../_img/corinthians-frente.jpg"},
-
-                {id: 1, title: 'Camisa do São Paulo', brand: 'Adidas',version: 'Copa do Brasil',
-                    club: 'São Paulo', season: 2019,occasion: 'Partida', gk: false,price:220.0, src:"../_img/saopaulo-frente.jpg"},
-
-                {id: 2, title: 'Camisa do Flamengo', brand: 'Adidas',version: 'Libertadores',
-                    club: 'Flamengo', season: 2019, occasion: 'Partida', gk: false,price:225.0,src:"../_img/flamengo-frente.jpg"},
-
-                {id: 3, title: 'Camisa do Palmeiras', brand: 'Puma',version: 'Copa do Brasil',
-                    club: 'Palmeiras', season: 2019, occasion: 'Partida', gk: false,price:215.90,src:"../_img/palmeiras-frente.jpg"},
-
-                {id: 4, title: 'Camisa do Vasco', brand: 'Diadora',version: 'Copa do Brasil',
-                    club: 'Vasco', season: 2019, occasion: 'Partida', gk: false,price:230.0,src:"../_img/vasco-frente.jpg"},
-
-                {id: 5, title: 'Camisa do Cruzeiro', brand: 'Umbro',version: 'Libertadores',
-                    club: 'Cruzeiro', season: 2019, occasion: 'Partida', gk: false,price:225.0,src:"../_img/cruzeiro-frente.jpg"}]
-
-        },
-
-        methods:
-            {
-                trocaFoto(id,name){
-                    this.items[id].src = "../_img/" +name;
-
+                shirt: {
+                    id: 0,
+                    title: "",
+                    brand: "",
+                    version: "",
+                    club: "",
+                    season: "",
+                    occasion: "",
+                    gk: false,
+                    price:0.0,
+                    front:"",
+                    back:"",
+                    src:""
                 },
 
-                ativaFoto(id,name){
-                    this.items[id].src = "../_img/" +name;
-                }
+                items:[
+                    {id: 0, title: 'Camisa do Corinthians', brand: 'Nike',version: 'Copa do Brasil',
+                        club: 'Corinthians', season: 2019, occasion: 'Partida', gk: false, price:240.0,
+                        front:"../_img/corinthians-frente.jpg",back:"../_img/corinthians-costas.jpg",
+                        src:"../_img/corinthians-frente.jpg"},
+
+                    {id: 1, title: 'Camisa do São Paulo', brand: 'Adidas',version: 'Copa do Brasil',
+                        club: 'São Paulo', season: 2019,occasion: 'Partida', gk: false,price:220.0,
+                        front:"../_img/saopaulo-frente.jpg",back:"../_img/saopaulo-costas.jpg",
+                        src:"../_img/saopaulo-frente.jpg"},
+
+                    {id: 2, title: 'Camisa do Flamengo', brand: 'Adidas',version: 'Libertadores',
+                        club: 'Flamengo', season: 2019, occasion: 'Partida', gk: false,price:225.0,
+                        front:"../_img/flamengo-frente.jpg",back:"../_img/flamengo-costas.jpg",
+                        src:"../_img/flamengo-frente.jpg"},
+
+                    {id: 3, title: 'Camisa do Palmeiras', brand: 'Puma',version: 'Copa do Brasil',
+                        club: 'Palmeiras', season: 2019, occasion: 'Partida', gk: false,price:215.90,
+                        front:"../_img/palmeiras-frente.jpg",back:"../_img/palmeiras-costas.jpg",
+                        src:"../_img/palmeiras-frente.jpg"},
+
+                    {id: 4, title: 'Camisa do Vasco', brand: 'Diadora',version: 'Copa do Brasil',
+                        club: 'Vasco', season: 2019, occasion: 'Partida', gk: false,price:230.0,
+                        front:"../_img/vasco-frente.jpg",back:"../_img/vasco-costas.jpg",
+                        src:"../_img/vasco-frente.jpg" },
+
+                    {id: 5, title: 'Camisa do Cruzeiro', brand: 'Umbro',version: 'Libertadores',
+                        club: 'Cruzeiro', season: 2019, occasion: 'Partida', gk: false,price:225.0,
+                        front:"../_img/cruzeiro-frente.jpg",back:"../_img/cruzeiro-costas.jpg",
+                        src:"../_img/cruzeiro-frente.jpg" }]
 
             },
-        filters:
-            {
-                lowerCase(str){
-                    return str.toLowerCase();
+
+            methods:
+                {
+                    trocaFoto: function(id,name){
+                        this.items[id].src = name;
+
+                    },
+                },
+            filters:
+                {
+                    lowerCase(str){
+                        return str.toLowerCase();
+                    }
                 }
-            }
 
-    });
+        });
 
-</script>
+    </script>
 
 </div>
 

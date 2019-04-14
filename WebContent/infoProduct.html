@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>1000Sport:: Camisa do Corinthians </title>
+    <title> 1000Sport:: Camisa do Corinthians </title>
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
     <script src="../_js/jquery.min.js"></script>
@@ -24,32 +24,29 @@
 <body id="corpo" class="bg-light">
 
 
-<div id="interface" class="bg-light">
+<div id="interface" class="container-fluid bg-light">
 
-    <header id="app">
+    <nav id="nav" class="navbar navbar-nav navbar-expand-sm bg-white navbar-dark">
 
-        <img class="figure-img" src="../_img/logo_temp.png">
-        <input class="text-left" type="text" placeholder="Digite um item para pesquisar" required autofocus>
-
-        <button class="btn btn-primary"> Pesquisar </button>
-
-        <a class="alert-link" href="register.html">Cadastrar</a>
-        <a class="alert-link" href="login.html">Fazer Login</a>
-
-    </header>
-
-
-    <nav id="nav">
-
-        <ul class="nav nav-tabs font-weight-bold">
-            <li class="nav-item" v-for="menu in options"><a class="nav-link" href="#">{{menu.item}}</a> </li>
+        <ul class="nav navbar-nav font-weight-bold">
+            <a  href="index.html"><img class="navbar-brand figure-img" width="200px" height="100px" src="../_img/logo_temp.png"></a>
+            <li class="nav-item" v-for="menu in options"><a class="nav-link" href="#" style="color:#005cbf">{{menu.item}}</a> </li>
         </ul>
 
     </nav>
 
+    <input class="text-md-left" type="text" placeholder="Digite um item para pesquisar" required autofocus>
+
+    <button class="btn btn-primary btn-group-md"> Pesquisar </button>
+
+    <a class="alert-link align-baseline" href="register.html">Cadastrar</a>
+
+    <a class="alert-link align-baseline" href="login.html">Fazer Login</a>
 
 
-<section id="info">
+    <div id="desc" class="row">
+
+<section id="info" class="col-md-2">
 
     <ul id="fotos">
 
@@ -62,25 +59,28 @@
 
 </section>
 
-<aside>
+
+<aside class="col-md-6">
     <ul id="foto-ampliada">
-
-        <li> <img id="foto-01-ampliada" src="../_img/corinthians-frente.jpg"  width="500px" height=520px"></li>
+        <li> <img id="foto-01-ampliada" src="../_img/corinthians-frente.jpg"  width="400px" height=420px"></li>
     </ul>
-
-
-    <div id="desc" class="jumbotron-fluid">
-     <h2>Descrição</h2>
-
-      <label> Título: </label>: {{items[0].title}} <br>
-      <label> Marca: </label> {{items[0].brand}} <br>
-       <label> Versão: </label> {{items[0].version}} <br>
-      <label> Clube: </label> {{items[0].club}}<br>
-      <label> Temporada: </label> {{items[0].season}}<br>
-      <label> Ocasião: </label>{{items[0].occasion}}<br>
-      <label> Valor: </label>R$ {{items[0].price}}
-    </div>
 </aside>
+
+       <aside id="dados" class="col-md-4 font-weight-bold">
+
+           <h2 class="jumbotron-fluid">Descrição</h2>
+
+           <label> Título: </label>{{items[0].title}} <br>
+           <label> Marca: </label> {{items[0].brand}} <br>
+           <label> Versão: </label> {{items[0].version}} <br>
+           <label> Clube: </label> {{items[0].club}}<br>
+           <label> Temporada: </label> {{items[0].season}}<br>
+           <label> Ocasião: </label>{{items[0].occasion}}<br>
+           <label> Valor: </label> R$ {{items[0].price}}
+
+       </aside>
+
+    </div>
 
     <script type="application/javascript">
 

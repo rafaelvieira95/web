@@ -1,34 +1,30 @@
 
 div#interface {
-    width: 900px;
+    width: 1200px;
     background-color: #ffffff;
     margin: -20px auto 0px auto;
-    padding: 10px;
+    padding: 5px;
+    height: 100%;
 }
 
-
-header#app a{
-    margin-left: 20px;
-}
 
 ul#nav{
-
     margin-left: 110px;
 }
 
+nav#nav{
+    border-bottom: #1d2124 solid 2px;
+    margin-bottom: 10px;
+}
 
-header#app input{
-    width: 250px;
-    margin-left: -25px;
+div#interface input{
+    width: 400px;
+    margin-left: 110px;
 
 }
 
-header#app button{
-    margin-left: 15px;
-}
-
-header#app img{
-  margin-left: -10px;
+div#interface a{
+    padding: 10px;
 }
 
 section#menu ul{
@@ -45,9 +41,6 @@ section#menu span{
   height: 20px;
 
 }
-
-
-
 
 ul#foto-camisa li{
     float: left;
