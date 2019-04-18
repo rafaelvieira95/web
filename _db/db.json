@@ -1,0 +1,100 @@
+{
+  "shirts": [
+    {
+      "id": 0,
+      "title": "Camisa do Corinthians",
+      "brand": "Nike",
+      "version": "Copa do Brasil",
+      "club": "Corinthians",
+      "season": 2019,
+      "occasion": "Partida",
+      "gk": false,
+      "price": 240,
+      "src": "../_img/corinthians-frente.jpg",
+      "back": "../_img/corinthians-costas.jpg",
+      "front": "../_img/corinthians-frente.jpg"
+    },
+    {
+      "id": 1,
+      "title": "Camisa do São Paulo",
+      "brand": "Adidas",
+      "version": "Copa do Brasil",
+      "club": "São Paulo",
+      "season": 2019,
+      "occasion": "Partida",
+      "gk": false,
+      "price": 220,
+      "src": "../_img/saopaulo-frente.jpg",
+      "back": "../_img/saopaulo-costas.jpg",
+      "front": "../_img/saopaulo-frente.jpg"
+    },
+    {
+      "id": 2,
+      "title": "Camisa do Flamengo",
+      "brand": "Adidas",
+      "version": "Libertadores",
+      "club": "Flamengo",
+      "season": 2019,
+      "occasion": "Partida",
+      "gk": false,
+      "price": 225,
+      "src": "../_img/flamengo-frente.jpg",
+      "back": "../_img/flamengo-costas.jpg",
+      "front": "../_img/flamengo-frente.jpg"
+    },
+    {
+      "id": 3,
+      "title": "Camisa do Palmeiras",
+      "brand": "Puma",
+      "version": "Copa do Brasil",
+      "club": "Palmeiras",
+      "season": 2019,
+      "occasion": "Partida",
+      "gk": false,
+      "price": 215.9,
+      "src": "../_img/palmeiras-frente.jpg",
+      "back": "../_img/palmeiras-costas.jpg",
+      "front": "../_img/palmeiras-frente.jpg"
+    },
+    {
+      "id": 4,
+      "title": "Camisa do Vasco",
+      "brand": "Diadora",
+      "version": "Copa do Brasil",
+      "club": "Vasco",
+      "season": 2019,
+      "occasion": "Partida",
+      "gk": false,
+      "price": 230,
+      "src": "../_img/vasco-frente.jpg",
+      "back": "../_img/vasco-costas.jpg",
+      "front": "../_img/vasco-frente.jpg"
+    },
+    {
+      "id": 5,
+      "title": "Camisa do Cruzeiro",
+      "brand": "Umbro",
+      "version": "Libertadores",
+      "club": "Cruzeiro",
+      "season": 2019,
+      "occasion": "Partida",
+      "gk": false,
+      "price": 225,
+      "src": "../_img/cruzeiro-frente.jpg",
+      "back": "../_img/cruzeiro-costas.jpg",
+      "front": "../_img/rafael/fotos/cruzeiro-frente.jpg"
+    }
+  ],
+  "users": [],
+  "user": [
+    {
+      "id": "1",
+      "name": "Rafael",
+      "email": "rafael@gmail.com",
+      "password": "123",
+      "username": "@rafael"
+    }
+  ]
+}
+
+

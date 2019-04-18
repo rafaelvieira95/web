@@ -13,6 +13,8 @@
     <script src="../bootstrap/js/bootstrap.min.js"></script>
     <script src="../_js/vue.js"></script>
     <link rel="stylesheet" href="../_css/style.css">
+    <script src="../_js/axios.min.js"></script>
+    <script src="../_js/post.js"></script>
 
 </head>
 
@@ -43,9 +45,10 @@
     <section  id="menu">
 
         <ul id="foto-camisa">
+
             <li v-for="it in items">
-                <img @mouseover= 'trocaFoto(it.id,it.back)' @mouseout='trocaFoto(it.id,it.front)' :src= it.src width="200px" height="220px">
-                <a class="card-link" href="infoProduct.html"> {{it.title}} </a>
+                <img @mouseover= 'trocaFoto(it.id,it.back)' @mouseout='trocaFoto(it.id,it.front)' :src=it.src width="200px" height="220px">
+                <a class="card-link" @click="localData(it)" href="info.html"> {{it.title}} </a>
                 <span>
                 <p class="text-justify font-italic"> <strong> Temporada {{it.season}} à vista R$ {{it.price}} em até 10 x {{it.price / 10}} </strong> </p>
                 </span>
@@ -63,8 +66,7 @@
             el:"#nav",
             data: {
                 options:
-                    [
-                        {item: "Futebol"},
+                      [ {item: "Futebol"},
                         {item: "Handball"},
                         {item: "Futsal"},
                         {item: "Basquete"},
@@ -76,70 +78,45 @@
         var menu = new Vue({
 
             el:"#menu",
+
             data:{
+                items:[],
+                url: "http://127.0.0.1:3000/shirts"
+            },
 
-                shirt: {
-                    id: 0,
-                    title: "",
-                    brand: "",
-                    version: "",
-                    club: "",
-                    season: "",
-                    occasion: "",
-                    gk: false,
-                    price:0.0,
-                    front:"",
-                    back:"",
-                    src:""
-                },
-
-                items:[
-                    {id: 0, title: 'Camisa do Corinthians', brand: 'Nike',version: 'Copa do Brasil',
-                        club: 'Corinthians', season: 2019, occasion: 'Partida', gk: false, price:240.0,
-                        front:"../_img/corinthians-frente.jpg",back:"../_img/corinthians-costas.jpg",
-                        src:"../_img/corinthians-frente.jpg"},
-
-                    {id: 1, title: 'Camisa do São Paulo', brand: 'Adidas',version: 'Copa do Brasil',
-                        club: 'São Paulo', season: 2019,occasion: 'Partida', gk: false,price:220.0,
-                        front:"../_img/saopaulo-frente.jpg",back:"../_img/saopaulo-costas.jpg",
-                        src:"../_img/saopaulo-frente.jpg"},
-
-                    {id: 2, title: 'Camisa do Flamengo', brand: 'Adidas',version: 'Libertadores',
-                        club: 'Flamengo', season: 2019, occasion: 'Partida', gk: false,price:225.0,
-                        front:"../_img/flamengo-frente.jpg",back:"../_img/flamengo-costas.jpg",
-                        src:"../_img/flamengo-frente.jpg"},
-
-                    {id: 3, title: 'Camisa do Palmeiras', brand: 'Puma',version: 'Copa do Brasil',
-                        club: 'Palmeiras', season: 2019, occasion: 'Partida', gk: false,price:215.90,
-                        front:"../_img/palmeiras-frente.jpg",back:"../_img/palmeiras-costas.jpg",
-                        src:"../_img/palmeiras-frente.jpg"},
-
-                    {id: 4, title: 'Camisa do Vasco', brand: 'Diadora',version: 'Copa do Brasil',
-                        club: 'Vasco', season: 2019, occasion: 'Partida', gk: false,price:230.0,
-                        front:"../_img/vasco-frente.jpg",back:"../_img/vasco-costas.jpg",
-                        src:"../_img/vasco-frente.jpg" },
-
-                    {id: 5, title: 'Camisa do Cruzeiro', brand: 'Umbro',version: 'Libertadores',
-                        club: 'Cruzeiro', season: 2019, occasion: 'Partida', gk: false,price:225.0,
-                        front:"../_img/cruzeiro-frente.jpg",back:"../_img/cruzeiro-costas.jpg",
-                        src:"../_img/cruzeiro-frente.jpg" }]
-
+            created: function () {
+                localStorage.removeItem('db_shirts');
+                this.get()
             },
 
             methods:
                 {
+
                     trocaFoto: function(id,name){
                         this.items[id].src = name;
 
                     },
-                },
-            filters:
-                {
-                    lowerCase(str){
-                        return str.toLowerCase();
-                    }
-                }
 
+                    get: function () {
+                        vm = this;
+                        axios.get(this.url).then(function (r) {
+
+                            vm.items = r.data;
+                            console.log(r);
+
+                        }).catch(function (erro) {
+                            console.log(erro)
+                        });
+                    },
+
+                    localData (item) {
+
+                        let s = JSON.stringify(item);
+                        localStorage.setItem('db_shirts',s);
+                    }
+
+
+                }
         });
 
     </script>
