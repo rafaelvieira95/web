@@ -10,9 +10,19 @@
       "occasion": "Partida",
       "gk": false,
       "price": 240,
-      "src": "../_img/corinthians-frente.jpg",
-      "back": "../_img/corinthians-costas.jpg",
-      "front": "../_img/corinthians-frente.jpg"
+      "src": "corinthians-frente.jpg",
+      "back": "corinthians-costas.jpg",
+      "front": "corinthians-frente.jpg",
+
+      "photos": [
+        {"img":"corinthians-frente.jpg"
+        },
+        {"img":"corinthians-costas.jpg"},
+        {
+        "img":"corinthians-escudo.jpg"},
+        {
+        "img":"corinthians-perfil.jpg"
+      }]
     },
     {
       "id": 1,
@@ -24,9 +34,9 @@
       "occasion": "Partida",
       "gk": false,
       "price": 220,
-      "src": "../_img/saopaulo-frente.jpg",
-      "back": "../_img/saopaulo-costas.jpg",
-      "front": "../_img/saopaulo-frente.jpg"
+      "src": "saopaulo-frente.jpg",
+      "back": "saopaulo-costas.jpg",
+      "front": "saopaulo-frente.jpg"
     },
     {
       "id": 2,
@@ -38,9 +48,9 @@
       "occasion": "Partida",
       "gk": false,
       "price": 225,
-      "src": "../_img/flamengo-frente.jpg",
-      "back": "../_img/flamengo-costas.jpg",
-      "front": "../_img/flamengo-frente.jpg"
+      "src": "flamengo-frente.jpg",
+      "back": "flamengo-costas.jpg",
+      "front": "flamengo-frente.jpg"
     },
     {
       "id": 3,
@@ -52,9 +62,9 @@
       "occasion": "Partida",
       "gk": false,
       "price": 215.9,
-      "src": "../_img/palmeiras-frente.jpg",
-      "back": "../_img/palmeiras-costas.jpg",
-      "front": "../_img/palmeiras-frente.jpg"
+      "src": "palmeiras-frente.jpg",
+      "back": "palmeiras-costas.jpg",
+      "front": "palmeiras-frente.jpg"
     },
     {
       "id": 4,
@@ -66,9 +76,9 @@
       "occasion": "Partida",
       "gk": false,
       "price": 230,
-      "src": "../_img/vasco-frente.jpg",
-      "back": "../_img/vasco-costas.jpg",
-      "front": "../_img/vasco-frente.jpg"
+      "src": "vasco-frente.jpg",
+      "back": "vasco-costas.jpg",
+      "front": "vasco-frente.jpg"
     },
     {
       "id": 5,
@@ -80,21 +90,29 @@
       "occasion": "Partida",
       "gk": false,
       "price": 225,
-      "src": "../_img/cruzeiro-frente.jpg",
-      "back": "../_img/cruzeiro-costas.jpg",
-      "front": "../_img/rafael/fotos/cruzeiro-frente.jpg"
+      "src": "cruzeiro-frente.jpg",
+      "back": "cruzeiro-costas.jpg",
+      "front": "rafael/fotos/cruzeiro-frente.jpg"
     }
   ],
-  "users": [],
-  "user": [
+  "users": [
     {
-      "id": "1",
-      "name": "Rafael",
-      "email": "rafael@gmail.com",
-      "password": "123",
-      "username": "@rafael"
+      "id": 1,
+      "nameFantasy": "Esportes e Calçados ",
+      "societyReason": "Esportes+",
+      "cnpj": "123.123.123/0002-90",
+      "name": "Dagoberto",
+      "surname": "Soares",
+      "cpf": "000.000.000-90",
+      "city": "indeps",
+      "state": "Ceará",
+      "street": "Cruzeiro",
+      "neighborhood": "Pedrinhas",
+      "cep": "63640-000",
+      "number": "125",
+      "nameUser": "@esportes_calc",
+      "email": "esportes_calc@bol.com",
+      "password": "123"
     }
   ]
 }
-
-
