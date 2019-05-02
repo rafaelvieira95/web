@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>1000Sport :: Home</title>
+
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <script src="_js/jquery.min.js"></script>
+    <script src="_js/popper.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="_js/vue.js"></script>
+    <link rel="stylesheet" href="_css/style.css">
+    <script src="_js/axios.min.js"></script>
+    <script src="../_js/post.js"></script>
+
+</head>
+
+<body id="corpo"class="bg-light">
+
+
+<div id="interface">
+
+
+    <nav id="nav" class="navbar navbar-nav navbar-expand-sm bg-white navbar-dark">
+
+        <ul class="nav navbar-nav font-weight-bold">
+            <a  href="#"><img class="navbar-brand figure-img" width="200px" height="100px" src="_img/logo_temp.png"></a>
+            <li class="nav-item" v-for="menu in options"><a class="nav-link" href="#" style="color:#005cbf">{{menu.item}}</a> </li>
+        </ul>
+
+    </nav>
+
+    <input class="text-md-left" type="text" placeholder="Digite um item para pesquisar" required autofocus>
+
+    <button class="btn btn-primary btn-group-md"> Pesquisar </button>
+
+    <a class="alert-link align-baseline" href="register.html">Cadastrar</a>
+
+    <a class="alert-link align-baseline" href="login.html">Fazer Login</a>
+
+
+    <section  id="menu">
+
+        <ul id="foto-camisa">
+
+            <li v-for="it in items">
+                <img @mouseover= 'trocaFoto(it.id,it.back)' @mouseout='trocaFoto(it.id,it.front)' :src=it.src width="200px" height="220px">
+                <a class="card-link" @click="localData(it,it.photos)" href="info.html/" +it.id> {{it.title}} </a>
+                <span>
+                <p class="text-justify font-italic"> <strong> Temporada {{it.season}} à vista R$ {{it.price}} em até 10 x {{it.price / 10}} </strong> </p>
+                </span>
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <script>
+
+        var app = new Vue({
+
+            el:"#nav",
+            data: {
+                options:
+                      [ {item: "Futebol"},
+                        {item: "Handball"},
+                        {item: "Futsal"},
+                        {item: "Basquete"},
+                        {item: "Tênis"},
+                        {item: "Acessórios"}]
+            }
+        });
+
+        var menu = new Vue({
+
+            el:"#menu",
+
+            data:{
+                items:[],
+                url: "http://127.0.0.1:3000/shirts"
+            },
+
+            created: function () {
+                localStorage.removeItem('db_shirts');
+                localStorage.removeItem('db_shirts_info');
+                this.get()
+            },
+
+            methods:
+                {
+
+                    trocaFoto: function(id,name){
+                        this.items[id].src = name;
+
+                    },
+
+                    get: function () {
+                        vm = this;
+                        axios.get(this.url).then(function (r) {
+
+                            vm.items = r.data;
+                            console.log(r);
+
+                        }).catch(function (erro) {
+                            console.log(erro)
+                        });
+                    },
+
+                    localData(it,p) {
+
+                        let photos = JSON.stringify(p);
+                        let data = JSON.stringify(it);
+                        localStorage.setItem('db_shirts',photos);
+                        localStorage.setItem('db_shirts_info',data);
+                    }
+
+
+                }
+        });
+
+    </script>
+
+</div>
+
+</body>
+
+</html>

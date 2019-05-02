@@ -1,0 +1,60 @@
+
+div#interface {
+    width: 1200px;
+    background-color: #ffffff;
+    margin: -20px auto 0px auto;
+    padding: 5px;
+    height: 100%;
+}
+
+
+ul#nav{
+    margin-left: 110px;
+}
+
+nav#nav{
+    border-bottom: #1d2124 solid 2px;
+    margin-bottom: 10px;
+}
+
+div#interface input{
+    width: 400px;
+    margin-left: 110px;
+
+}
+
+div#interface a{
+    padding: 10px;
+}
+
+section#menu ul{
+
+    list-style: none;
+    padding: 0px;
+    margin-top: 10px;
+    margin-left: 80px;
+
+}
+
+section#menu span{
+
+  height: 20px;
+
+}
+
+ul#foto-camisa li{
+    float: left;
+    width: 200px;
+    height: 290px;
+    margin: 15px;
+    border: 1px solid #ffffff;
+   /* background-color: #ffffff; */
+    box-shadow: 0px 0px 1px rgba(0,0,0,.2);
+    transition: all .4s ease-in;
+}
+
+
+
+
+
+

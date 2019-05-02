@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title> 1000Sport:: Camisa do Corinthians </title>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <script src="_js/jquery.min.js"></script>
+    <script src="_js/popper.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="_js/vue.js"></script>
+    <link rel="stylesheet" href="_css/style.css">
+    <link rel="stylesheet" href="_css/product.css">
+    <script src="_js/axios.min.js"></script>
+
+      <style>
+
+          body#corpo {
+              background-image:url("_img/futebol.jpg");
+          }
+      </style>
+
+</head>
+
+<body id="corpo" class="bg-light">
+
+
+<div id="interface" class="container-fluid bg-light">
+
+    <nav id="nav" class="navbar navbar-nav navbar-expand-sm bg-white navbar-dark">
+
+        <ul class="nav navbar-nav font-weight-bold">
+            <a  href="index.html"><img class="navbar-brand figure-img" width="200px" height="100px" src="_img/logo_temp.png"></a>
+            <li class="nav-item" v-for="menu in options"><a class="nav-link" href="#" style="color:#005cbf">{{menu.item}}</a> </li>
+        </ul>
+
+    </nav>
+
+    <input class="text-md-left" type="text" placeholder="Digite um item para pesquisar" required autofocus>
+
+    <button class="btn btn-primary btn-group-md"> Pesquisar </button>
+
+    <a class="alert-link align-baseline" href="register.html">Cadastrar</a>
+
+    <a class="alert-link align-baseline" href="login.html">Fazer Login</a>
+
+
+    <div id="desc" class="row">
+
+<section id="info" class="col-md-2">
+
+    <ul id="fotos" >
+
+        <li v-for="it in items"> <img @click="changePhoto(it.img)"  :src="path(it.img)"  width="128px" height="150px"> </li>
+        <!--li> <img @click="changePhoto(items.back)"   :src=items.back  width="128px" height="150px"> </li>
+        <li> <img @click="changePhoto('items.photos.img')" src="../_img/corinthians-perfil.jpg"  width="128px" height="150px"> </li>
+        <li> <img @nclick="changePhoto('corinthians-escudo.jpg')" src="../_img/corinthians-escudo.jpg"  width="128px" height="150px"> </li-->
+
+    </ul>
+
+</section>
+
+
+<aside class="col-md-5">
+    <ul id="foto-ampliada">
+        <li> <img id="foto-01-ampliada" :src="path(items[0].img)"  width="400px" height=420px"></li>
+    </ul>
+</aside>
+
+       <aside id="dados" class="col-md-4 font-weight-bold">
+
+           <h2 class="jumbotron-fluid">Descrição</h2>
+
+           <label> Título: </label>{{dataInfo.title}} <br>
+           <label> Marca: </label> {{dataInfo.brand}} <br>
+           <label> Versão: </label> {{dataInfo.version}} <br>
+           <label> Clube: </label> {{dataInfo.club}}<br>
+           <label> Temporada: </label> {{dataInfo.season}}<br>
+           <label> Ocasião: </label>{{dataInfo.occasion}}<br>
+           <label> Valor: </label> R$ {{dataInfo.price}}
+
+       </aside>
+
+    </div>
+
+
+<script>
+
+    var app = new Vue({
+
+        el:"#nav",
+        data: {
+            options:
+                [
+                    {item: "Futebol"},
+                    {item: "Handball"},
+                    {item: "Futsal"},
+                    {item: "Basquete"},
+                    {item: "Tênis"},
+                    {item: "Acessórios"}]
+        }
+    });
+
+    var menu = new Vue({
+
+        el:"#desc",
+
+        data:{
+            items:[],
+            dataInfo:[]
+        },
+        created: function(){
+          this.items =  this.loadDb();
+          this.dataInfo = this.loadDbInfo();
+        },
+
+        methods:{
+
+            loadDb: function () {
+                let db = localStorage.getItem('db_shirts');
+                let object = JSON.parse(db);
+                return object
+            },
+
+            loadDbInfo: function(){
+
+                let dbInfo = localStorage.getItem('db_shirts_info');
+                let object = JSON.parse(dbInfo);
+                return object
+            },
+
+            path: function(path){
+                return "../_img/"+path;
+            },
+
+            changePhoto(foto){
+                document.getElementById("foto-01-ampliada").src ="../_img/"+foto;
+            }
+
+        }
+
+    });
+
+</script>
+</div>
+
+</body>
+</html>

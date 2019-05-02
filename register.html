@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>1000Sport :: Cadastro</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <script src="_js/jquery.min.js"></script>
+    <script src="_js/popper.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="_js/vue.js"></script>
+
+
+</head>
+
+<body>
+
+<div id="campo-cad" class="container-fluid">
+
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 jumbotron-fluid text-center bg-primary">
+            <header>
+                <h2 style=color:white;>Cadastro de Produtos esportivos</h2>
+            </header>
+        </div>
+
+         <ul class="pagination justify-content-center col-sm-auto"  style=margin-top:10px;>
+
+            <li class="page-item"> <a class="page-link"> Escolha seu Produto </a></li>
+            <li class="page-item"> <a class="page-link"> Descreva seu Produto</a>  </li>
+            <li class="page-item"> <a class="page-link"> Informação de preço e quantidade</a></li>
+            <li class="page-item"> <a class="page-link"> Confirme seu cadastro</a> </li>
+
+        </ul>
+         <div class="col-sm-1" style=margin-top:25px;>
+           <a class="alert-link col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3" href="index.html" > Voltar </a>
+        </div>
+    </div>
+
+    <div  class="row">
+
+        <div class="col-md-auto">
+            <label> Produto: </label>
+        </div>
+
+        <div>
+           <select class="custom-select">
+               <option @click.prevent="apresenta"> Nenhum </option>
+               <option @click.prevent="camisa"> Camisa </option>
+           </select>
+        </div>
+        <div class="col-md-auto">
+            <label> Empresa: </label>
+        </div>
+        <div>
+            <select class="custom-select">
+                <option> Nenhum </option>
+                <option> admin</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row" style=margin-top:20px;>
+
+        <div v-if="ativo">
+            <h4 class="jumbotron-fluid"><strong> Clique em um dos Produtos e o cadastro será gerado! </strong></h4>
+
+        </div>
+
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 border-0" v-if="ativo == false">
+            <iframe :src="campoCamisa" class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 border-0" width="800px" height="600px" scrolling="yes"></iframe>
+        </div>
+     </div>
+
+  </div>
+
+
+<script>
+
+
+
+    var app = new Vue({
+
+       el: "#campo-cad",
+        data:{
+
+            campoCamisa: "registerForms.html#camisa",
+            ativo: true,
+            index: 0,
+            items:[]
+
+        },
+
+        methods:{
+
+            camisa: function(){
+                this.ativo = false
+            },
+            apresenta: function(){
+                this.ativo = true
+            },
+
+
+
+        }
+    });
+
+
+</script>
+
+
+</body>
+
+
+</html>
