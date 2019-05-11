@@ -2,15 +2,19 @@
 
     <div id="app">
 
+        <h4 class="jumbotron-fluid"><strong> Clique em um dos Produtos e o cadastro será gerado! </strong></h4>
 
-            <h4 class="jumbotron-fluid"><strong> Clique em um dos Produtos e o cadastro será gerado! </strong></h4>
+        <label class="row">
+            <select @click="selectProduct(itemSelected)" class="col-md-3 col-sm-3 custom-select" v-model="itemSelected">
+                <option v-for="i in products"> {{i.name}}</option>
+            </select>
+        </label>
 
-        <select v-model="itemSelected" @click="selectProduct(itemSelected)" class="custom-select">
-            <option v-for="i in products"> {{i.name}}</option>
-        </select>
 
-        <shirt v-show="itemSelected === 'Camisa' && ativo === true"></shirt>
-        <!--control v-show="ativo && itemSelected === 'Nenhum'"></control-->
+        <shirts v-show="itemSelected === 'Camisa' && activated === true"></shirts>
+        <boots  v-show="itemSelected  === 'Chuteira' && activated === true"></boots>
+        <shorts v-show="itemSelected === 'Shorts' && activated === true"></shorts>
+        <balls  v-show="itemSelected  === 'Bola' && activated === true"></balls>
 
     </div>
 
@@ -18,11 +22,14 @@
 
 <script>
 
-    var Shirt = httpVueLoader('../_vue/shirts.vue');
+     let shirts = httpVueLoader('../_vue/shirts.vue');
+     let shorts = httpVueLoader('../_vue/shorts.vue');
+     let balls =  httpVueLoader('../_vue/balls.vue');
+     let boots =  httpVueLoader("../_vue/boots.vue");
 
       module.exports = {
-        name:'app',
-        components:{Shirt},
+          name:'app',
+        components:{shorts,balls,shirts,boots},
 
           data(){
             return{
@@ -33,48 +40,49 @@
                     {name:'Bola'},
                     {name: 'Shorts'}],
 
-                ativo: false,
-                itemSelected: 'Nenhum Item'
+                activated: false,
+                itemSelected: ""
 
             }
           },
 
-          methods:{
+          methods: {
 
-            selectProduct(p){
+              selectProduct(p) {
 
-                  if(p === 'Camisa') {
+                  if (p === 'Nenhum') {
+                      this.itemSelected ="";
+                      this.activated = false;
+                  }else
 
-                       this.itemSelected = p;
-                       this.ativo = true;
+                  if (p === 'Camisa') {
+                      this.itemSelected = p;
+                      this.activated = true;
+                  }else
+
+                  if(p === 'Chuteira'){
+                      this.itemSelected = p;
+                      this.activated = true;
+                  }else
+
+                  if (p === 'Bola') {
+                      this.itemSelected = p;
+                      this.activated = true;
+
+                  }else
+
+                  if(p === 'Shorts'){
+                      this.itemSelected = p;
+                      this.activated = true;
                   }
-
-                  if(p === 'Nenhum'){
-                      //this.itemSelected = p;
-                      this.ativo = false;
-                  }
-
-
-                       //  alert(this.ativo + 'Camisa');
-                        //this.itemSelected = p;
-                        //this.ativo = true;
-
-
-                        //alert(this.ativo + 'Chuteira');
-                       // this.itemSelected = p;
-                        //this.ativo = true;
-
-
-                }
-
-
-            }
-
+              }
+          }
     };
 
 </script>
 
-<style>
 
+
+<style>
 
 </style>

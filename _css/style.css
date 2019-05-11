@@ -1,30 +1,20 @@
 
 div#interface {
-    width: 1200px;
+    /*width: 1200px; */
     background-color: #ffffff;
     margin: -20px auto 0px auto;
     padding: 5px;
     height: 100%;
 }
 
-
-ul#nav{
-    margin-left: 110px;
-}
-
-nav#nav{
-    border-bottom: #1d2124 solid 2px;
-    margin-bottom: 10px;
-}
-
 div#interface input{
-    width: 400px;
-    margin-left: 110px;
+    width: 350px;
+    /*margin-left: 110px;*/
 
 }
 
 div#interface a{
-    padding: 10px;
+    padding: 8px;
 }
 
 section#menu ul{

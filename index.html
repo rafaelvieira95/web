@@ -14,7 +14,6 @@
     <script src="_js/vue.js"></script>
     <link rel="stylesheet" href="_css/style.css">
     <script src="_js/axios.min.js"></script>
-    <script src="../_js/post.js"></script>
 
 </head>
 
@@ -24,16 +23,18 @@
 <div id="interface">
 
 
-    <nav id="nav" class="navbar navbar-nav navbar-expand-sm bg-white navbar-dark">
+    <nav id="nav" class="navbar col-sm-12 col-5 navbar-nav navbar-expand-sm bg-white navbar-dark">
 
-        <ul class="nav navbar-nav font-weight-bold">
+        <ul class="row nav navbar-nav font-weight-bold">
             <a  href="#"><img class="navbar-brand figure-img" width="200px" height="100px" src="_img/logo_temp.png"></a>
             <li class="nav-item" v-for="menu in options"><a class="nav-link" href="#" style="color:#005cbf">{{menu.item}}</a> </li>
         </ul>
 
     </nav>
 
-    <input class="text-md-left" type="text" placeholder="Digite um item para pesquisar" required autofocus>
+<hr>
+
+    <input class="text-md-left col-sm-4" type="text" placeholder="Digite um item para pesquisar" required autofocus>
 
     <button class="btn btn-primary btn-group-md"> Pesquisar </button>
 
@@ -48,7 +49,7 @@
 
             <li v-for="it in items">
                 <img @mouseover= 'trocaFoto(it.id,it.back)' @mouseout='trocaFoto(it.id,it.front)' :src=it.src width="200px" height="220px">
-                <a class="card-link" @click="localData(it,it.photos)" href="info.html/" +it.id> {{it.title}} </a>
+                <a class="card-link" @click="localData(it,it.photos)" href=path(it.id)> {{it.title}} </a>
                 <span>
                 <p class="text-justify font-italic"> <strong> Temporada {{it.season}} à vista R$ {{it.price}} em até 10 x {{it.price / 10}} </strong> </p>
                 </span>
@@ -116,7 +117,11 @@
                         let data = JSON.stringify(it);
                         localStorage.setItem('db_shirts',photos);
                         localStorage.setItem('db_shirts_info',data);
-                    }
+                    },
+
+                     path(p){
+                       return "info.html/"+p;
+                      }
 
 
                 }

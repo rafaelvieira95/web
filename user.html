@@ -27,7 +27,7 @@
 
 
 
-    <form class="row" method="post" action="index.html">
+    <form class="row" method="post"  action="index.html">
 
         <fieldset class="form-group col-md-3">
             <legend> Dados da Empresa </legend>
@@ -38,6 +38,7 @@
             <input type="text" v-model="societyReason" class="form-control form-text">
             <label class="badge badge-primary"> CNPJ: </label>
             <input type="text" v-model="cnpj" class="form-control form-text"><br>
+            <p style=color:red;>{{msgCnpj}}</p>
 
             <p class="text-justify text-muted"> Após seus dados serem validados, sua sessão será iniciada na homepage do site!</p>
 
@@ -53,6 +54,7 @@
             <input type="text" v-model="surname" class="form-control form-text" >
             <label class="badge badge-primary"> CPF: </label>
             <input type="text" v-model="cpf" class="form-control form-text">
+            <p style=color:red;>{{msgCpf}}</p>
 
         </fieldset>
 
@@ -75,7 +77,8 @@
             <label class="badge badge-primary"> Bairro: </label>
             <input type="text" v-model="neighborhood" class="form-control form-text">
             <label class="badge badge-primary"> Cep:</label>
-            <input type="text" v-model="cep" class="form-control form-text" >
+            <input type="text" v-model="cep" class="form-control form-text">
+            <p style=color:red;>{{msgCep}}</p>
             <label class="badge badge-primary"> Número: </label>
             <input type="number" v-model="number" class="form-control form-text">
 
@@ -94,14 +97,13 @@
             <label class="badge badge-primary"> Senha:</label>
             <input type="password" v-model="password" class="form-control form-text"><br>
 
-            <button type="submit"  class="form-control btn btn-success" @click.prevent="postUser" v-show="checkFields()"> Cadastrar</button>
-            <button type="submit" class="form-control btn btn-success" disabled v-show="checkFields() == false"> Cadastrar</button>
-
-            <button type="reset" class="form-control  btn btn-danger" v-show="checkClear()">Limpar</button>
-            <button type="reset" class="form-control  btn btn-danger disabled" disabled v-show="checkClear() == false">Limpar</button>
-
         </fieldset>
 
+        <button type="submit" class="form-control btn btn-success" @click.prevent="postUser(event)" v-show="checkFields()"> Cadastrar</button>
+        <!--button type="submit" class="form-control btn btn-success" disabled v-show="checkFields() == false"> Cadastrar</button-->
+
+        <button type="reset" class="form-control  btn btn-danger" v-show="checkClear()">Limpar</button>
+        <button type="reset" class="form-control  btn btn-danger disabled" disabled v-show="checkClear() == false">Limpar</button>
 
 
     </form>
@@ -139,6 +141,10 @@
             email: null,
             password: null,
 
+            msgCep: '', //msg de erro para cep,cnpj e cpf
+            msgCnpj: '',
+            msgCpf:'',
+
             states:[
                 {name:'Acre'},{name: 'Alagoas'},{name:'Amapá'},{name:'Amazonas'},{name:'Bahia'},{name:'Ceará'},{name:'Distrito Federal'},
                 {name:'Espírito Santo'},{name:'Goiás'},{name:'Maranhão'},{name: 'Mato Grosso'},{name: 'Mato Grosso do Sul'},
@@ -165,10 +171,10 @@
             },
 
             checkFields: function (){
-
-                return !!( this.nameFantasy && this.societyReason && this.cnpj && this.name &&
-                           this.surname && this.cpf && this.city && this.street && this.neighborhood &&
-                           this.cep && this.number && this.nameUser && this.email && this.password);
+                    return true;
+                //return !!(this.nameFantasy && this.societyReason && this.cnpj && this.name &&
+                          // this.surname && this.cpf && this.city && this.street && this.neighborhood &&
+                          // this.cep && this.number && this.nameUser && this.email && this.password);
 
             },
 
@@ -176,26 +182,50 @@
             cpfValidator: function(cpf){
 
                 let regex = new RegExp("[0-9][0-9][0-9].[0-9][0-9][0-9].[0-9][0-9][0-9]-[0-9][0-9]");
-                let flag = regex.exec(cpf);
+
+                if(!regex.exec(cpf))
+                    this.msgCpf = 'O Cpf passado é inválido!';
+                else this.msgCpf = '';
+
+                return regex.exec(cpf);
 
             },
+
             cnpjValidator: function(cnpj){
 
                 let regex = new RegExp("[0-9][0-9].[0-9][0-9][0-9].[0-9][0-9][0-9]/[0-9][0-9][0-9][0-9]-[0-9][0-9]");
-                let flag = regex.exec(cnpj);
+
+                if(!regex.exec(cnpj))
+                    this.msgCnpj = 'O Cnpj passado é inválido!';
+                else this.msgCnpj = '';
+
+                return regex.exec(cnpj);
 
             },
 
             cepValidador: function(cep){
 
                 let regex = new RegExp("[0-9][0-9][0-9][0-9][0-9]-[0-9][0-9][0-9]");
-                let flag = regex.exec(cep);
+
+                if(!regex.exec(cep))
+                    this.msgCep = 'O Cep informado é inválido!';
+                else this.msgCep = '';
+
+                return regex.exec(cep);
 
             },
 
-            postUser: function () {
+            postUser: function (event) {
 
-                axios.post(this.url,{
+                let cpf =  this.cpfValidator(this.cpf);
+                let cnpj = this.cnpjValidator(this.cnpj);
+                let cep =  this.cepValidador(this.cep);
+
+                if (!cpf || !cnpj || !cep)
+                    event.preventDefault();
+
+                    //alert('entrou aqui');
+               /* axios.post(this.url, {
 
                     id: this.nextId,
                     nameFantasy: this.nameFantasy,
@@ -214,13 +244,13 @@
                     email: this.email,
                     password: this.password,
 
-                }).then(function (r){
-                console.log(r);
-            }).catch(function (erro) {
+                }).then(function (r) {
+                    console.log(r);
+                }).catch(function (erro) {
                     console.log(erro);
-                });
+                }); */
 
-            },
+                },
 
             getUsers: function () {
 

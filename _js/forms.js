@@ -1,5 +1,5 @@
 
-var App = httpVueLoader('./_vue/App.vue');
+var App = httpVueLoader('../_vue/App.vue');
 
 var app = new Vue({
 

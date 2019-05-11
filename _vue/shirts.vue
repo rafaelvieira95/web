@@ -4,7 +4,7 @@
 
         <form @submit="validaCadastro" action="#">
 
-            <div class="row p-2 form-control bg-light">
+            <div class="row p-2 form-group bg-light">
 
                 <div class="col-sm-auto">
                     <label class="badge badge-dark p-2" >Título:</label>
@@ -21,7 +21,7 @@
                 </div>
             </div>
 
-            <div class="row p-2 form-control bg-light">
+            <div class="row p-2 form-group bg-light">
 
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 
@@ -36,7 +36,7 @@
             </div>
 
 
-            <div class="row p-2 form-control bg-light">
+            <div class="row p-2 form-group bg-light">
 
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 
@@ -54,7 +54,7 @@
 
             </div>
 
-            <div class="row p-2 form-control bg-light ">
+            <div class="row p-2 form-group bg-light ">
 
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 p-1">
 
@@ -88,7 +88,7 @@
 
  module.exports = {
 
-    name:'shirt',
+    name:'shirts',
 
     data(){
         return{

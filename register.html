@@ -13,7 +13,8 @@
     <script src="_js/popper.min.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
     <script src="_js/vue.js"></script>
-
+    <script src="_js/httpVueLoader.js"></script>
+    <script src="_js/axios.min.js"></script>
 
 </head>
 
@@ -22,7 +23,7 @@
 <div id="campo-cad" class="container-fluid">
 
     <div class="row">
-        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 jumbotron-fluid text-center bg-primary">
+        <div class="col-md-12 col-sm-12 col-12 jumbotron-fluid text-center bg-primary">
             <header>
                 <h2 style=color:white;>Cadastro de Produtos esportivos</h2>
             </header>
@@ -40,78 +41,11 @@
            <a class="alert-link col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3" href="index.html" > Voltar </a>
         </div>
     </div>
+</div>
 
-    <div  class="row">
+<div id="app"></div>
 
-        <div class="col-md-auto">
-            <label> Produto: </label>
-        </div>
-
-        <div>
-           <select class="custom-select">
-               <option @click.prevent="apresenta"> Nenhum </option>
-               <option @click.prevent="camisa"> Camisa </option>
-           </select>
-        </div>
-        <div class="col-md-auto">
-            <label> Empresa: </label>
-        </div>
-        <div>
-            <select class="custom-select">
-                <option> Nenhum </option>
-                <option> admin</option>
-            </select>
-        </div>
-    </div>
-
-    <div class="row" style=margin-top:20px;>
-
-        <div v-if="ativo">
-            <h4 class="jumbotron-fluid"><strong> Clique em um dos Produtos e o cadastro será gerado! </strong></h4>
-
-        </div>
-
-        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 border-0" v-if="ativo == false">
-            <iframe :src="campoCamisa" class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 border-0" width="800px" height="600px" scrolling="yes"></iframe>
-        </div>
-     </div>
-
-  </div>
-
-
-<script>
-
-
-
-    var app = new Vue({
-
-       el: "#campo-cad",
-        data:{
-
-            campoCamisa: "registerForms.html#camisa",
-            ativo: true,
-            index: 0,
-            items:[]
-
-        },
-
-        methods:{
-
-            camisa: function(){
-                this.ativo = false
-            },
-            apresenta: function(){
-                this.ativo = true
-            },
-
-
-
-        }
-    });
-
-
-</script>
-
+<script src="_js/forms.js"></script>
 
 </body>
 
