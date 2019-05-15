@@ -2,11 +2,12 @@
 
     <div id="app">
 
-        <h4 class="jumbotron-fluid"><strong> Clique em um dos Produtos e o cadastro será gerado! </strong></h4>
+        <h4 class="jumbotron-fluid"><strong> &nbsp; &nbsp;Clique em um dos Produtos e o cadastro será gerado! </strong></h4>
 
         <label class="row">
-            <select @click="selectProduct(itemSelected)" class="col-md-3 col-sm-3 custom-select" v-model="itemSelected">
-                <option v-for="i in products"> {{i.name}}</option>
+
+            <select @click="selectProduct(itemSelected)" class="col-md-3 custom-select" v-model="itemSelected">
+                 <option v-for="i in products"> {{i.name}}</option>
             </select>
         </label>
 
@@ -22,10 +23,10 @@
 
 <script>
 
-     let shirts = httpVueLoader('../_vue/shirts.vue');
-     let shorts = httpVueLoader('../_vue/shorts.vue');
-     let balls =  httpVueLoader('../_vue/balls.vue');
-     let boots =  httpVueLoader("../_vue/boots.vue");
+     let shirts = httpVueLoader('_vue/sport/shirts.vue');
+     let shorts = httpVueLoader('_vue/sport/shorts.vue');
+     let balls =  httpVueLoader('_vue/sport/balls.vue');
+     let boots =  httpVueLoader("_vue/sport/boots.vue");
 
       module.exports = {
           name:'app',

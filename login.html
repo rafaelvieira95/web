@@ -24,13 +24,13 @@
 
     <div class="col-md-4">
 
-     <form id="app" class="form-signin" @submit="validaCampo" action="index.html" style=top:140px;>
+     <form id="app" class="form-signin" @submit="validateLogin" action="index.html" style=top:140px;>
 
-        <img class="mb-4" src="_img/logo_temp.png" alt="" width="256" height="100">
+         <a  href="index.html"> <img class="navbar-brand figure-img" width="256px" height="100px" src="_vue/sport/pictures/logo_temp.png"></a>
 
-        <input id="email" v-model="email" type="text" placeholder="example@provider.com" class="form-control" autofocus><br>
+        <input id="email" v-model="email" type="email" placeholder="example@provider.com" class="form-control" required autofocus><br>
 
-        <input id="pswd" type="password" v-model="senha" placeholder="Senha" class="form-control" > <br> <br>
+        <input id="pswd" type="password" v-model="password" placeholder="Senha" class="form-control" > <br> <br>
 
         <button id="btn" type="submit" class="btn btn-lg btn-primary btn-block"> Login</button><br><br>
 
@@ -41,7 +41,7 @@
 
         <p class="mt-4 mb-3 text-muted text-center"> Copyright &copy; 2019 - 1000Sport Ltda.</p>
 
-    </form>
+     </form>
 
     </div>
 
@@ -58,16 +58,16 @@
         el: "#app",
         data:{
             log: '',
-            senha:'',
+            password:'',
             email:''
         },
         methods: {
 
-            validaCampo: function (event) {
+            validateLogin: function (event) {
 
-                if(this.email && this.senha) return true;
+                if(this.email && this.password) return true;
 
-                if (!this.senha  && !this.email) {
+                if (!this.password  && !this.email) {
                     this.log = 'preencha os dois campos!'
 
                 }else
@@ -76,7 +76,7 @@
                     this.log = 'informe seu email!';
                 }else
 
-                if (!this.senha) {
+                if (!this.password) {
                     this.log = 'Informe sua senha!';
                 }
                 event.preventDefault()

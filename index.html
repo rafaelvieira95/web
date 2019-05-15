@@ -14,6 +14,7 @@
     <script src="_js/vue.js"></script>
     <link rel="stylesheet" href="_css/style.css">
     <script src="_js/axios.min.js"></script>
+    <script src="_js/httpVueLoader.js"></script>
 
 </head>
 
@@ -22,34 +23,41 @@
 
 <div id="interface">
 
+    <div class="row">
 
-    <nav id="nav" class="navbar col-sm-12 col-5 navbar-nav navbar-expand-sm bg-white navbar-dark">
-
+    <div class="col-md-1 bg-white"></div>
+    <nav id="nav" class="navbar col-md-11 col-5 navbar-nav navbar-expand-sm bg-white navbar-dark">
         <ul class="row nav navbar-nav font-weight-bold">
-            <a  href="#"><img class="navbar-brand figure-img" width="200px" height="100px" src="_img/logo_temp.png"></a>
+            <a  href="#"><img class="navbar-brand figure-img" width="200px" height="100px" src="_vue/sport/pictures/logo_temp.png"></a>
             <li class="nav-item" v-for="menu in options"><a class="nav-link" href="#" style="color:#005cbf">{{menu.item}}</a> </li>
         </ul>
 
     </nav>
+    </div>
 
 <hr>
 
-    <input class="text-md-left col-sm-4" type="text" placeholder="Digite um item para pesquisar" required autofocus>
+    <div class="row">
+        <p class="col-md-3"></p>
+    <input class="text-md-left col-md-3" type="text" placeholder="Digite um item para pesquisar" required autofocus>
+        &nbsp;&nbsp;
+    <button class="btn btn-primary btn-group-md col-md-1 text-md-center"> Pesquisar </button>
 
-    <button class="btn btn-primary btn-group-md"> Pesquisar </button>
+    <a class="alert-link align-baseline text-md-left col-md-1" href="register.html">Cadastrar</a>
 
-    <a class="alert-link align-baseline" href="register.html">Cadastrar</a>
+    <a class="alert-link align-baseline text-md-left col-md-2" href="login.html">Fazer Login</a>
 
-    <a class="alert-link align-baseline" href="login.html">Fazer Login</a>
-
+    </div>
 
     <section  id="menu">
 
         <ul id="foto-camisa">
 
             <li v-for="it in items">
-                <img @mouseover= 'trocaFoto(it.id,it.back)' @mouseout='trocaFoto(it.id,it.front)' :src=it.src width="200px" height="220px">
-                <a class="card-link" @click="localData(it,it.photos)" href=path(it.id)> {{it.title}} </a>
+
+                <img @mouseover='mouseOver(it.id,it.idUser)' @mouseout='mouseOut(it.id,it.idUser)' :src=mainPic(it.id,it.idUser) width="200px" height="220px">
+                <img v-if="source === null" :src=mainPic(it.id,it.idUser,0) width="200px" height="220px">
+                <a class="card-link" href=path(it.id)> {{it.title}} </a>
                 <span>
                 <p class="text-justify font-italic"> <strong> Temporada {{it.season}} à vista R$ {{it.price}} em até 10 x {{it.price / 10}} </strong> </p>
                 </span>
@@ -66,6 +74,7 @@
 
             el:"#nav",
             data: {
+
                 options:
                       [ {item: "Futebol"},
                         {item: "Handball"},
@@ -82,20 +91,31 @@
 
             data:{
                 items:[],
-                url: "http://127.0.0.1:3000/shirts"
+                url: "http://127.0.0.1:8080/sport/api/shirts",
+                source: null
             },
 
             created: function () {
-                localStorage.removeItem('db_shirts');
-                localStorage.removeItem('db_shirts_info');
-                this.get()
+                this.get();
+
             },
 
             methods:
                 {
 
-                    trocaFoto: function(id,name){
-                        this.items[id].src = name;
+                    mouseOver: function(id,idUser){
+
+                       // if(this.source === "_img/"+id+"_"+idUser+"-pic1"){
+                           //alert('Passou o Mouse aqui idx '+ 1);
+                            this.mainPic(id,idUser,1);
+                        //}
+
+
+                    },
+
+                    mouseOut: function(id,idUser){
+                       // alert('Passou o Mouse aqui idx '+ 0);
+                        this.mainPic(id,idUser,0);
 
                     },
 
@@ -119,9 +139,16 @@
                         localStorage.setItem('db_shirts_info',data);
                     },
 
-                     path(p){
-                       return "info.html/"+p;
-                      }
+                     path(p) {
+                         return "info.html/" + p;
+                     },
+
+                    mainPic(id,idUser){
+
+                           this.source = '_img/'+id+'_'+idUser+'-pic0';
+
+                        return this.source;
+                    }
 
 
                 }
