@@ -13,37 +13,36 @@
     <link rel="stylesheet" href="_css/product.css">
     <script src="_js/axios.min.js"></script>
 
-      <style>
-
-          body#corpo {
-              background-image:url("_img/futebol.jpg");
-          }
-      </style>
-
 </head>
 
 <body id="corpo" class="bg-light">
 
 
-<div id="interface" class="container-fluid bg-light">
+<div class="row">
 
-    <nav id="nav" class="navbar navbar-nav navbar-expand-sm bg-white navbar-dark">
-
-        <ul class="nav navbar-nav font-weight-bold">
-            <a  href="index.html"><img class="navbar-brand figure-img" width="200px" height="100px" src="_img/logo_temp.png"></a>
+    <div class="col-md-1 bg-white"></div>
+    <nav id="nav" class="navbar col-md-11 col-5 navbar-nav navbar-expand-sm bg-white navbar-dark">
+        <ul class="row nav navbar-nav font-weight-bold">
+            <a  href="index.html"><img class="navbar-brand figure-img" width="200px" height="100px" src="_vue/sport/pictures/logo_temp.png"></a>
             <li class="nav-item" v-for="menu in options"><a class="nav-link" href="#" style="color:#005cbf">{{menu.item}}</a> </li>
         </ul>
 
     </nav>
+</div>
 
-    <input class="text-md-left" type="text" placeholder="Digite um item para pesquisar" required autofocus>
+<hr>
 
-    <button class="btn btn-primary btn-group-md"> Pesquisar </button>
+<div class="row">
+    <p class="col-md-3"></p>
+    <input class="text-md-left col-md-3" type="text" placeholder="Digite um item para pesquisar" required autofocus>
+    &nbsp;&nbsp;
+    <button class="btn btn-primary btn-group-md col-md-2 text-md-center"> Pesquisar </button>
 
-    <a class="alert-link align-baseline" href="register.html">Cadastrar</a>
+    <a class="alert-link align-baseline text-md-left col-md-1" href="register.html">Cadastrar</a>
 
-    <a class="alert-link align-baseline" href="login.html">Fazer Login</a>
+    <a class="alert-link align-baseline text-md-left col-md-2" href="login.html">Fazer Login</a>
 
+</div>
 
     <div id="desc" class="row">
 
@@ -51,10 +50,7 @@
 
     <ul id="fotos" >
 
-        <li v-for="it in items"> <img @click="changePhoto(it.img)"  :src="path(it.img)"  width="128px" height="150px"> </li>
-        <!--li> <img @click="changePhoto(items.back)"   :src=items.back  width="128px" height="150px"> </li>
-        <li> <img @click="changePhoto('items.photos.img')" src="../_img/corinthians-perfil.jpg"  width="128px" height="150px"> </li>
-        <li> <img @nclick="changePhoto('corinthians-escudo.jpg')" src="../_img/corinthians-escudo.jpg"  width="128px" height="150px"> </li-->
+        <li v-for="it in items"> <img v-show="it.source !== null" @click="changePhoto(it.id,it.source)" :src=it.source width="128px" height="150px"> </li>
 
     </ul>
 
@@ -63,7 +59,7 @@
 
 <aside class="col-md-5">
     <ul id="foto-ampliada">
-        <li> <img id="foto-01-ampliada" :src="path(items[0].img)"  width="400px" height=420px"></li>
+        <li> <img id="foto-01-ampliada" :src=photo  width="400px" height=420px"></li>
     </ul>
 </aside>
 
@@ -106,35 +102,46 @@
         el:"#desc",
 
         data:{
+
+            url:'http://127.0.0.1:8080/sport/api/shirts/',
             items:[],
-            dataInfo:[]
+            dataInfo: {},
+            id: null,
+            photo: null
         },
+
         created: function(){
-          this.items =  this.loadDb();
-          this.dataInfo = this.loadDbInfo();
+
+            let currentUrl = window.location.href;
+            let id = new URL(currentUrl).searchParams.get("id");
+
+            vm = this;
+
+            axios.get(this.url + id).then(function (r){
+
+                vm.dataInfo = r.data;
+                vm.id = id;
+                let idUser = vm.dataInfo.idUser;
+                vm.photo = '_img/'+id+'_'+vm.dataInfo.idUser+'-pic0';
+
+                let obj  = {id: 0, source:'_img/' + id +'_' + idUser + '-pic0'};
+                let obj1 = {id: 1, source:'_img/' + id +'_' + idUser + '-pic1'};
+                let obj2 = {id: 2, source:'_img/' + id +'_' + idUser + '-pic2'};
+                let obj3 = {id: 3, source:'_img/' + id +'_' + idUser + '-pic3'};
+
+                vm.items.push(obj,obj1,obj2,obj3);
+                console.log(r);
+
+                }).catch(function (erro) {
+                console.log(erro);
+            });
+
         },
 
         methods:{
 
-            loadDb: function () {
-                let db = localStorage.getItem('db_shirts');
-                let object = JSON.parse(db);
-                return object
-            },
-
-            loadDbInfo: function(){
-
-                let dbInfo = localStorage.getItem('db_shirts_info');
-                let object = JSON.parse(dbInfo);
-                return object
-            },
-
-            path: function(path){
-                return "../_img/"+path;
-            },
-
-            changePhoto(foto){
-                document.getElementById("foto-01-ampliada").src ="../_img/"+foto;
+            changePhoto(pos,source){
+                this.photo = this.items[pos].source;
             }
 
         }

@@ -9,6 +9,7 @@
                 <div class="col-sm-auto">
                     <label class="badge badge-dark p-2" >Título:</label>
                     <input type="text" v-model="shirt.title">
+
                 </div>
 
             </div>
@@ -17,7 +18,7 @@
 
                 <div class="jumbotron-fluid col-sm-auto">
                     <h4 style=color:darkorange>Preencha a ficha técnica</h4>
-                    <p>Você pode encontrar estes dados na caixa do produto, etiqueta, embalagem ou nas especificações do fabricante.</p>
+                    <p> {{shirt.idUser}} Você pode encontrar estes dados na caixa do produto, etiqueta, embalagem ou nas especificações do fabricante.</p>
                 </div>
             </div>
 
@@ -159,7 +160,7 @@
 
             shirt: {
                 id: '',
-                idUser: '',
+                idUser: 3,
                 title: '',
                 brand: '',
                 version: '',
@@ -192,23 +193,20 @@
     methods: {
 
         validateForm: function() {
-            return !this.shirt.title || !this.shirt.price || !this.shirt.brand || !this.shirt.version || !this.shirt.season;
+            return !this.shirt.title || !this.shirt.price || !this.pic0 ||
+                   !this.pic1 || !this.shirt.brand || !this.shirt.version || !this.shirt.season;
         },
 
         submit: function(event) {
 
             let validateForm = this.validateForm();
+            
             if(validateForm) {
                 this.log = 'Volte e preencha todos os campos!';
                 event.preventDefault();
             }else {
 
-
-
-
                  let formData = new FormData();
-
-                  this.idUser = 3;
 
                   formData.append('pic0',this.pic0);
                   formData.append('pic1',this.pic1);

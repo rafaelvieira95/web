@@ -18,7 +18,7 @@
 
 </head>
 
-<body id="corpo"class="bg-light">
+<body id="corpo" class="bg-light">
 
 
 <div id="interface">
@@ -32,16 +32,16 @@
             <li class="nav-item" v-for="menu in options"><a class="nav-link" href="#" style="color:#005cbf">{{menu.item}}</a> </li>
         </ul>
 
-    </nav>
+      </nav>
     </div>
 
 <hr>
 
-    <div class="row">
+    <div id="credencial" class="row">
         <p class="col-md-3"></p>
     <input class="text-md-left col-md-3" type="text" placeholder="Digite um item para pesquisar" required autofocus>
         &nbsp;&nbsp;
-    <button class="btn btn-primary btn-group-md col-md-1 text-md-center"> Pesquisar </button>
+    <button class="btn btn-primary btn-group-md col-md-2 text-md-center"> Pesquisar </button>
 
     <a class="alert-link align-baseline text-md-left col-md-1" href="register.html">Cadastrar</a>
 
@@ -53,14 +53,14 @@
 
         <ul id="foto-camisa">
 
-            <li v-for="it in items">
-
-                <img @mouseover='mouseOver(it.id,it.idUser)' @mouseout='mouseOut(it.id,it.idUser)' :src=mainPic(it.id,it.idUser) width="200px" height="220px">
-                <img v-if="source === null" :src=mainPic(it.id,it.idUser,0) width="200px" height="220px">
-                <a class="card-link" href=path(it.id)> {{it.title}} </a>
+            <li v-for="i in pics">
+                <a class="card-link" :href=path(i.id)>
+                <img @mouseover='mouseOver(i.pos,i.id,i.idUser)' @mouseout='mouseOut(i.pos,i.id,i.idUser)' :src=i.source width="200px" height="220px">
                 <span>
-                <p class="text-justify font-italic"> <strong> Temporada {{it.season}} à vista R$ {{it.price}} em até 10 x {{it.price / 10}} </strong> </p>
+                    <p><strong style=color:darkorange;>{{i.title}} </strong></p>
+                <p class="text-justify font-italic"> <strong> Temporada {{i.season}} à vista R$ {{i.price}} em até 10 x {{i.price / 10}}  </strong> </p>
                 </span>
+                </a>
             </li>
 
         </ul>
@@ -70,9 +70,10 @@
 
     <script>
 
-        var app = new Vue({
+        let app = new Vue({
 
             el:"#nav",
+
             data: {
 
                 options:
@@ -85,14 +86,18 @@
             }
         });
 
-        var menu = new Vue({
+
+
+        let menu = new Vue({
 
             el:"#menu",
 
             data:{
-                items:[],
+
+                pics:[],
+                items: [],
                 url: "http://127.0.0.1:8080/sport/api/shirts",
-                source: null
+                source: ''
             },
 
             created: function () {
@@ -103,54 +108,44 @@
             methods:
                 {
 
-                    mouseOver: function(id,idUser){
+                    mouseOver: function (i,id, idUser) {
 
-                       // if(this.source === "_img/"+id+"_"+idUser+"-pic1"){
-                           //alert('Passou o Mouse aqui idx '+ 1);
-                            this.mainPic(id,idUser,1);
-                        //}
-
-
+                        this.pics[i].source='_img/' + id + '_' + idUser + '-pic1';
                     },
 
-                    mouseOut: function(id,idUser){
-                       // alert('Passou o Mouse aqui idx '+ 0);
-                        this.mainPic(id,idUser,0);
-
+                    mouseOut: function(i,id, idUser){
+                        this.pics[i].source='_img/' + id + '_' + idUser + '-pic0';
                     },
 
                     get: function () {
-                        vm = this;
-                        axios.get(this.url).then(function (r) {
 
-                            vm.items = r.data;
+                        let vm = this;
+                        axios.get(vm.url).then(function (r) {
+
+                            vm.items = r.data.shirt;
+
+                            for (let i = 0; i < vm.items.length; i++) {
+
+                                let obj = {pos:i,
+                                    id: vm.items[i].id,
+                                    idUser: vm.items[i].idUser,
+                                    title: vm.items[i].title,
+                                    season:vm.items[i].season,
+                                    brand: vm.items[i].brand,
+                                    price:vm.items[i].price,
+                                    source:'_img/'+ vm.items[i].id +'_' +vm.items[i].idUser +'-pic0'};
+
+                                     vm.pics.push(obj);
+                            }
                             console.log(r);
 
                         }).catch(function (erro) {
                             console.log(erro)
                         });
                     },
-
-                    localData(it,p) {
-
-                        let photos = JSON.stringify(p);
-                        let data = JSON.stringify(it);
-                        localStorage.setItem('db_shirts',photos);
-                        localStorage.setItem('db_shirts_info',data);
-                    },
-
-                     path(p) {
-                         return "info.html/" + p;
-                     },
-
-                    mainPic(id,idUser){
-
-                           this.source = '_img/'+id+'_'+idUser+'-pic0';
-
-                        return this.source;
+                    path: function (id) {
+                        return "info.html?id="+id;
                     }
-
-
                 }
         });
 
