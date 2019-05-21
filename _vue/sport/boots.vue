@@ -1,7 +1,6 @@
 <template>
 
     <div class="container-fluid bg-transparent">
-        <form method="post" action="#">
 
             <div class="row p-2 bg-light">
                 <div class="col-sm-auto">
@@ -96,7 +95,7 @@
                         <input type="file" id="pic3" ref="pic3" name="pic3" @change="handleFileUpload('3')" hidden>
                     </label>
 
-                    <label v-if="pic3 !== null" class="btn btn-primary">Selecione
+                    <label v-if="pic3 !== null" class="btn btn-success">Selecione
                         <input type="file" id="pic33" ref="pic3" name="pic3" @change="handleFileUpload('3')" hidden>
                     </label>
 
@@ -105,10 +104,8 @@
             </div>
 
             <p style=color:darkred;>{{log}} </p>
-            <button type="submit" @click.prevent="submit" class="btn btn-primary p-2" > Cadastrar </button>
+            <button type="submit" @click="submit" class="btn btn-primary p-2" > Cadastrar </button>
 
-
-        </form>
     </div>
 </template>
 
@@ -154,22 +151,32 @@
                 ]
             }
         },
+
+        created:function(){
+
+            if(this.$session.exists()){
+                this.boot.idUser = this.$session.get("id");
+            }
+        },
+
         methods: {
 
             validateForm: function () {
 
-                return !this.boot.title || !this.boot.brand || !this.boot.model || !this.boot.version ||
+                return !this.boot.title || !this.pic0 ||
+                    !this.pic1 || !this.boot.brand || !this.boot.model || !this.boot.version ||
                     !this.boot.bootsGender || !this.boot.bootSize;
             },
 
-            submit: function (event) {
+            submit: function () {
 
 
                 let validateForm = this.validateForm();
 
                 if(validateForm){
-                    this.log = 'Volte e preencha todos os campos!';
-                    event.preventDefault();
+                    this.log = 'Volte e preencha todos os campos!' +
+                        '\nlembrando que as duas primeiras fotos são obrigatórias!';
+
                 }else {
 
 
@@ -180,6 +187,7 @@
                     formData.append('pic2',this.pic2);
                     formData.append('pic3',this.pic3);
 
+                    formData.append('boot.idUser',this.boot.idUser);
                     formData.append('boot.title',this.boot.title);
                     formData.append('boot.brand',this.boot.brand);
                     formData.append('boot.model',this.boot.model);
@@ -195,6 +203,7 @@
 
                     }).then(function (r) {
                         console.log(r.data);
+                        window.location.replace("/sport/register.html");
 
                     }).catch(function (erro) {
                         console.log(erro);
@@ -208,7 +217,7 @@
                 switch (idx) {
                     case '0': {
                         this.pic0 = this.$refs.pic0.files[0];
-                        alert(this.pic0.name);
+
                         break;
                     }
                     case '1': {

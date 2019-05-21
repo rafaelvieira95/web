@@ -14,6 +14,7 @@ section#menu span{
 
 }
 
+/*foto do index*/
 ul#foto-camisa li{
 
     float: left;
@@ -26,6 +27,7 @@ ul#foto-camisa li{
     transition: all .4s ease-in;
 }
 
+/*foto do index*/
 ul#foto-camisa li:hover{
 
     transform: scale(1.15);

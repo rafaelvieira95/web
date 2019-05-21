@@ -1,5 +1,5 @@
 
-let User = httpVueLoader('_vue/view/sport.vue');
+let User = httpVueLoader('_vue/view/view-app/user-view.vue');
 
 const app = new Vue({
 

@@ -12,19 +12,20 @@
     <script src="_js/popper.min.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
     <script src="_js/vue.js"></script>
+    <script src="_js/axios.min.js"></script>
+    <script src="_js/vue-session.js"></script>
 
 </head>
 
 <body class="bg-white">
 
 
-<div class="row text-center">
+<div id="app" class="container-fluid row text-center">
 
-    <div class="col-md-4"></div>
+    <div class="col-md-4 col-sm-2"></div>
 
-    <div class="col-md-4">
+    <div class="col-md-4 col-sm-8 col-12">
 
-     <form id="app" class="form-signin" @submit="validateLogin" action="index.html" style=top:140px;>
 
          <a  href="index.html"> <img class="navbar-brand figure-img" width="256px" height="100px" src="_vue/sport/pictures/logo_temp.png"></a>
 
@@ -32,20 +33,20 @@
 
         <input id="pswd" type="password" v-model="password" placeholder="Senha" class="form-control" > <br> <br>
 
-        <button id="btn" type="submit" class="btn btn-lg btn-primary btn-block"> Login</button><br><br>
+        <button id="btn" type="submit" @click="submit" class="btn btn-lg btn-primary btn-block"> Login</button><br><br>
 
-        <p v-model="log" style=color:darkred>{{log}}</p>
+        <p v-model="log" class="text-warning">{{log}}</p>
+         <p v-model="errorCause" class="text-danger">{{errorCause}}</p>
 
         <a class="text-danger text-md-center">Esqueceu sua senha?</a> <br><br>
         <a class="text-info text-md-center" href="user.html">Não é parceiro? clique cadastre sua Empresa!</a>
 
         <p class="mt-4 mb-3 text-muted text-center"> Copyright &copy; 2019 - 1000Sport Ltda.</p>
 
-     </form>
 
     </div>
 
-    <div class="col-md-4"></div>
+    <div class="col-md-4 col-sm-2"></div>
 
 </div>
 
@@ -54,32 +55,68 @@
 
     var app = new Vue({
 
-
         el: "#app",
+
         data:{
-            log: '',
-            password:'',
-            email:''
+            url: 'http://127.0.0.1:8080/sport/login',
+            log: null,
+            email: null,
+            password:null,
+            errorCause: null
         },
+
         methods: {
 
-            validateLogin: function (event) {
+            submit: function() {
+
+                vm = this;
+                axios.defaults.withCredentials = true;
+
+                let validateForm = this.validateLogin();
+
+                if (validateForm) {
+
+                    axios.post(this.url, {
+
+                        email: vm.email,
+                        password: vm.password
+
+                    }).then(function (r) {
+
+                        if (r.status == 200) {
+
+                            vm.$session.start();
+                            vm.$session.set("id", r.data);
+                            window.location.replace("admin.html");
+                        }
+
+                    }).catch(function (erro) {
+
+                        vm.errorCause = 'Não foi possível realizar o login! \nVerifique seus dados e tente novamente!';
+
+                    });
+               }
+            },
+
+            validateLogin: function () {
 
                 if(this.email && this.password) return true;
 
                 if (!this.password  && !this.email) {
                     this.log = 'preencha os dois campos!'
-
+                    return false;
                 }else
 
                 if (!this.email) {
                     this.log = 'informe seu email!';
+                    return false;
                 }else
 
                 if (!this.password) {
                     this.log = 'Informe sua senha!';
+                    return false;
                 }
-                event.preventDefault()
+
             }
 
         }

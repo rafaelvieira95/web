@@ -9,18 +9,21 @@
     <script src="_js/popper.min.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
     <script src="_js/vue.js"></script>
-    <link rel="stylesheet" href="_css/style.css">
+    <!--link rel="stylesheet" href="_css/style.css"-->
     <link rel="stylesheet" href="_css/product.css">
     <script src="_js/axios.min.js"></script>
+    <script src="_js/vue-session.js"></script>
 
 </head>
 
-<body id="corpo" class="bg-light">
+<body class="bg-light">
 
+<div id="app" class="container-fluid">
 
 <div class="row">
 
     <div class="col-md-1 bg-white"></div>
+
     <nav id="nav" class="navbar col-md-11 col-5 navbar-nav navbar-expand-sm bg-white navbar-dark">
         <ul class="row nav navbar-nav font-weight-bold">
             <a  href="index.html"><img class="navbar-brand figure-img" width="200px" height="100px" src="_vue/sport/pictures/logo_temp.png"></a>
@@ -32,60 +35,81 @@
 
 <hr>
 
-<div class="row">
+ <div class="row">
+
     <p class="col-md-3"></p>
-    <input class="text-md-left col-md-3" type="text" placeholder="Digite um item para pesquisar" required autofocus>
-    &nbsp;&nbsp;
-    <button class="btn btn-primary btn-group-md col-md-2 text-md-center"> Pesquisar </button>
 
-    <a class="alert-link align-baseline text-md-left col-md-1" href="register.html">Cadastrar</a>
+     <input class="text-md-left col-md-3" type="text" placeholder="Digite um item para pesquisar" required autofocus>
+     &nbsp;&nbsp;
+     <button class="btn btn-primary btn-group-md col-md-2 text-md-center"> Pesquisar </button>
 
-    <a class="alert-link align-baseline text-md-left col-md-2" href="login.html">Fazer Login</a>
+     <a v-if="logout === true" class="alert-link align-baseline text-md-left col-md-1" href="register.html">Cadastrar</a>
 
-</div>
+     <a v-if="login === true" class="alert-link align-baseline text-md-left col-md-2" href="login.html">Fazer Login</a>
+     <a v-if="logout" @click="logoutSession" class="alert-link align-baseline text-md-left col-md-1" href="index.html" style=color:red;>Sair</a>
 
-    <div id="desc" class="row">
+  </div>
 
-<section id="info" class="col-md-2">
 
-    <ul id="fotos" >
+    <div class="row bg-transparent">
 
-        <li v-for="it in items"> <img v-show="it.source !== null" @click="changePhoto(it.id,it.source)" :src=it.source width="128px" height="150px"> </li>
+   <section id="info" class="col-md-2">
 
-    </ul>
+     <ul id="foto" >
 
-</section>
+        <li v-for="it in items"> <img @click="changePhoto(it.id,it.source)" :src=it.source width="128px" height="150px"> </li>
+
+     </ul>
+
+   </section>
 
 
 <aside class="col-md-5">
     <ul id="foto-ampliada">
-        <li> <img id="foto-01-ampliada" :src=photo  width="400px" height=420px"></li>
+        <li> <img :src=photo  width="400px" height=420px"></li>
     </ul>
 </aside>
 
-       <aside id="dados" class="col-md-4 font-weight-bold">
+       <aside id="dados" class="col-md-5 font-weight-bold">
 
-           <h2 class="jumbotron-fluid">Descrição</h2>
+           <!--h2 class="jumbotron-fluid">Descrição</h2-->
 
-           <label> Título: </label>{{dataInfo.title}} <br>
-           <label> Marca: </label> {{dataInfo.brand}} <br>
-           <label> Versão: </label> {{dataInfo.version}} <br>
-           <label> Clube: </label> {{dataInfo.club}}<br>
-           <label> Temporada: </label> {{dataInfo.season}}<br>
-           <label> Ocasião: </label>{{dataInfo.occasion}}<br>
-           <label> Valor: </label> R$ {{dataInfo.price}}
+           <label class="badge badge-info"> Título: </label> <strong> {{dataInfo.title}}</strong> <br>
+           <label class="badge badge-info"> Marca: </label> <strong> {{dataInfo.brand}} </strong><br>
+           <label class="badge badge-info"> Versão: </label> <strong> {{dataInfo.version}}</strong> <br>
+           <label class="badge badge-info"> Clube: </label> <strong> {{dataInfo.club}} </strong><br>
+           <label class="badge badge-info"> Temporada: </label> <strong>{{dataInfo.season}}</strong><br>
+           <label class="badge badge-info"> Ocasião: </label> <strong>{{dataInfo.occasion}}</strong><br>
+           <label class="badge badge-info"> Valor: R$ </label> <strong> {{dataInfo.price}} </strong> <br>
+
+           <label class="badge badge-warning col-md-2">quantidade:</label>
+           <input class="col-md-2" type="number" min="1" max="50"><br>
+           <button class="btn btn-primary">Comprar</button>
+
 
        </aside>
 
-    </div>
+         </div>
 
+     </div>
+</div>
 
 <script>
 
-    var app = new Vue({
+    let app = new Vue({
 
-        el:"#nav",
-        data: {
+        el:"#app",
+
+        data:{
+
+            url:'http://127.0.0.1:8080/sport/api/shirts/',
+            items:[],
+            dataInfo: {},
+            id: null,
+            photo: null,
+            logout: false,
+            login: true,
+
             options:
                 [
                     {item: "Futebol"},
@@ -94,20 +118,6 @@
                     {item: "Basquete"},
                     {item: "Tênis"},
                     {item: "Acessórios"}]
-        }
-    });
-
-    var menu = new Vue({
-
-        el:"#desc",
-
-        data:{
-
-            url:'http://127.0.0.1:8080/sport/api/shirts/',
-            items:[],
-            dataInfo: {},
-            id: null,
-            photo: null
         },
 
         created: function(){
@@ -117,22 +127,49 @@
 
             vm = this;
 
+            if(vm.$session.exists()){
+
+                vm.logout = true;
+                vm.login = false;
+            }
+
             axios.get(this.url + id).then(function (r){
 
                 vm.dataInfo = r.data;
                 vm.id = id;
                 let idUser = vm.dataInfo.idUser;
+
                 vm.photo = '_img/'+id+'_'+vm.dataInfo.idUser+'-pic0';
 
                 let obj  = {id: 0, source:'_img/' + id +'_' + idUser + '-pic0'};
                 let obj1 = {id: 1, source:'_img/' + id +'_' + idUser + '-pic1'};
-                let obj2 = {id: 2, source:'_img/' + id +'_' + idUser + '-pic2'};
-                let obj3 = {id: 3, source:'_img/' + id +'_' + idUser + '-pic3'};
+                let obj2 = {id: 2, source:'_img/'+id+'_'+idUser+'-pic2'};
+                let obj3 = {id: 3, source:'_img/'+id+'_'+idUser+'-pic3'};
 
                 vm.items.push(obj,obj1,obj2,obj3);
+
+                let img = new Image();
+
+                img.src = '_img/'+id+'_'+idUser+'-pic2';
+
+                img.onerror= function(){
+
+                    vm.items[2].source = '_img/no-pic_standard.png';
+
+;                };
+
+                 img = new Image();
+
+                img.src = '_img/'+id+'_'+idUser+'-pic3';
+
+                img.onerror = function(){
+
+                    vm.items[3].source = '_img/no-pic_standard.png';
+                };
+
                 console.log(r);
 
-                }).catch(function (erro) {
+            }).catch(function (erro) {
                 console.log(erro);
             });
 
@@ -141,15 +178,22 @@
         methods:{
 
             changePhoto(pos,source){
-                this.photo = this.items[pos].source;
-            }
 
+                this.photo = this.items[pos].source;
+
+            },
+
+            logoutSession: function () {
+
+                this.$session.destroy();
+                this.logout = false;
+                this.login = true;
+            }
         }
 
     });
 
 </script>
-</div>
 
 </body>
 </html>

@@ -2,8 +2,6 @@
 
     <div class="container-fluid bg-transparent">
 
-        <form method="post" action="#">
-
             <div class="row p-2 form-group bg-light">
 
                 <div class="col-sm-auto">
@@ -17,8 +15,8 @@
             <div class="row p-2">
 
                 <div class="jumbotron-fluid col-sm-auto">
-                    <h4 style=color:darkorange>Preencha a ficha técnica</h4>
-                    <p> {{shirt.idUser}} Você pode encontrar estes dados na caixa do produto, etiqueta, embalagem ou nas especificações do fabricante.</p>
+                    <h4 style=color:darkorange> Preencha a ficha técnica</h4>
+                    <p> Você pode encontrar estes dados na caixa do produto, etiqueta, embalagem ou nas especificações do fabricante.</p>
                 </div>
             </div>
 
@@ -27,7 +25,9 @@
                 <div class="col-md-12">
 
                     <label class="badge badge-dark p-2">Marca:</label>
-                    <input type="text" v-model="shirt.brand" class="col-md-3">
+                        <select v-model="shirt.brand"  class="col-md-2 custom-select">
+                            <option v-for="b in brands">{{b.name}}</option>
+                        </select>
 
                     <label class="badge badge-dark p-2" >Versão da camisa:</label>
                     <input type="text" v-model="shirt.version" class="col-md-3">
@@ -132,10 +132,9 @@
             </div>
 
               <p style=color:darkred;>{{log}} </p>
-            <button type="submit" @click.prevent="submit" class="btn btn-primary p-2" > Cadastrar </button>
+            <button type="submit" @click="submit" class="btn btn-primary p-2" > Cadastrar </button>
 
 
-        </form>
 
     </div>
 
@@ -159,27 +158,24 @@
             pic3: null,
 
             shirt: {
-                id: '',
-                idUser: 3,
-                title: '',
-                brand: '',
-                version: '',
-                club: '',
-                season: '',
-                occasion: '',
-                price: '',
+                id: null,
+                idUser: null,
+                title: null,
+                brand: null,
+                version: null,
+                club: null,
+                season: null,
+                occasion: null,
+                price: null,
                 gk: false
             },
 
             teams: [
-                {name: "Corinthians"},
-                {name: "Flamengo"},
-                {name: "São Paulo"},
-                {name: "Cruzeiro"},
-                {name: "Fluminense"},
-                {name: "Bahia"},
-                {name: "Palmeiras"},
-                {name: "Vasco"}
+                {name: "Athletico Paranaense"},{name: "Atlético Mineiro"},{name: "Avaí"},
+                {name: "Bahia"},{name: "Ceará"},{name: "Chapecoense"},{name: "Corinthians"},
+                {name: "Cruzeiro"},{name: "CSA"},{name: "Flamengo"},{name: "Fluminense"},
+                {name: "Fortaleza"},{name: "Goiás"},{name: "Grêmio"},{name: "Internacional"},
+                {name: "Palmeiras"},{name: "Santos"}, {name: "São Paulo"}, {name: "Vasco"}
             ],
 
             mood:[
@@ -187,9 +183,27 @@
             {game:"Partida"},
             {game:"Treinamento"}
 
-        ]
+        ],
+            brands:[
+                {name:'Adidas'},
+                {name:'Diadora'},
+                {name:'Nike'},
+                {name:'Lotto'},
+                {name:'Rebook'},
+                {name:'Puma'},
+                {name:'Under Armour'},
+                {name:'Umbro'}
+            ]
         }
     },
+
+     created:function(){
+
+        if(this.$session.exists()){
+            this.shirt.idUser = this.$session.get("id");
+        }
+     },
+
     methods: {
 
         validateForm: function() {
@@ -197,13 +211,13 @@
                    !this.pic1 || !this.shirt.brand || !this.shirt.version || !this.shirt.season;
         },
 
-        submit: function(event) {
+        submit: function() {
 
             let validateForm = this.validateForm();
             
             if(validateForm) {
-                this.log = 'Volte e preencha todos os campos!';
-                event.preventDefault();
+                this.log = 'Volte e preencha todos os campos!'+
+                    '\nlembrando que as duas primeiras fotos são obrigatórias!';
             }else {
 
                  let formData = new FormData();
@@ -212,6 +226,7 @@
                   formData.append('pic1',this.pic1);
                   formData.append('pic2',this.pic2);
                   formData.append('pic3',this.pic3);
+
                   formData.append('shirt.idUser',this.shirt.idUser);
                   formData.append('shirt.title',this.shirt.title);
                   formData.append('shirt.brand',this.shirt.brand);
@@ -228,10 +243,14 @@
                    headers:{'Content-Type': 'multipart/form-data'}
 
                 }).then(function (r) {
+
                     console.log(r.data);
+                    window.location.replace("/sport/register.html");
+
                 }).catch(function (erro) {
 
                     console.log(erro);
+
                 });
 
             }

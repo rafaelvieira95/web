@@ -1,8 +1,6 @@
 <template>
     <div class="container-fluid bg-transparent">
 
-        <form method="post" action="register.html">
-
             <div class="row p-2 bg-light">
                 <div class="col-sm-auto">
                     <label class="badge badge-dark p-2">Título: </label>
@@ -87,7 +85,7 @@
                         <input type="file" id="pic3" ref="pic3" name="pic3" @change="handleFileUpload('3')" hidden>
                     </label>
 
-                    <label v-if="pic3 !== null" class="btn btn-primary">Selecione
+                    <label v-if="pic3 !== null" class="btn btn-success">Selecione
                         <input type="file" id="pic33" ref="pic3" name="pic3" @change="handleFileUpload('3')" hidden>
                     </label>
 
@@ -97,10 +95,8 @@
 
 
             <p style=color:darkred;>{{log}} </p>
-            <button type="submit" @click.prevent="submit" class="btn btn-primary p-2">Cadastrar </button>
+            <button type="submit" @click="submit" class="btn btn-primary p-2">Cadastrar </button>
 
-
-        </form>
     </div>
 </template>
 
@@ -137,21 +133,31 @@
             }
         },
 
+        created:function(){
+
+            if(this.$session.exists()){
+                this.ball.idUser = this.$session.get("id");
+            }
+
+        },
+
         methods: {
 
             validateForm: function () {
 
-                return !this.ball.title || !this.ball.brand || !this.ball.price || !this.ball.model || !this.ball.year || !this.ball.field;
+                return !this.ball.title || !this.ball.brand || !this.pic0 ||
+                    !this.pic1 || !this.ball.price || !this.ball.model || !this.ball.year || !this.ball.field;
             },
 
-            submit:function (event) {
+            submit:function () {
 
                 let validateForm = this.validateForm();
 
                 if (validateForm) {
 
-                    this.log = 'Volte e preencha todos os campos!';
-                    event.preventDefault();
+                    this.log = 'Volte e preencha todos os campos!'+
+                        '\nlembrando que as duas primeiras fotos são obrigatórias!';
+
                 } else {
 
                     let formData = new FormData();
@@ -161,6 +167,8 @@
                     formData.append('pic2',this.pic2);
                     formData.append('pic3',this.pic3);
 
+
+                    formData.append('ball.idUser',this.ball.idUser);
                     formData.append('ball.title',this.ball.title);
                     formData.append('ball.brand',this.ball.brand);
                     formData.append('ball.model',this.ball.model);
@@ -172,7 +180,10 @@
                     headers:{'Content-Type':'multipart/form-data'}
 
                 }).then(function (r) {
+
                     console.log(r.data);
+                    window.location.replace("/sport/register.html");
+
                 }).catch(function (erro) {
                     console.log(erro);
                 });

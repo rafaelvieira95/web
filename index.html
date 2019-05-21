@@ -15,13 +15,14 @@
     <link rel="stylesheet" href="_css/style.css">
     <script src="_js/axios.min.js"></script>
     <script src="_js/httpVueLoader.js"></script>
+    <script src="_js/vue-session.js"></script>
 
 </head>
 
-<body id="corpo" class="bg-light">
+<body class="bg-light">
 
 
-<div id="interface">
+<div id="interface" class="container-fluid">
 
     <div class="row">
 
@@ -37,15 +38,19 @@
 
 <hr>
 
-    <div id="credencial" class="row">
-        <p class="col-md-3"></p>
-    <input class="text-md-left col-md-3" type="text" placeholder="Digite um item para pesquisar" required autofocus>
+    <div class="row">
+        <p class="col-md-2 col-1"></p>
+
+     <input class="text-md-left col-md-4 col-sm-5" type="text" placeholder="Digite um item para pesquisar" required autofocus>
         &nbsp;&nbsp;
-    <button class="btn btn-primary btn-group-md col-md-2 text-md-center"> Pesquisar </button>
+    <button class="btn btn-primary btn-group-md col-md-1 col-sm-3 text-md-center"> Pesquisar </button>
 
-    <a class="alert-link align-baseline text-md-left col-md-1" href="register.html">Cadastrar</a>
+       <a v-if="logout === true" class="alert-link align-baseline text-md-left col-md-1 col-sm-2" href="register.html">Cadastrar</a>
 
-    <a class="alert-link align-baseline text-md-left col-md-2" href="login.html">Fazer Login</a>
+        <a v-if="login === true" class="alert-link align-baseline text-md-left col-md-2 col-sm-2" href="login.html">Fazer Login</a>
+        <a v-if="logout === true" class="alert-link align-baseline text-md-left col-md-2" href="admin.html"> Minha Conta</a>
+        <a v-if="logout" @click="logoutSession" class="alert-link align-baseline text-md-left col-md-1" href="index.html" style=color:red;>Sair</a>
+
 
     </div>
 
@@ -55,7 +60,7 @@
 
             <li v-for="i in pics">
                 <a class="card-link" :href=path(i.id)>
-                <img @mouseover='mouseOver(i.pos,i.id,i.idUser)' @mouseout='mouseOut(i.pos,i.id,i.idUser)' :src=i.source width="200px" height="220px">
+                <img @mouseover='mouseOver(i,i.id,i.idUser)' @mouseout='mouseOut(i,i.id,i.idUser)' :src=i.source width="200px" height="220px">
                 <span>
                     <p><strong style=color:darkorange;>{{i.title}} </strong></p>
                 <p class="text-justify font-italic"> <strong> Temporada {{i.season}} à vista R$ {{i.price}} em até 10 x {{i.price / 10}}  </strong> </p>
@@ -63,95 +68,170 @@
                 </a>
             </li>
 
+            <li v-for="i in picBall">
+                <a class="card-link" href="#">
+                    <img @mouseover='mouseOver(i,i.id,i.idUser)' @mouseout='mouseOut(i,i.id,i.idUser)' :src=i.source width="200px" height="220px">
+                    <span>
+                    <p><strong style=color:darkorange;>{{i.title}} </strong></p>
+                <p class="text-justify font-italic"> <strong> Marca {{i.brand}} à vista R$ {{i.price}} em até 10 x {{i.price / 10}}  </strong> </p>
+                </span>
+                </a>
+            </li>
+
+
         </ul>
 
     </section>
+</div>
 
+<script>
 
-    <script>
+    let app = new Vue({
 
-        let app = new Vue({
+        el:"#interface",
 
-            el:"#nav",
+        data:{
 
-            data: {
+            pics:[],
+            picBall: [],
+            items: [],
+            balls: [],
+            urlShirts: 'http://127.0.0.1:8080/sport/api/shirts',
+            urlBalls: 'http://127.0.0.1:8080/sport/api/balls',
+            source: '',
 
-                options:
-                      [ {item: "Futebol"},
-                        {item: "Handball"},
-                        {item: "Futsal"},
-                        {item: "Basquete"},
-                        {item: "Tênis"},
-                        {item: "Acessórios"}]
+            logout: false,
+            login: true,
+
+            options:
+
+                [ {item: "Futebol"},
+                    {item: "Handball"},
+                    {item: "Futsal"},
+                    {item: "Basquete"},
+                    {item: "Tênis"},
+                    {item: "Acessórios"}]
+
+        },
+
+        created: function () {
+
+            if(this.$session.exists()){
+
+                this.logout = true;
+                this.login = false;
             }
-        });
 
+            this.getShirts();
+            this.getBalls();
+        },
 
+        methods:
+            {
 
-        let menu = new Vue({
+                mouseOver: function (array,id,idUser) {
 
-            el:"#menu",
+                    array.source ='_img/' + id + '_' + idUser + '-pic1';
+                },
 
-            data:{
+                mouseOut: function(array,id,idUser){
 
-                pics:[],
-                items: [],
-                url: "http://127.0.0.1:8080/sport/api/shirts",
-                source: ''
-            },
+                    array.source ='_img/' + id + '_' + idUser + '-pic0';
+                },
 
-            created: function () {
-                this.get();
+                getShirts: function () {
 
-            },
+                    vm = this;
+                    axios.get(vm.urlShirts).then(function (r) {
 
-            methods:
-                {
-
-                    mouseOver: function (i,id, idUser) {
-
-                        this.pics[i].source='_img/' + id + '_' + idUser + '-pic1';
-                    },
-
-                    mouseOut: function(i,id, idUser){
-                        this.pics[i].source='_img/' + id + '_' + idUser + '-pic0';
-                    },
-
-                    get: function () {
-
-                        let vm = this;
-                        axios.get(vm.url).then(function (r) {
+                        if(r.data.shirt.length > 1) {
 
                             vm.items = r.data.shirt;
 
-                            for (let i = 0; i < vm.items.length; i++) {
+                        }else{
+                            vm.items = r.data;
+                        }
 
-                                let obj = {pos:i,
-                                    id: vm.items[i].id,
-                                    idUser: vm.items[i].idUser,
-                                    title: vm.items[i].title,
-                                    season:vm.items[i].season,
-                                    brand: vm.items[i].brand,
-                                    price:vm.items[i].price,
-                                    source:'_img/'+ vm.items[i].id +'_' +vm.items[i].idUser +'-pic0'};
+                        for (let i = 0; i < vm.items.length; i++) {
 
-                                     vm.pics.push(obj);
-                            }
-                            console.log(r);
+                            let obj = {
+                                pos:i,
+                                id: vm.items[i].id,
+                                idUser: vm.items[i].idUser,
+                                title: vm.items[i].title,
+                                season:vm.items[i].season,
+                                brand: vm.items[i].brand,
+                                price:vm.items[i].price,
+                                source:'_img/'+ vm.items[i].id +'_' +vm.items[i].idUser +'-pic0'};
 
-                        }).catch(function (erro) {
-                            console.log(erro)
-                        });
-                    },
-                    path: function (id) {
-                        return "info.html?id="+id;
-                    }
+                            vm.pics.push(obj);
+
+                        }
+
+                        console.log(r);
+
+                    }).catch(function (erro) {
+                        console.log(erro)
+                    });
+                },
+
+                getBalls: function(){
+
+                    vm = this;
+
+                    axios.get(vm.urlBalls).then(function (r) {
+
+                        if(r.data.ball.length > 1) {
+
+                            vm.balls = r.data.ball;
+
+                        }else{
+                            vm.balls = r.data;
+                        }
+
+
+                        for (let i =0; i < vm.balls.length; i++) {
+
+                            let obj = {
+
+                                pos:i,
+                                id: vm.balls[i].id,
+                                idUser: vm.balls[i].idUser,
+                                title: vm.balls[i].title,
+                                model: vm.balls[i].model,
+                                brand: vm.balls[i].brand,
+                                price: vm.balls[i].price,
+                                year:  vm.balls[i].year,
+                                source:'_img/'+ vm.balls[i].id +'_' +vm.balls[i].idUser +'-pic0'
+                            };
+
+                            vm.picBall.push(obj);
+                        }
+
+                        console.log(r);
+
+                    }).catch(function (erro) {
+
+                        console.log(erro)
+                    });
+
+
+                },
+
+                path: function (id) {
+                    return "info.html?id="+id;
+                },
+
+                logoutSession: function () {
+
+                    this.$session.destroy();
+                    this.logout = false;
+                    this.login = true;
                 }
-        });
+            }
+    });
 
-    </script>
-
-</div>
+</script>
 
 </body>
 

@@ -1,8 +1,15 @@
 <template>
 
-    <div id="app">
+    <div v-if="sessionActivated" id="app" class="container-fluid">
 
-        <h4 class="jumbotron-fluid"><strong> &nbsp; &nbsp;Clique em um dos Produtos e o cadastro será gerado! </strong></h4>
+        <div class="row">
+            <div class="col-md-11 jumbotron-fluid text-center bg-primary">
+                <h2 style=color:white;>Cadastro de Produtos esportivos</h2>
+            </div>
+            <a class="alert-link col-md-1 bg-primary text-md-center" href="index.html" style=color:white;> Voltar </a>
+        </div>
+
+        <h4 class="jumbotron-fluid"><strong> &nbsp&nbsp;Clique em um dos Produtos e o cadastro será gerado! </strong></h4>
 
         <label class="row">
 
@@ -26,7 +33,7 @@
      let shirts = httpVueLoader('_vue/sport/shirts.vue');
      let shorts = httpVueLoader('_vue/sport/shorts.vue');
      let balls =  httpVueLoader('_vue/sport/balls.vue');
-     let boots =  httpVueLoader("_vue/sport/boots.vue");
+     let boots =  httpVueLoader('_vue/sport/boots.vue');
 
       module.exports = {
           name:'app',
@@ -36,15 +43,28 @@
             return{
 
                 products:[{name:'Nenhum'}
-                    ,{name:'Camisa'},
-                    {name:'Chuteira'},
-                    {name:'Bola'},
-                    {name: 'Shorts'}],
-
+                         ,{name:'Camisa'},
+                         {name:'Chuteira'},
+                         {name:'Bola'},
+                         {name:'Shorts'}],
                 activated: false,
-                itemSelected: ""
+                itemSelected: "",
+                sessionActivated: false
 
             }
+          },
+
+          created: function () {
+             vm = this;
+
+              if(!vm.$session.exists()){
+
+                  vm.sessionActivated = false;
+                  window.location.replace("index.html");
+              }else{
+
+                  vm.sessionActivated = true;
+              }
           },
 
           methods: {
