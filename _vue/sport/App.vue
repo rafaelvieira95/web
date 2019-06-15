@@ -37,13 +37,13 @@
 
       module.exports = {
           name:'app',
-        components:{shorts,balls,shirts,boots},
+          components:{shorts,balls,shirts,boots},
 
           data(){
             return{
 
-                products:[{name:'Nenhum'}
-                         ,{name:'Camisa'},
+                products:[{name:'Nenhum'},
+                         {name:'Camisa'},
                          {name:'Chuteira'},
                          {name:'Bola'},
                          {name:'Shorts'}],

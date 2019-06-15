@@ -1,5 +1,5 @@
-<template>
 
+<template>
     <div id="app" class="container-fluid bg-white font-weight-light">
         <nav class="navbar navbar-expand-sm bg-white navbar-dark">
 
@@ -8,7 +8,7 @@
 
         </nav>
 
-        <form class="row" method="post">
+        <div class="row form-group">
 
             <fieldset class="form-group col-md-3">
                 <legend> Dados da Empresa </legend>
@@ -21,7 +21,7 @@
                 <input type="text" v-model="user.cnpj" class="form-control form-text"><br>
                 <p style=color:red;>{{msgCnpj}}</p>
 
-                <p class="text-justify text-muted"> Após seus dados serem validados, sua sessão será iniciada na homepage do site!</p>
+                <!--p class="text-justify text-muted"> Após seus dados serem validados, sua sessão será iniciada na homepage do site!</p-->
 
             </fieldset>
 
@@ -78,7 +78,7 @@
 
                 <div class="row">
                     <div class="col-md-1 col-1"></div>
-                    <button type="submit" class="form-control btn btn-success col-sm-5 col-5" @click.prevent="submit" v-show="checkFields()">Cadastrar</button>
+                    <button type="submit" class="form-control btn btn-success col-sm-5 col-5" @click="submit" v-show="checkFields()">Cadastrar</button>
                     <button type="submit" class="form-control btn btn-success col-sm-5 col-5" disabled v-show="!(checkFields()!==false)"> Cadastrar</button>
                     &nbsp;
                     <button type="reset" class="form-control  btn btn-danger col-sm-5 col-5" v-show="checkClear()">Limpar</button>
@@ -87,9 +87,8 @@
                 </div>
 
             </fieldset>
-
-        </form>
     </div>
+</div>
 
 </template>
 
@@ -101,7 +100,7 @@
         data(){
             return{
 
-                url: 'http://127.0.0.1:8080/sport/api/users',
+                url: 'http://127.0.0.1:8080/api/users',
                 arrayUsers:[],
                 user:{
 
@@ -190,33 +189,52 @@
 
             },
 
-            submit: function (event) {
+            submit: function () {
 
                 let cpf =  this.cpfValidator(this.user.cpf);
                 let cnpj = this.cnpjValidator(this.user.cnpj);
                 let cep =  this.cepValidador(this.user.cep);
 
-                if (!cpf || !cnpj || !cep)
-                    event.preventDefault();
-                else {
+                if (cpf && cnpj && cep){
 
-                    axios.post(this.url, {
-                      
-                        nameFantasy: this.user.nameFantasy,
-                        societyReason: this.user.societyReason,
-                        cnpj: this.user.cnpj,
-                        name: this.user.name,
-                        surname: this.user.surname,
-                        cpf: this.user.cpf,
-                        city: this.user.city,
-                        state: this.user.state,
-                        street: this.user.street,
-                        neighborhood: this.user.neighborhood,
-                        cep: this.user.cep,
-                        number: this.user.number,
-                        nameUser: this.user.nameUser,
-                        email: this.user.email,
-                        password: this.user.password,
+                     /*let formData = new FormData();
+                                         
+                    formData.append('user.nameFantasy',this.user.nameFantasy);
+                    formData.append('user.societyReason',this.user.societyReason);
+                    formData.append('user.cnpj',this.user.cnpj); 
+                    formData.append('user.name',this.user.name);
+                    formData.append('user.surname',this.user.surname);
+                    formData.append('user.cpf',this.user.cpf);
+                    formData.append('user.city',this.user.city);
+                    formData.append('user.state',this.user.state);
+                    formData.append('user.street',this.user.street);
+                    formData.append('user.neighborhood',this.user.neighborhood);
+                    formData.append('user.cep',this.user.cep);
+                    formData.append('user.number',this.user.number);
+                    formData.append('user.nameUser', this.user.nameUser);
+                    formData.append('user.email',this.user.email);
+                    formData.append('user.password',this.user.password);
+                    */
+                    axios.post(this.url, 
+                {
+               
+                    nameFantasy: this.user.nameFantasy,
+                    societyReason: this.user.societyReason,
+                    cnpj :this.user.cnpj, 
+                    name :this.user.name,
+                    surname : this.user.surname,
+                    cpf : this.user.cpf,
+                    city: this.user.city,
+                    state: this.user.state,
+                    street: this.user.street,
+                    neighborhood: this.user.neighborhood,
+                    cep :this.user.cep,
+                    number: this.user.number,
+                    nameUser: this.user.nameUser,
+                    email: this.user.email,
+                    password: this.user.password
+      
+                  //headers:{'Content-Type': 'multipart/form-data'}
 
                     }).then(function (r) {
 

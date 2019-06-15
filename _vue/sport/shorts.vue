@@ -5,7 +5,7 @@
             <div class="row p-2 bg-light">
                 <div class="col-sm-auto">
                     <label class="badge badge-dark p-2">Título: </label>
-                    <input type="text" v-model="short.title">
+                    <input type="text" v-model="title">
                 </div>
             </div>
 
@@ -20,25 +20,25 @@
             <div class="row p-2 bg-light">
                 <div class="col-md-10">
                     <label class="badge badge-dark p-2">Marca:</label>
-                    <input type="text" v-model="short.brand" class="col-md-3">
+                    <input type="text" v-model="brand" class="col-md-3">
                     &nbsp; &nbsp;
                     <label class="badge badge-dark p-2" >Modelo do short:</label>
-                    <input type="text" v-model="short.model" class="col-md-3">
+                    <input type="text" v-model="model" class="col-md-3">
                 </div>
             </div>
 
             <div class="row p-2 bg-light">
                 &nbsp; &nbsp;
                     <label class="badge badge-dark p-2">Gênero:</label>
-                    <select v-model="short.chooseGender" class="custom-select col-md-2">
+                    <select v-model="chooseGender" class="custom-select col-md-2">
                         <option v-for="g in gender">{{g.option}}</option>
                     </select>
                    &nbsp; &nbsp;
                     <label class="badge badge-dark p-2">Preço (R$):</label>
-                    <input type="number" v-model="short.price" class="col-md-2">
+                    <input type="number" v-model="price" class="col-md-2">
                    &nbsp; &nbsp;
                     <label class="badge badge-dark p-2">Tamanho:</label>
-                    <select v-model="short.chooseSize" class="custom-select col-md-1">
+                    <select v-model="chooseSize" class="custom-select col-md-1">
                         <option v-for="s in size">{{s.letter}}</option>
                     </select>
 
@@ -119,14 +119,14 @@
         name: 'shorts',
         data(){
             return{
-                url:'http://127.0.0.1:8080/sport/api/shorts',
+                url:'http://127.0.0.1:8080/api/shorts',
                 log:'',
                 pic0: null,
                 pic1: null,
                 pic2: null,
                 pic3: null,
 
-                short: {
+
                     id: null,
                     idUser: null,
                     title: null,
@@ -134,8 +134,8 @@
                     model: null,
                     price: null,
                     chooseSize: null,
-                    chooseGender: null
-                },
+                    chooseGender: null,
+
 
                 gender: [
                     {option: "Unissex"},
@@ -155,14 +155,14 @@
         created:function(){
 
             if(this.$session.exists()){
-                this.short.idUser = this.$session.get("id");
+                this.idUser = this.$session.get("id");
             }
         },
         methods: {
 
             validateForm: function () {
-                return !this.short.title || !this.pic0 ||  !this.pic1 || !this.short.brand || !this.short.model ||
-                    !this.short.chooseGender || !this.short.chooseSize;
+                return !this.title || !this.pic0 ||  !this.pic1 || !this.brand || !this.model ||
+                    !this.chooseGender || !this.chooseSize;
             },
 
             submit: function () {
@@ -182,13 +182,13 @@
                     formData.append('pic2',this.pic2);
                     formData.append('pic3',this.pic3);
 
-                    formData.append('short.idUser',this.short.idUser);
-                    formData.append('short.title',this.short.title);
-                    formData.append('short.brand',this.short.brand);
-                    formData.append('short.model',this.short.model);
-                    formData.append('short.chooseSize',this.short.chooseSize);
-                    formData.append('short.price',this.short.price);
-                    formData.append('short.chooseGender',this.short.chooseGender);
+                    formData.append('idUser',this.idUser);
+                    formData.append('title',this.title);
+                    formData.append('brand',this.brand);
+                    formData.append('model',this.model);
+                    formData.append('chooseSize',this.chooseSize);
+                    formData.append('price',this.price);
+                    formData.append('chooseGender',this.chooseGender);
 
                     axios.post(this.url,formData, {
 

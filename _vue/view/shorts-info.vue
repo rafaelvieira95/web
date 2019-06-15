@@ -54,32 +54,16 @@
 
             return{
 
-                url: 'http://127.0.0.1:8080/sport/api/shorts/all/',
-                urlDelete: 'http://127.0.0.1:8080/sport/api/shorts/',
+                url: 'http://127.0.0.1:8080/api/shorts/all/',
+                urlDelete: 'http://127.0.0.1:8080/api/shorts/',
                 shorts:[]
             }
         },
 
         created: function(){
 
-            vm = this;
-            let id = vm.$session.get("id");
+        this.get();
 
-            axios.get(vm.url + id).then(function (r) {
-
-                if (r.data.short.length > 1) {
-                    vm.shorts = r.data.short;
-                }else{
-                    vm.shorts = r.data;
-                }
-
-                console.log(r);
-
-            }).catch(function (erro) {
-
-                console.log(erro);
-
-            });
         },
 
         methods: {
@@ -97,6 +81,27 @@
                         console.log(erro);
                     });
                 }
+
+            },
+
+            get: function () {
+
+                vm = this;
+                let id = vm.$session.get("id");
+
+                axios.get(vm.url + id).then(function (r) {
+
+                    if (r.data.length >= 1) {
+                        vm.shorts = r.data;
+                    }
+
+                    console.log(r);
+
+                }).catch(function (erro) {
+
+                    console.log(erro);
+
+                });
 
             }
         }

@@ -95,7 +95,7 @@
 
                 users:[],
                 sessionActivated: null,
-                url:'http://127.0.0.1:8080/sport/api/users/'
+                url:'http://127.0.0.1:8080/api/users/'
             }
         },
 
@@ -104,6 +104,7 @@
             vm = this;
 
             if(!vm.$session.exists()){
+
                 vm.sessionActivated = false;
 
             }else{
@@ -111,9 +112,8 @@
 
                 let id = vm.$session.get("id");
 
-               axios.get(vm.url + id).then(function (r) {
-
-                vm.users = r.data;
+                axios.get(vm.url + id).then(function (r) {
+                    vm.users = r.data;
 
 
             }).catch(function (erro) {

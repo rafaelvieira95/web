@@ -4,7 +4,7 @@
             <div class="row p-2 bg-light">
                 <div class="col-sm-auto">
                     <label class="badge badge-dark p-2">Título: </label>
-                    <input type="text" v-model="ball.title">
+                    <input type="text" v-model="title">
                 </div>
             </div>
 
@@ -18,25 +18,25 @@
             <div class="row p-2  bg-light">
                 <div class="col-md-12">
                     <label class="badge badge-dark p-2">Marca:</label>
-                    <input type="text" v-model="ball.brand" class="col-md-3">
+                    <input type="text" v-model="brand" class="col-md-3">
 
                     <label class="badge badge-dark p-2" >Modelo da bola:</label>
-                    <input type="text" v-model="ball.model" class="col-md-3">
+                    <input type="text" v-model="model" class="col-md-3">
                 </div>
             </div>
 
             <div class="row p-2  bg-light">
                 <div class="col-md-12">
                     <label class="badge badge-dark p-2">Ano:</label>
-                    <select v-model="ball.year" class="custom-select col-md-3">
+                    <select v-model="year" class="custom-select col-md-3">
                         <option v-for="year in years">{{year.number}}</option>
                     </select>
 
                     <label class="badge badge-dark p-2">Preço (R$): </label>
-                    <input type="number" v-model="ball.price" class="col-md-1">
+                    <input type="number" v-model="price" class="col-md-1">
 
                     <label class="badge badge-dark p-2">Campo: </label>
-                    <input type="checkbox" v-model="ball.field" class="custom-checkbox col-md-1">
+                    <input type="checkbox" v-model="field" class="custom-checkbox col-md-1">
                 </div>
             </div>
             <div class="row">
@@ -107,14 +107,14 @@
         name: 'balls',
         data(){
             return{
-                url:'http://127.0.0.1:8080/sport/api/balls',
+                url:'http://127.0.0.1:8080/api/balls',
                 log:'',
                 pic0: null,
                 pic1: null,
                 pic2: null,
                 pic3: null,
 
-                ball: {
+
                     id: null,
                     idUser: null,
                     title: null,
@@ -122,8 +122,8 @@
                     model: null,
                     year: null,
                     price: null,
-                    field: false
-                },
+                    field: false,
+
 
                 years: [
                     {number: 2017},
@@ -136,7 +136,7 @@
         created:function(){
 
             if(this.$session.exists()){
-                this.ball.idUser = this.$session.get("id");
+                this.idUser = this.$session.get("id");
             }
 
         },
@@ -145,8 +145,8 @@
 
             validateForm: function () {
 
-                return !this.ball.title || !this.ball.brand || !this.pic0 ||
-                    !this.pic1 || !this.ball.price || !this.ball.model || !this.ball.year || !this.ball.field;
+                return !this.title || !this.brand || !this.pic0 ||
+                    !this.pic1 || !this.price || !this.model || !this.year || !this.field;
             },
 
             submit:function () {
@@ -168,13 +168,13 @@
                     formData.append('pic3',this.pic3);
 
 
-                    formData.append('ball.idUser',this.ball.idUser);
-                    formData.append('ball.title',this.ball.title);
-                    formData.append('ball.brand',this.ball.brand);
-                    formData.append('ball.model',this.ball.model);
-                    formData.append('ball.year',this.ball.year);
-                    formData.append('ball.price',this.ball.price);
-                    formData.append('ball.field',this.ball.field);
+                    formData.append('idUser',this.idUser);
+                    formData.append('title',this.title);
+                    formData.append('brand',this.brand);
+                    formData.append('model',this.model);
+                    formData.append('year',this.year);
+                    formData.append('price',this.price);
+                    formData.append('field',this.field);
 
                 axios.post(this.url, formData,{
                     headers:{'Content-Type':'multipart/form-data'}

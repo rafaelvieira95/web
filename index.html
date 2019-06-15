@@ -32,7 +32,6 @@
             <a  href="#"><img class="navbar-brand figure-img" width="200px" height="100px" src="_vue/sport/pictures/logo_temp.png"></a>
             <li class="nav-item" v-for="menu in options"><a class="nav-link" href="#" style="color:#005cbf">{{menu.item}}</a> </li>
         </ul>
-
       </nav>
     </div>
 
@@ -58,7 +57,7 @@
 
         <ul id="foto-camisa">
 
-            <li v-for="i in pics">
+            <li v-for="i in picShirt">
                 <a class="card-link" :href=path(i.id)>
                 <img @mouseover='mouseOver(i,i.id,i.idUser)' @mouseout='mouseOut(i,i.id,i.idUser)' :src=i.source width="200px" height="220px">
                 <span>
@@ -78,6 +77,25 @@
                 </a>
             </li>
 
+            <li v-for="i in picShort">
+                <a class="card-link" href="#">
+                    <img @mouseover='mouseOver(i,i.id,i.idUser)' @mouseout='mouseOut(i,i.id,i.idUser)' :src=i.source width="200px" height="220px">
+                    <span>
+                    <p><strong style=color:darkorange;>{{i.title}} </strong></p>
+                <p class="text-justify font-italic"> <strong> Marca {{i.brand}} à vista R$ {{i.price}} em até 10 x {{i.price / 10}}  </strong> </p>
+                </span>
+                </a>
+            </li>
+
+            <li v-for="i in picBoot">
+                <a class="card-link" href="#">
+                    <img @mouseover='mouseOver(i,i.id,i.idUser)' @mouseout='mouseOut(i,i.id,i.idUser)' :src=i.source width="200px" height="220px">
+                    <span>
+                    <p><strong style=color:darkorange;>{{i.title}} </strong></p>
+                <p class="text-justify font-italic"> <strong> Marca {{i.brand}} à vista R$ {{i.price}} em até 10 x {{i.price / 10}}  </strong> </p>
+                </span>
+                </a>
+            </li>
 
         </ul>
 
@@ -92,12 +110,18 @@
 
         data:{
 
-            pics:[],
+            picShirt:[],
             picBall: [],
-            items: [],
+            picShort:[],
+            picBoot:[],
+            shirts: [],
             balls: [],
-            urlShirts: 'http://127.0.0.1:8080/sport/api/shirts',
-            urlBalls: 'http://127.0.0.1:8080/sport/api/balls',
+            shorts:[],
+            boots:[],
+            urlShirts: 'http://127.0.0.1:8080/api/shirts',
+            urlBalls: 'http://127.0.0.1:8080/api/balls',
+            urlShorts: 'http://127.0.0.1:8080/api/shorts',
+            urlBoots: 'http://127.0.0.1:8080/api/boots',
             source: '',
 
             logout: false,
@@ -116,14 +140,18 @@
 
         created: function () {
 
-            if(this.$session.exists()){
+            vm = this;
 
-                this.logout = true;
-                this.login = false;
+            if(vm.$session.exists()){
+
+                vm.logout = true;
+                vm.login = false;
             }
 
-            this.getShirts();
-            this.getBalls();
+            vm.getShirts();
+            vm.getBalls();
+            vm.getBoots();
+            vm.getShorts();
         },
 
         methods:
@@ -144,31 +172,25 @@
                     vm = this;
                     axios.get(vm.urlShirts).then(function (r) {
 
-                        if(r.data.shirt.length > 1) {
+                        if (r.data.length >= 1) {
 
-                            vm.items = r.data.shirt;
+                            vm.shirts = r.data;
 
-                        }else{
-                            vm.items = r.data;
-                        }
+                            for (let i = 0; i < vm.shirts.length; i++) {
 
-                        for (let i = 0; i < vm.items.length; i++) {
+                                vm.picShirt.push({
+                                    id: vm.shirts[i].id,
+                                    idUser: vm.shirts[i].idUser,
+                                    title: vm.shirts[i].title,
+                                    season: vm.shirts[i].season,
+                                    brand: vm.shirts[i].brand,
+                                    price: vm.shirts[i].price,
+                                    source: '_img/' + vm.shirts[i].id + '_' + vm.shirts[i].idUser + '-pic0'
+                                });
 
-                            let obj = {
-                                pos:i,
-                                id: vm.items[i].id,
-                                idUser: vm.items[i].idUser,
-                                title: vm.items[i].title,
-                                season:vm.items[i].season,
-                                brand: vm.items[i].brand,
-                                price:vm.items[i].price,
-                                source:'_img/'+ vm.items[i].id +'_' +vm.items[i].idUser +'-pic0'};
-
-                            vm.pics.push(obj);
+                            }
 
                         }
-
-                        console.log(r);
 
                     }).catch(function (erro) {
                         console.log(erro)
@@ -181,31 +203,26 @@
 
                     axios.get(vm.urlBalls).then(function (r) {
 
-                        if(r.data.ball.length > 1) {
+                        if(r.data.length >= 1) {
 
-                            vm.balls = r.data.ball;
-
-                        }else{
                             vm.balls = r.data;
-                        }
 
+                            for (let i =0; i < vm.balls.length; i++) {
 
-                        for (let i =0; i < vm.balls.length; i++) {
+                                vm.picBall.push({
 
-                            let obj = {
+                                    id: vm.balls[i].id,
+                                    idUser: vm.balls[i].idUser,
+                                    title: vm.balls[i].title,
+                                    model: vm.balls[i].model,
+                                    brand: vm.balls[i].brand,
+                                    price: vm.balls[i].price,
+                                    year:  vm.balls[i].year,
+                                    source:'_img/'+ vm.balls[i].id +'_' +vm.balls[i].idUser +'-pic0'
+                                });
 
-                                pos:i,
-                                id: vm.balls[i].id,
-                                idUser: vm.balls[i].idUser,
-                                title: vm.balls[i].title,
-                                model: vm.balls[i].model,
-                                brand: vm.balls[i].brand,
-                                price: vm.balls[i].price,
-                                year:  vm.balls[i].year,
-                                source:'_img/'+ vm.balls[i].id +'_' +vm.balls[i].idUser +'-pic0'
-                            };
+                            }
 
-                            vm.picBall.push(obj);
                         }
 
                         console.log(r);
@@ -214,8 +231,75 @@
 
                         console.log(erro)
                     });
+                },
 
+                getShorts: function(){
 
+                    vm = this;
+
+                    axios.get(vm.urlShorts).then(function (r) {
+
+                        if(r.data.length >= 1) {
+
+                            vm.shorts = r.data;
+
+                            for (let i = 0; i < vm.shorts.length; i++) {
+
+                                vm.picShort.push({
+                                    id: vm.shorts[i].id,
+                                    idUser: vm.shorts[i].idUser,
+                                    title: vm.shorts[i].title,
+                                    brand: vm.shorts[i].brand,
+                                    model: vm.shorts[i].model,
+                                    chooseGender: vm.shorts[i].chooseGender,
+                                    chooseSize: vm.shorts[i].chooseSize,
+                                    price: vm.shorts[i].price,
+                                    source: '_img/' + vm.shorts[i].id + '_' + vm.shorts[i].idUser + '-pic0'
+                                });
+                            }
+                        }
+                        console.log(r);
+
+                    }).catch(function (erro) {
+
+                        console.log(erro)
+                    });
+                },
+
+                getBoots: function(){
+
+                    vm = this;
+
+                    axios.get(vm.urlBoots).then(function (r) {
+
+                        if (r.data.length >= 1) {
+
+                            vm.boots = r.data;
+
+                            for(let i = 0; i < vm.boots.length; i++) {
+
+                                vm.picBoot.push({
+
+                                    id: vm.boots[i].id,
+                                    idUser: vm.boots[i].idUser,
+                                    title: vm.boots[i].title,
+                                    brand: vm.boots[i].brand,
+                                    model: vm.boots[i].model,
+                                    bootsGender: vm.boots[i].bootsGender,
+                                    bootSize: vm.boots[i].bootSize,
+                                    price: vm.boots[i].price,
+                                    source: '_img/' + vm.boots[i].id + '_' + vm.boots[i].idUser + '-pic0'
+
+                                });
+                            }
+                        }
+
+                        console.log(r);
+
+                    }).catch(function (erro) {
+
+                        console.log(erro)
+                    });
                 },
 
                 path: function (id) {

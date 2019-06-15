@@ -33,7 +33,7 @@
                      <td>{{s.occasion}}</td>
                      <td>{{s.price}}</td>
                      <td>{{s.gk}}</td>
-                     <td><button @click="showId(s.id)" class="btn btn-warning">Atualizar</button></td>
+                     <td><a :href=update(s.id)  class="btn btn-warning">Atualizar</a></td>
                      <td><button @click="askBeforeDelete(s.id)" class="btn btn-danger">Remover</button></td>
 
                  </tr>
@@ -60,26 +60,47 @@
 
             return{
 
-                url: 'http://127.0.0.1:8080/sport/api/shirts/all/',
-                urlDelete: 'http://127.0.0.1:8080/sport/api/shirts/',
-                shirts:[],
-                T:[]
+                url: 'http://127.0.0.1:8080/api/shirts/all/',
+                urlDelete: 'http://127.0.0.1:8080/api/shirts/',
+                shirts:[]    
             }
         },
 
         created: function(){
+          
+          this.get();
+         
+        },
+
+        methods:{
+
+          askBeforeDelete: function (id) {
+
+              if(confirm('Deseja realmente deletar?')){
+
+                  axios.delete(this.urlDelete + id).then(function (r) {
+                   
+                       shirts = r.data;
+                       console.log(r);
+                       
+                      
+                  }).catch(function (erro) {
+
+                      console.log(erro);
+                  });
+              }
+              this.get();
+          },
+
+          get: function(){
 
             vm = this;
+
             let id = vm.$session.get("id");
 
             axios.get(vm.url + id).then(function (r) {
 
-                   if (r.data.shirt.length > 1) {
-
-                       vm.shirts = r.data.shirt;
-
-                   }else{
-
+                   if (r.data.length >= 1) {
                        vm.shirts = r.data;
                    }
 
@@ -91,31 +112,14 @@
 
             });
 
+           },
 
-        },
+            update: function (id) {
 
-        methods:{
+              return 'update.html?id='+id+'&param=shirt';
 
-          askBeforeDelete: function (id) {
 
-              if(confirm('Deseja realmente deletar?')){
-
-                  axios.delete(this.urlDelete + id).then(function (r) {
-
-                      console.log(r);
-
-                  }).catch(function (erro) {
-
-                      console.log(erro);
-                  });
-              }
-
-          },
-
-            showId: function (id) {
-                alert('seu id é : '+ id);
             }
-
         }
     };
 </script>

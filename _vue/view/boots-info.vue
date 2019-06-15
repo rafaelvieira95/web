@@ -58,34 +58,16 @@
 
             return{
 
-                url: 'http://127.0.0.1:8080/sport/api/boots/all/',
-                urlDelete: 'http://127.0.0.1:8080/sport/api/boots/',
+                url: 'http://127.0.0.1:8080/api/boots/all/',
+                urlDelete: 'http://127.0.0.1:8080/api/boots/',
                 boots:[]
             }
         },
 
         created: function(){
 
-            vm = this;
-            let id = vm.$session.get("id");
+            this.get();
 
-            axios.get(vm.url + id).then(function (r) {
-
-                if (r.data.boot.length > 1) {
-
-                    vm.boots = r.data.boot;
-
-                }else{
-                    vm.boots = r.data;
-                }
-
-                console.log(r);
-
-            }).catch(function (erro) {
-
-                console.log(erro);
-
-            });
         },
 
         methods: {
@@ -103,6 +85,27 @@
                         console.log(erro);
                     });
                 }
+
+            },
+
+            get: function () {
+
+                vm = this;
+                let id = vm.$session.get("id");
+
+                axios.get(vm.url + id).then(function (r) {
+
+                    if (r.data.length >= 1) {
+                        vm.boots = r.data;
+                    }
+
+                    console.log(r);
+
+                }).catch(function (erro) {
+
+                    console.log(erro);
+
+                });
 
             }
         }

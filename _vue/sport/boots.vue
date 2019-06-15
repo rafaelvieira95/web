@@ -5,7 +5,7 @@
             <div class="row p-2 bg-light">
                 <div class="col-sm-auto">
                     <label class="badge badge-dark p-2">Título: </label>
-                    <input type="text" v-model="boot.title">
+                    <input type="text" v-model="title">
                 </div>
             </div>
 
@@ -19,32 +19,32 @@
             <div class="row p-2 bg-light">
                 <div class="col-md-12">
                     <label class="badge badge-dark p-2">Marca:</label>
-                    <input type="text" v-model="boot.brand" class="col-md-2">
+                    <input type="text" v-model="brand" class="col-md-2">
 
                     <label class="badge badge-dark p-2">Modelo da chuteira:</label>
-                    <input type="text" v-model="boot.model" class="col-md-2">
+                    <input type="text" v-model="model" class="col-md-2">
 
                     <label class="badge badge-dark p-2">Versão:</label>
-                    <input type="text" v-model="boot.version" class="col-md-2">
+                    <input type="text" v-model="version" class="col-md-2">
                 </div>
             </div>
 
             <div class="row p-2 bg-light">
                 <div class="col-md-12">
                     <label class="badge badge-dark p-2">Gênero:</label>
-                    <select v-model="boot.bootsGender" class="custom-select col-md-2">
+                    <select v-model="bootsGender" class="custom-select col-md-2">
                         <option v-for="g in gender">{{g.option}}</option>
                     </select>
                     <label class="badge badge-dark p-2">Tamanho:</label>
-                    <select v-model="boot.bootSize" class="custom-select col-md-1">
+                    <select v-model="bootSize" class="custom-select col-md-1">
                         <option v-for="s in size">{{s.number}}</option>
                     </select>
 
                     <label class="badge badge-dark p-2">Preço (R$):</label>
-                    <input type="number" v-model="boot.price" class="col-md-1">
+                    <input type="number" v-model="price" class="col-md-1">
 
                     <label class="">Campo:</label>
-                    <input type="checkbox" v-model="boot.field" class="custom-checkbox col-md-1">
+                    <input type="checkbox" v-model="field" class="custom-checkbox col-md-1">
                 </div>
             </div>
 
@@ -114,14 +114,14 @@
         name: 'boots',
         data(){
             return{
-                url:'http://127.0.0.1:8080/sport/api/boots',
+                url:'http://127.0.0.1:8080/api/boots',
                 log:'',
                 pic0: null,
                 pic1: null,
                 pic2: null,
                 pic3: null,
 
-                boot: {
+
                     id: null,
                     idUser: null,
                     title: null,
@@ -131,8 +131,7 @@
                     bootSize: null,
                     version: null,
                     price: null,
-                    field: false
-                },
+                    field: false,
 
                 gender: [
                     {option: "Unissex"},
@@ -155,7 +154,7 @@
         created:function(){
 
             if(this.$session.exists()){
-                this.boot.idUser = this.$session.get("id");
+                this.idUser = this.$session.get("id");
             }
         },
 
@@ -163,9 +162,9 @@
 
             validateForm: function () {
 
-                return !this.boot.title || !this.pic0 ||
-                    !this.pic1 || !this.boot.brand || !this.boot.model || !this.boot.version ||
-                    !this.boot.bootsGender || !this.boot.bootSize;
+                return !this.title || !this.pic0 ||
+                    !this.pic1 || !this.brand || !this.model || !this.version ||
+                    !this.bootsGender || !this.bootSize;
             },
 
             submit: function () {
@@ -187,15 +186,15 @@
                     formData.append('pic2',this.pic2);
                     formData.append('pic3',this.pic3);
 
-                    formData.append('boot.idUser',this.boot.idUser);
-                    formData.append('boot.title',this.boot.title);
-                    formData.append('boot.brand',this.boot.brand);
-                    formData.append('boot.model',this.boot.model);
-                    formData.append('boot.bootsGender',this.boot.bootsGender);
-                    formData.append('boot.version',this.boot.version);
-                    formData.append('boot.price',this.boot.price);
-                    formData.append('boot.bootSize',this.boot.bootSize);
-                    formData.append('boot.field',this.boot.field);
+                    formData.append('idUser',this.idUser);
+                    formData.append('title',this.title);
+                    formData.append('brand',this.brand);
+                    formData.append('model',this.model);
+                    formData.append('bootsGender',this.bootsGender);
+                    formData.append('version',this.version);
+                    formData.append('price',this.price);
+                    formData.append('bootSize',this.bootSize);
+                    formData.append('field',this.field);
 
                     axios.post(this.url, formData, {
 

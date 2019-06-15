@@ -6,7 +6,7 @@
 
                 <div class="col-sm-auto">
                     <label class="badge badge-dark p-2" >Título:</label>
-                    <input type="text" v-model="shirt.title">
+                    <input type="text" v-model="title">
 
                 </div>
 
@@ -25,12 +25,12 @@
                 <div class="col-md-12">
 
                     <label class="badge badge-dark p-2">Marca:</label>
-                        <select v-model="shirt.brand"  class="col-md-2 custom-select">
+                        <select v-model="brand"  class="col-md-2 custom-select">
                             <option v-for="b in brands">{{b.name}}</option>
                         </select>
 
                     <label class="badge badge-dark p-2" >Versão da camisa:</label>
-                    <input type="text" v-model="shirt.version" class="col-md-3">
+                    <input type="text" v-model="version" class="col-md-3">
 
                 </div>
 
@@ -43,13 +43,13 @@
 
                     <label class="badge badge-dark p-2">Time:</label>
 
-                    <select v-model="shirt.club" class="custom-select col-md-3">
+                    <select v-model="club" class="custom-select col-md-3">
 
                         <option v-for="team in teams">{{team.name}}</option>
                     </select>
 
                     <label class="badge badge-dark p-2">Temporada:</label>
-                    <input type="text" v-model="shirt.season" class="col-md-3">
+                    <input type="text" v-model="season" class="col-md-3">
 
                 </div>
 
@@ -61,15 +61,15 @@
 
                     <label class="badge badge-dark p-2">Tipo Ocasião:</label>
 
-                    <select v-model="shirt.occasion" class="custom-select col-md-3">
+                    <select v-model="occasion" class="custom-select col-md-3">
                         <option v-for="i in mood">{{i.game}}</option>
                     </select>
 
                     <label class="badge badge-dark p-2">Preço (R$):</label>
-                    <input type= "number" v-model="shirt.price" class="col-md-2">
+                    <input type= "number" v-model="price" class="col-md-2">
 
                     <label class="badge badge-dark p-2">Camisa de Goleiro:</label>
-                    <input type="checkbox" v-model="shirt.gk" class="custom-checkbox col-md-1">
+                    <input type="checkbox" v-model="gk" class="custom-checkbox col-md-1">
 
                 </div>
 
@@ -149,7 +149,7 @@
     data(){
         return{
 
-            url:'http://127.0.0.1:8080/sport/api/shirts',
+            url:'http://127.0.0.1:8080/api/shirts',
 
             log:'',
             pic0: null,
@@ -157,7 +157,7 @@
             pic2: null,
             pic3: null,
 
-            shirt: {
+
                 id: null,
                 idUser: null,
                 title: null,
@@ -167,8 +167,8 @@
                 season: null,
                 occasion: null,
                 price: null,
-                gk: false
-            },
+                gk: false,
+
 
             teams: [
                 {name: "Athletico Paranaense"},{name: "Atlético Mineiro"},{name: "Avaí"},
@@ -200,15 +200,15 @@
      created:function(){
 
         if(this.$session.exists()){
-            this.shirt.idUser = this.$session.get("id");
+            this.idUser = this.$session.get("id");
         }
      },
 
     methods: {
 
         validateForm: function() {
-            return !this.shirt.title || !this.shirt.price || !this.pic0 ||
-                   !this.pic1 || !this.shirt.brand || !this.shirt.version || !this.shirt.season;
+            return !this.title || !this.price || !this.pic0 ||
+                   !this.pic1 || !this.brand || !this.version || !this.season;
         },
 
         submit: function() {
@@ -227,15 +227,15 @@
                   formData.append('pic2',this.pic2);
                   formData.append('pic3',this.pic3);
 
-                  formData.append('shirt.idUser',this.shirt.idUser);
-                  formData.append('shirt.title',this.shirt.title);
-                  formData.append('shirt.brand',this.shirt.brand);
-                  formData.append('shirt.version',this.shirt.version);
-                  formData.append('shirt.club',this.shirt.club);
-                  formData.append('shirt.season',this.shirt.season);
-                  formData.append('shirt.price',this.shirt.price);
-                  formData.append('shirt.occasion',this.shirt.occasion);
-                  formData.append('shirt.gk',this.shirt.gk);
+                  formData.append('idUser',this.idUser);
+                  formData.append('title',this.title);
+                  formData.append('brand',this.brand);
+                  formData.append('version',this.version);
+                  formData.append('club',this.club);
+                  formData.append('season',this.season);
+                  formData.append('price',this.price);
+                  formData.append('occasion',this.occasion);
+                  formData.append('gk',this.gk);
 
 
                axios.post(this.url,formData, {
