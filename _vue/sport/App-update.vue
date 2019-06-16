@@ -2,7 +2,10 @@
 
    <div id="app" class="container-fluid">
 
-   <shirt></shirt>
+      <shirt v-if="isSelected === 'shirt'"></shirt>
+      <balls v-if="isSelected === 'ball'"></balls>
+      <boots v-if="isSelected === 'boot'"></boots>
+      <shorts v-if="isSelected === 'short'"></shorts>
 
    </div>
 
@@ -12,11 +15,14 @@
 
 
     let shirt = httpVueLoader('_vue/sport/shirts-update.vue');
+    let balls = httpVueLoader('_vue/sport/balls-update.vue');
+    let boots = httpVueLoader('_vue/sport/boots-update.vue');
+    let shorts = httpVueLoader('_vue/sport/shorts-update.vue');
 
       module.exports = {
 
           name: 'app-update',
-          components: {shirt},
+          components: {shirt,balls,boots,shorts},
 
         data(){
             return{

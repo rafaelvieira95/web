@@ -118,7 +118,7 @@
 
             <div class="col-md-1">
                 <p class="badge badge-info">opcional</p>
-                <img id="img0" :src=pathPic3 width="110px" height="100px"><br><br>
+                <img :src=pathPic3 width="110px" height="100px"><br><br>
 
                 <label v-if="pic3 === null" class="btn btn-primary">Selecione
                     <input type="file" id="pic3" ref="pic3" name="pic3" @change="handleFileUpload('3')" hidden>
@@ -208,6 +208,7 @@
             let currentUrl = window.location.href;
             vm.idProduct = new URL(currentUrl).searchParams.get("id");
             vm.idUser =  vm.$session.get("id");
+            vm.loadImages();
 
                 axios.get(vm.url + vm.idProduct).then(function (r) {
 
@@ -225,7 +226,7 @@
                     console.log(erro);
                 });
 
-            vm.loadImages();
+
 
         },
 
@@ -283,47 +284,48 @@
 
             loadImages: function () {
 
-                img = new Image();
+                let img = new Image();
 
                 img.src = '_img/'+this.idProduct + '_' + this.idUser + '-pic0';
 
-                this.pic0 = '_img/'+this.idProduct + '_' + this.idUser + '-pic0';
+                this.pathPic0 = '_img/'+this.idProduct + '_' + this.idUser + '-pic0';
 
                 img.onerror = function () {
 
-                    this.pic0 = '_img/no-pic_standard.png';
+                    this.pathPic0 = '_img/no-pic_standard.png';
 
                 };
 
-                img1 = new Image();
+                let img1 = new Image();
 
                 img1.src = '_img/'+this.idProduct + '_' + this.idUser + '-pic1';
-                this.pic1 = '_img/'+this.idProduct + '_' + this.idUser + '-pic1';
+
+                this.pathPic1 = '_img/'+this.idProduct + '_' + this.idUser + '-pic1';
 
                 img1.onerror = function () {
 
-                    this.pic1 = '_img/no-pic_standard.png';
+                    this.pathPic1 = '_img/no-pic_standard.png';
 
                 };
 
-                img2 = new Image();
+                let img2 = new Image();
 
                 img2.src = '_img/'+this.idProduct+ '_' + this.idUser + '-pic2';
-                this.pic2 = '_img/'+this.idProduct+ '_' + this.idUser + '-pic2';
+                this.pathPic2 = '_img/'+this.idProduct+ '_' + this.idUser + '-pic2';
 
                 img2.onerror = function () {
 
-                    this.pic2 = '_img/no-pic_standard.png';
+                    this.pathPic2 = '_img/no-pic_standard.png';
                 };
 
-                img3 = new Image();
+                let img3 = new Image();
 
                 img3.src = '_img/'+this.idProduct + '_' + this.idUser + '-pic3';
-                this.pic3 = '_img/'+this.idProduct + '_' + this.idUser + '-pic3';
+                this.pathPic3 = '_img/'+this.idProduct + '_' + this.idUser + '-pic3';
 
                 img3.onerror = function () {
 
-                    this.pic3 = '_img/no-pic_standard.png';
+                    this.pathPic3 = '_img/no-pic_standard.png';
 
                 };
 

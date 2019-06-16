@@ -103,6 +103,12 @@
 
                 });
 
+            },
+            update: function (id) {
+
+                return 'update.html?id='+id+'&param=short';
+
+
             }
         }
 

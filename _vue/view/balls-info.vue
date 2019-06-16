@@ -29,7 +29,7 @@
                     <td>{{s.year}}</td>
                     <td>{{s.price}}</td>
                     <td>{{s.field}}</td>
-                    <td><button class="btn btn-warning">Atualizar</button></td>
+                    <td><a :href="update(s.id)" class="btn btn-warning">Atualizar</a></td>
                     <td><button @click="askBeforeDelete(s.id)" class="btn btn-danger">Remover</button></td>
 
                 </tr>
@@ -101,6 +101,13 @@
                     console.log(erro);
 
                 });
+
+            },
+
+            update: function (id) {
+
+                return 'update.html?id=' + id + '&param=ball';
+
 
             }
         }
