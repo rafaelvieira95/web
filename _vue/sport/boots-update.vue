@@ -191,8 +191,7 @@
 
             validateForm: function () {
 
-                return !this.title || !this.pic0 ||
-                    !this.pic1 || !this.brand || !this.model || !this.version ||
+                return !this.title || !this.brand || !this.model || !this.version ||
                     !this.bootsGender || !this.bootSize;
             },
 
@@ -242,53 +241,49 @@
 
             loadImages: function () {
 
+                vm = this;
                 let img = new Image();
 
-                img.src = '_img/' + this.idProduct + '_' + this.idUser + '-pic0';
+                img.src = '_img/' + vm.idProduct + '_' + vm.idUser + '-pic0';
 
-                this.pathPic0 = img.src;
+                vm.pathPic0 = img.src;
 
                 img.onerror = function () {
 
-                    this.pathPic0 = '_img/no-pic_standard.png';
+                    vm.pathPic0 = '_img/no-pic_standard.png';
 
                 };
 
-                 img = new Image();
+                img = new Image();
 
-                img.src = '_img/' + this.idProduct + '_' + this.idUser + '-pic1';
+                img.src = '_img/' + vm.idProduct + '_' + vm.idUser + '-pic1';
 
-                this.pathPic1 = img.src;
+                vm.pathPic1 = img.src;
 
-                img.onerror = function () {
+                vm.onerror = function () {
 
-                    this.pathPic1 = '_img/no-pic_standard.png';
-
-                };
-
-                 img = new Image();
-
-                img.src = '_img/' + this.idProduct + '_' + this.idUser + '-pic2';
-
-                this.pathPic2 = img.src;
-
-                img.onerror = function () {
-                    this.pathPic2 = '_img/no-pic_standard.png';
+                    vm.pathPic1 = '_img/no-pic_standard.png';
 
                 };
 
+                img = new Image();
 
-
-                 img = new Image();
-
-                img.src = '_img/' + this.idProduct + '_' + this.idUser + '-pic3';
-
-                this.pathPic3 = img.src;
+                img.src = '_img/' + vm.idProduct + '_' + vm.idUser + '-pic2';
+                vm.pathPic2 = img.src;
 
                 img.onerror = function () {
 
+                    vm.pathPic2 = '_img/no-pic_standard.png';
+                };
 
-                    this.pathPic3 = '_img/no-pic_standard.png';
+                img = new Image();
+
+                img.src = '_img/' + vm.idProduct + '_' + vm.idUser + '-pic3';
+                vm.pathPic3 = img.src;
+
+                img.onerror = function () {
+
+                    vm.pathPic3 = '_img/no-pic_standard.png';
 
                 };
 

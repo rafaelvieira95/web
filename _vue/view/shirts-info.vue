@@ -34,7 +34,7 @@
                      <td>{{s.price}}</td>
                      <td>{{s.gk}}</td>
                      <td><a :href=update(s.id)  class="btn btn-warning">Atualizar</a></td>
-                     <td><button @click="askBeforeDelete(s.id)" class="btn btn-danger">Remover</button></td>
+                     <td><button @click="askBeforeDelete(s)" class="btn btn-danger">Remover</button></td>
 
                  </tr>
 
@@ -67,50 +67,56 @@
         },
 
         created: function(){
-          
-          this.get();
+          vm = this;
+          vm.get();
          
         },
 
         methods:{
 
-          askBeforeDelete: function (id) {
+          askBeforeDelete: function (s) {
 
               if(confirm('Deseja realmente deletar?')){
 
-                  axios.delete(this.urlDelete + id).then(function (r) {
-                   
-                       shirts = r.data;
-                       console.log(r);
-                       
-                      
-                  }).catch(function (erro) {
+                  this.deleteItem(s);
 
+                 axios.delete(this.urlDelete + s.id).then(function (r) {
+                     console.log(r);
+                  }).catch(function (erro) {
                       console.log(erro);
-                  });
+                 });
               }
-              this.get();
           },
+
+          deleteItem: function(el){
+
+              if(el != null){
+
+                  let index = this.shirts.indexOf(el);
+
+                  if(index !== -1) {
+                      this.shirts.splice(index, 1);
+                  }
+              }
+
+          } ,
 
           get: function(){
 
-            vm = this;
-
+              vm = this;
             let id = vm.$session.get("id");
 
             axios.get(vm.url + id).then(function (r) {
 
-                   if (r.data.length >= 1) {
-                       vm.shirts = r.data;
-                   }
-
-                  console.log(r);
+                vm.shirts = r.data;
+                console.log(r);
 
             }).catch(function (erro) {
 
                 console.log(erro);
 
             });
+
 
            },
 

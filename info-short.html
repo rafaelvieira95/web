@@ -2,14 +2,13 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title> 1000Sport:: Camisa do Corinthians </title>
+    <title> 1000Sport:: Short </title>
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
     <script src="_js/jquery.min.js"></script>
     <script src="_js/popper.min.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
     <script src="_js/vue.js"></script>
-    <!--link rel="stylesheet" href="_css/style.css"-->
     <link rel="stylesheet" href="_css/product.css">
     <script src="_js/axios.min.js"></script>
     <script src="_js/vue-session.js"></script>
@@ -20,78 +19,75 @@
 
 <div id="app" class="container-fluid">
 
-<div class="row">
+    <div class="row">
 
-    <div class="col-md-1 bg-white"></div>
+        <div class="col-md-1 bg-white"></div>
 
-    <nav id="nav" class="navbar col-md-11 col-5 navbar-nav navbar-expand-sm bg-white navbar-dark">
-        <ul class="row nav navbar-nav font-weight-bold">
-            <a  href="index.html"><img class="navbar-brand figure-img" width="200px" height="100px" src="_vue/sport/pictures/logo_temp.png"></a>
-            <li class="nav-item" v-for="menu in options"><a class="nav-link" href="#" style="color:#005cbf">{{menu.item}}</a> </li>
-        </ul>
+        <nav id="nav" class="navbar col-md-11 col-5 navbar-nav navbar-expand-sm bg-white navbar-dark">
+            <ul class="row nav navbar-nav font-weight-bold">
+                <a  href="index.html"><img class="navbar-brand figure-img" width="200px" height="100px" src="_vue/sport/pictures/logo_temp.png"></a>
+                <li class="nav-item" v-for="menu in options"><a class="nav-link" href="#" style="color:#005cbf">{{menu.item}}</a> </li>
+            </ul>
 
-    </nav>
-</div>
+        </nav>
+    </div>
 
-<hr>
+    <hr>
 
- <div class="row">
+    <div class="row">
 
-    <p class="col-md-3"></p>
+        <p class="col-md-3"></p>
 
-     <input class="text-md-left col-md-3" type="text" placeholder="Digite um item para pesquisar" required autofocus>
-     &nbsp;&nbsp;
-     <button class="btn btn-primary btn-group-md col-md-2 text-md-center"> Pesquisar </button>
+        <input class="text-md-left col-md-3" type="text" placeholder="Digite um item para pesquisar" required autofocus>
+        &nbsp;&nbsp;
+        <button class="btn btn-primary btn-group-md col-md-2 text-md-center"> Pesquisar </button>
 
-     <a v-if="logout === true" class="alert-link align-baseline text-md-left col-md-1" href="register.html">Cadastrar</a>
+        <a v-if="logout === true" class="alert-link align-baseline text-md-left col-md-1" href="register.html">Cadastrar</a>
 
-     <a v-if="login === true" class="alert-link align-baseline text-md-left col-md-2" href="login.html">Fazer Login</a>
-     <a v-if="logout" @click="logoutSession" class="alert-link align-baseline text-md-left col-md-1" href="index.html" style=color:red;>Sair</a>
+        <a v-if="login === true" class="alert-link align-baseline text-md-left col-md-2" href="login.html">Fazer Login</a>
+        <a v-if="logout" @click="logoutSession" class="alert-link align-baseline text-md-left col-md-1" href="index.html" style=color:red;>Sair</a>
 
-  </div>
+    </div>
 
 
     <div class="row bg-transparent">
 
-   <section id="info" class="col-md-2">
+        <section id="info" class="col-md-2">
 
-     <ul id="foto" >
+            <ul id="foto" >
 
-        <li v-for="it in items"> <img @click="changePhoto(it.id,it.source)" :src=it.source width="128px" height="150px"> </li>
+                <li v-for="it in items"> <img @click="changePhoto(it.id)" :src=it.source width="128px" height="150px"> </li>
 
-     </ul>
+            </ul>
 
-   </section>
-
-
-<aside class="col-md-5">
-    <ul id="foto-ampliada">
-        <li> <img :src=photo  width="400px" height=420px"></li>
-    </ul>
-</aside>
-
-       <aside id="dados" class="col-md-5 font-weight-bold">
-
-           <!--h2 class="jumbotron-fluid">Descrição</h2-->
-
-           <label class="badge badge-info"> Título: </label> <strong> {{dataInfo.title}}</strong> <br>
-           <label class="badge badge-info"> Marca: </label> <strong> {{dataInfo.brand}} </strong><br>
-           <label class="badge badge-info"> Versão: </label> <strong> {{dataInfo.version}}</strong> <br>
-           <label class="badge badge-info"> Clube: </label> <strong> {{dataInfo.club}} </strong><br>
-           <label class="badge badge-info"> Temporada: </label> <strong>{{dataInfo.season}}</strong><br>
-           <label class="badge badge-info"> Ocasião: </label> <strong>{{dataInfo.occasion}}</strong><br>
-           <label class="badge badge-info"> Valor: R$ </label> <strong> {{dataInfo.price}} </strong> <br>
-
-           <label class="badge badge-warning col-md-2">quantidade:</label>
-           <input class="col-md-2" type="number" min="1" max="50"><br>
-           <button class="btn btn-primary">Comprar</button>
+        </section>
 
 
-       </aside>
+        <aside class="col-md-5">
+            <ul id="foto-ampliada">
+                <li> <img :src=photo  width="400px" height=420px"></li>
+            </ul>
+        </aside>
 
-         </div>
+        <aside id="dados" class="col-md-5 font-weight-bold">
 
-     </div>
+            <label class="badge badge-info"> Título: </label> <strong> {{dataInfo.title}}</strong> <br>
+            <label class="badge badge-info"> Marca: </label> <strong> {{dataInfo.brand}} </strong><br>
+            <label class="badge badge-info"> Modelo: </label> <strong> {{dataInfo.model}}</strong> <br>
+            <label class="badge badge-info"> Gênero: </label> <strong> {{dataInfo.chooseGender}} </strong><br>
+            <label class="badge badge-info"> Tamanho: </label> <strong> {{dataInfo.chooseSize}} </strong><br>
+            <label class="badge badge-info"> Valor: R$ </label> <strong> {{dataInfo.price}} </strong> <br>
+
+            <label class="badge badge-warning col-md-2">quantidade:</label>
+            <input class="col-md-2" type="number" min="1" max="50"><br>
+            <button class="btn btn-primary">Comprar</button>
+
+
+        </aside>
+
+    </div>
+
+</div>
 </div>
 
 <script>
@@ -102,7 +98,7 @@
 
         data:{
 
-            url:'http://127.0.0.1:8080/api/shirts/',
+            url:'http://127.0.0.1:8080/api/shorts/',
             items:[],
             dataInfo: {},
             id: null,
@@ -156,9 +152,9 @@
 
                     vm.items[2].source = '_img/no-pic_standard.png';
 
-;                };
+                    ;                };
 
-                 img = new Image();
+                img = new Image();
 
                 img.src = '_img/'+id+'_'+idUser+'-pic3';
 
@@ -177,7 +173,7 @@
 
         methods:{
 
-            changePhoto(pos,source){
+            changePhoto(pos){
 
                 this.photo = this.items[pos].source;
 

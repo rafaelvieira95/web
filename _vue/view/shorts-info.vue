@@ -30,7 +30,7 @@
                     <td>{{s.chooseGender}}</td>
                     <td>{{s.price}}</td>
                     <td><button class="btn btn-warning">Atualizar</button></td>
-                    <td><button @click="askBeforeDelete(s.id)" class="btn btn-danger">Remover</button></td>
+                    <td><button @click="askBeforeDelete(s)" class="btn btn-danger">Remover</button></td>
 
                 </tr>
 
@@ -62,24 +62,37 @@
 
         created: function(){
 
-        this.get();
+           vm = this;
+           vm.get();
 
         },
 
         methods: {
 
-            askBeforeDelete: function (id) {
+            askBeforeDelete: function (s) {
 
                 if (confirm('Deseja realmente deletar?')) {
 
-                    axios.delete(this.urlDelete + id).then(function (r) {
+                    this.deleteItem(s);
 
+                    axios.delete(this.urlDelete + s.id).then(function (r) {
                         console.log(r);
-
                     }).catch(function (erro) {
-
                         console.log(erro);
                     });
+                }
+
+            },
+
+            deleteItem: function(el){
+
+                if(el != null){
+
+                    let index = this.shorts.indexOf(el);
+
+                    if(index !== -1) {
+                        this.shorts.splice(index, 1);
+                    }
                 }
 
             },

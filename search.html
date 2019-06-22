@@ -8,72 +8,347 @@
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
     <script src="_js/jquery.min.js"></script>
     <script src="_js/popper.min.js"></script>
+    <link rel="stylesheet" href="_css/style.css">
     <script src="bootstrap/js/bootstrap.min.js"></script>
     <script src="_js/vue.js"></script>
+    <script src="_js/axios.min.js"></script>
+    <script src="_js/httpVueLoader.js"></script>
+    <script src="_js/vue-session.js"></script>
+
+
+    <style>
+
+        ul#foto-camisa{
+            list-style: none;
+        }
+
+        ul#foto-camisa li{
+
+            float: left;
+            width: 220px;
+            height: 310px;
+            margin: 20px;
+            transition: all .4s ease-in;
+        }
+
+        ul#foto-camisa li:hover{
+
+            transform: scale(1.15);
+            transition: all .9s ease-in;
+
+        }
+
+    </style>
 
 </head>
 
 <body>
 
-<div class="container-fluid">
+<div id="menu"  class="container-fluid">
 
     <div class="row">
-        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"></div>
-        <nav class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+        <div class="col-md-2"></div>
+        <nav class="col-md-10">
 
-            <input class="col-lg-6 col-md-6 col-sm-5 col-xs-6 text-left" type="text" placeholder="Digite um item para pesquisar" required autofocus style=top:10px;>
+            <input class="col-md-6 text-left" type="text"  v-model="query" placeholder="Digite um item para pesquisar" required autofocus style=top:10px;>
 
-            <button class="btn btn-primary col-lg-2 col-md-2 col-sm-3 col-xs-2" style=top:10px;>Pesquisar</button>
+            <button class="btn btn-primary col-md-2" @click="searchProducts" style=top:10px;>Pesquisar</button>
 
         </nav>
 
     </div>
 
     <div class="row">
-        <hr class="border-bottom border-dark col-lg-12 col-md-12 col-sm-12 col-xs-12" style=top:15px;>
+        <hr class="border-bottom border-dark col-md-12" style=top:15px;>
     </div>
-</div>
 
 
-<div  id="sec" class="container-fluid p-2">
+
+<div  class="container-fluid p-2">
     <div class="row">
-        <div class="col-lg-8 col-md-7 col-sm-7 col-xs-8"></div>
-        <label class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-lg-right text-md-right text-sm-right text-xs-right" for="sel"> <strong>Listar:</strong></label>
-        <select class="col-lg-2 col-md-3 col-sm-3 col-xs-2 custom-select" id="sel">
+        <div class="col-md-7"></div>
+        <label class="col-md-2 text-lg-right text-md-right text-sm-right text-xs-right" for="sel"> <strong>Listar:</strong></label>
+        <select class="col-md-3 custom-select" id="sel">
             <option v-for="opt in categories"> {{opt.choice}}</option>
         </select>
         <div class="col-md-1"></div>
     </div>
+ </div>
+
+    <section>
+
+        <ul id="foto-camisa">
+
+            <li v-for="i in picShirt">
+                <a class="card-link" :href=path(i.id)>
+                    <img @mouseover='mouseOver(i,i.id,i.idUser)' @mouseout='mouseOut(i,i.id,i.idUser)' :src=i.source width="200px" height="220px">
+                    <span>
+                    <p><strong style=color:darkorange;>{{i.title}} </strong></p>
+                <p class="text-justify font-italic"> <strong> Temporada {{i.season}} à vista R$ {{i.price}} em até 10 x {{i.price / 10}}  </strong> </p>
+                </span>
+                </a>
+            </li>
+
+            <li v-for="i in picBall">
+                <a class="card-link" href="#">
+                    <img @mouseover='mouseOver(i,i.id,i.idUser)' @mouseout='mouseOut(i,i.id,i.idUser)' :src=i.source width="200px" height="220px">
+                    <span>
+                    <p><strong style=color:darkorange;>{{i.title}} </strong></p>
+                <p class="text-justify font-italic"> <strong> Marca {{i.brand}} à vista R$ {{i.price}} em até 10 x {{i.price / 10}}  </strong> </p>
+                </span>
+                </a>
+            </li>
+
+            <li v-for="i in picShort">
+                <a class="card-link" href="#">
+                    <img @mouseover='mouseOver(i,i.id,i.idUser)' @mouseout='mouseOut(i,i.id,i.idUser)' :src=i.source width="200px" height="220px">
+                    <span>
+                    <p><strong style=color:darkorange;>{{i.title}} </strong></p>
+                <p class="text-justify font-italic"> <strong> Marca {{i.brand}} à vista R$ {{i.price}} em até 10 x {{i.price / 10}}  </strong> </p>
+                </span>
+                </a>
+            </li>
+
+            <li v-for="i in picBoot">
+                <a class="card-link" href="#">
+                    <img @mouseover='mouseOver(i,i.id,i.idUser)' @mouseout='mouseOut(i,i.id,i.idUser)' :src=i.source width="200px" height="220px">
+                    <span>
+                    <p><strong style=color:darkorange;>{{i.title}} </strong></p>
+                <p class="text-justify font-italic"> <strong> Marca {{i.brand}} à vista R$ {{i.price}} em até 10 x {{i.price / 10}}  </strong> </p>
+                </span>
+                </a>
+            </li>
+
+        </ul>
+
+    </section>
+
+
 </div>
 
-<section class="container-fluid bg-secondary">
-
-    <div class="row">
-        <div class="col-md-1"></div>
-        <img class="col-md-10 img-fluid img-thumbnail" alt="Futebol" src="_img/futebol.jpg">
-        <div class="col-md-1"></div>
-    </div>
-</section>
 
 <script>
-    var sec = new Vue({
 
-        el:"#sec",
+    let menu = new Vue({
+
+        el:"#menu",
         data:{
 
+            query: null,
+            source: '',
+            urlShirts: 'http://127.0.0.1:8080/api/shirts/search?name=',
+            urlBalls: 'http://127.0.0.1:8080/api/balls/search?name=',
+            urlShorts: 'http://127.0.0.1:8080/api/shorts/search?name=',
+            urlBoots: 'http://127.0.0.1:8080/api/boots/search?name=',
+
+            picShirt:[],
+            picBall: [],
+            picShort:[],
+            picBoot:[],
+            shirts: [],
+            balls: [],
+            shorts:[],
+            boots:[],
+
             categories:[
+
                 {choice: "Menor preço"},
                 {choice: "Maior preço"},
                 {choice: "Recentes"},
                 {choice: "Antigos"},
                 {choice: "Mais vendidos"}
             ]
+        },
+
+        created: function () {
+
+            vm = this;
+            let currentUrl = window.location.href;
+            let newUrl = new URL(currentUrl);
+            vm.query = newUrl.searchParams.get("query");
+
+            vm.getShirts(vm.query);
+            vm.getShorts(vm.query);
+            vm.getBalls(vm.query);
+            vm.getBoots(vm.query);
+
+        },
+
+        methods: {
+
+            mouseOver: function (array,id,idUser) {
+
+                array.source ='_img/' + id + '_' + idUser + '-pic1';
+            },
+
+            mouseOut: function(array,id,idUser){
+
+                array.source ='_img/' + id + '_' + idUser + '-pic0';
+            },
+
+            searchProducts: function(){
+
+                   this.picShirt =  this.getShirts(this.query);
+                   this.picBoot =   this.getBoots(this.query);
+                   this.picBall =   this.getBalls(this.query);
+                   this.picShort =  this.getShorts(this.query);
+            },
+
+            getShirts: function (queryParam) {
+
+                vm = this;
+                axios.get(vm.urlShirts + queryParam).then(function (r) {
+
+                    if (r.data.length >= 1) {
+
+                        vm.shirts = r.data;
+
+                        for (let i = 0; i < vm.shirts.length; i++) {
+
+                            vm.picShirt.push({
+                                id: vm.shirts[i].id,
+                                idUser: vm.shirts[i].idUser,
+                                title: vm.shirts[i].title,
+                                season: vm.shirts[i].season,
+                                brand: vm.shirts[i].brand,
+                                price: vm.shirts[i].price,
+                                source: '_img/' + vm.shirts[i].id + '_' + vm.shirts[i].idUser + '-pic0'
+                            });
+
+                        }
+
+                    }
+
+                    return vm.picShirt;
+
+                }).catch(function (erro) {
+                    console.log(erro)
+                });
+
+                return [];
+            },
+
+            getBalls: function(queryParam){
+
+                vm = this;
+
+                axios.get(vm.urlBalls + queryParam).then(function (r) {
+
+                    if(r.data.length >= 1) {
+
+                        vm.balls = r.data;
+
+                        for (let i =0; i < vm.balls.length; i++) {
+
+                            vm.picBall.push({
+
+                                id: vm.balls[i].id,
+                                idUser: vm.balls[i].idUser,
+                                title: vm.balls[i].title,
+                                model: vm.balls[i].model,
+                                brand: vm.balls[i].brand,
+                                price: vm.balls[i].price,
+                                year:  vm.balls[i].year,
+                                source:'_img/'+ vm.balls[i].id +'_' +vm.balls[i].idUser +'-pic0'
+                            });
+
+                        }
+
+                    }
+
+                    console.log(r);
+                    return vm.picBall;
+
+                }).catch(function (erro) {
+
+                    console.log(erro)
+                });
+
+                return [];
+
+            },
+
+            getShorts: function(queryParam){
+
+                vm = this;
+
+                axios.get(vm.urlShorts + queryParam).then(function (r) {
+
+                    if(r.data.length >= 1) {
+
+                        vm.shorts = r.data;
+
+                        for (let i = 0; i < vm.shorts.length; i++) {
+
+                            vm.picShort.push({
+                                id: vm.shorts[i].id,
+                                idUser: vm.shorts[i].idUser,
+                                title: vm.shorts[i].title,
+                                brand: vm.shorts[i].brand,
+                                model: vm.shorts[i].model,
+                                chooseGender: vm.shorts[i].chooseGender,
+                                chooseSize: vm.shorts[i].chooseSize,
+                                price: vm.shorts[i].price,
+                                source: '_img/' + vm.shorts[i].id + '_' + vm.shorts[i].idUser + '-pic0'
+                            });
+                        }
+                    }
+                    console.log(r);
+
+                    return vm.picShort;
+
+                }).catch(function (erro) {
+
+                    console.log(erro)
+                });
+
+                return [];
+            },
+
+            getBoots: function(queryParam){
+
+                vm = this;
+
+                axios.get(vm.urlBoots + queryParam).then(function (r) {
+
+                    if (r.data.length >= 1) {
+
+                        vm.boots = r.data;
+
+                        for(let i = 0; i < vm.boots.length; i++) {
+
+                            vm.picBoot.push({
+
+                                id: vm.boots[i].id,
+                                idUser: vm.boots[i].idUser,
+                                title: vm.boots[i].title,
+                                brand: vm.boots[i].brand,
+                                model: vm.boots[i].model,
+                                bootsGender: vm.boots[i].bootsGender,
+                                bootSize: vm.boots[i].bootSize,
+                                price: vm.boots[i].price,
+                                source: '_img/' + vm.boots[i].id + '_' + vm.boots[i].idUser + '-pic0'
+
+                            });
+                        }
+                    }
+
+                    console.log(r);
+                     return vm.picBoot;
+
+                }).catch(function (erro) {
+
+                    console.log(erro)
+                });
+                return [];
+            },
+            path: function (id) {
+                return "info.html?id="+id;
+            }
         }
 
     });
 </script>
-
-
 
 </body>
 

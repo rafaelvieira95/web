@@ -72,7 +72,7 @@
 
         <div id="opt" class="row">
          <div class="col-md-4 col-sm-4"></div>
-                <button class="btn btn-warning">Atualizar dados</button>
+                <a class="btn btn-warning" href="../sport/user-update.html">Atualizar dados</a>
             <div class="col-md-1 col-sm-1"></div>
                 <button class="btn btn-danger">Apagar conta </button>
             <div class="col-md-4 col-sm-4"></div>

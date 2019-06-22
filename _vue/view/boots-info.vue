@@ -35,7 +35,7 @@
                     <td>{{s.price}}</td>
                     <td>{{s.field}}</td>
                     <td><a :href="update(s.id)" class="btn btn-warning">Atualizar</a></td>
-                    <td><button @click="askBeforeDelete(s.id)" class="btn btn-danger">Remover</button></td>
+                    <td><button @click="askBeforeDelete(s)" class="btn btn-danger">Remover</button></td>
 
                 </tr>
 
@@ -66,24 +66,37 @@
 
         created: function(){
 
-            this.get();
+            vm = this;
+            vm.get();
 
         },
 
         methods: {
 
-            askBeforeDelete: function (id) {
+            askBeforeDelete: function (b) {
 
                 if (confirm('Deseja realmente deletar?')) {
 
-                    axios.delete(this.urlDelete + id).then(function (r) {
+                    this.deleteItem(b);
 
+                    axios.delete(this.urlDelete + b.id).then(function (r) {
                         console.log(r);
-
                     }).catch(function (erro) {
-
                         console.log(erro);
                     });
+                }
+
+            },
+
+            deleteItem: function(el){
+
+                if(el != null){
+
+                    let index = this.boots.indexOf(el);
+
+                    if(index !== -1) {
+                        this.boots.splice(index, 1);
+                    }
                 }
 
             },

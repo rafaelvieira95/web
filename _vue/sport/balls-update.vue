@@ -173,8 +173,7 @@
 
             validateForm: function () {
 
-                return !this.title || !this.brand || !this.pic0 ||
-                    !this.pic1 || !this.price || !this.model || !this.year || !this.field;
+                return !this.title || !this.brand || !this.price || !this.model || !this.year || !this.field;
             },
 
             submit: function () {
@@ -200,7 +199,7 @@
                     formData.append('title',this.title);
                     formData.append('brand',this.brand);
                     formData.append('model',this.model);
-                    formData.append('year',this.year);
+                    formData.append('year', this.year);
                     formData.append('price',this.price);
                     formData.append('field',this.field);
 
@@ -221,48 +220,49 @@
 
             loadImages: function () {
 
+                vm = this;
                 let img = new Image();
 
-                img.src = '_img/' + this.idProduct + '_' + this.idUser + '-pic0';
+                img.src = '_img/' + vm.idProduct + '_' + vm.idUser + '-pic0';
 
-                this.pathPic0 = '_img/' + this.idProduct + '_' + this.idUser + '-pic0';
+                vm.pathPic0 = img.src;
 
                 img.onerror = function () {
 
-                    this.pathPic0 = '_img/no-pic_standard.png';
+                    vm.pathPic0 = '_img/no-pic_standard.png';
 
                 };
 
-               let img1 = new Image();
+                img = new Image();
 
-                img1.src = '_img/' + this.idProduct + '_' + this.idUser + '-pic1';
+                img.src = '_img/' + vm.idProduct + '_' + vm.idUser + '-pic1';
 
-                this.pathPic1 = '_img/' + this.idProduct + '_' + this.idUser + '-pic1';
+                vm.pathPic1 = img.src;
 
-                img1.onerror = function () {
+                vm.onerror = function () {
 
-                    this.pathPic1 = '_img/no-pic_standard.png';
+                    vm.pathPic1 = '_img/no-pic_standard.png';
 
                 };
 
-                let img2 = new Image();
+                img = new Image();
 
-                img2.src = '_img/' + this.idProduct + '_' + this.idUser + '-pic2';
-                this.pathPic2 = '_img/' + this.idProduct + '_' + this.idUser + '-pic2';
+                img.src = '_img/' + vm.idProduct + '_' + vm.idUser + '-pic2';
+                vm.pathPic2 = img.src;
 
-                img2.onerror = function () {
+                img.onerror = function () {
 
-                    this.pathPic2 = '_img/no-pic_standard.png';
+                    vm.pathPic2 = '_img/no-pic_standard.png';
                 };
 
-                let img3 = new Image();
+                img = new Image();
 
-                img3.src = '_img/' + this.idProduct + '_' + this.idUser + '-pic3';
-                this.pathPic3 = '_img/' + this.idProduct + '_' + this.idUser + '-pic3';
+                img.src = '_img/' + vm.idProduct + '_' + vm.idUser + '-pic3';
+                vm.pathPic3 = img.src;
 
-                img3.onerror = function () {
+                img.onerror = function () {
 
-                    this.pathPic3 = '_img/no-pic_standard.png';
+                    vm.pathPic3 = '_img/no-pic_standard.png';
 
                 };
 

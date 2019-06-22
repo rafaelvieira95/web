@@ -146,7 +146,7 @@
             validateForm: function () {
 
                 return !this.title || !this.brand || !this.pic0 ||
-                    !this.pic1 || !this.price || !this.model || !this.year || !this.field;
+                    !this.pic1 || !this.price || !this.model || !this.year;
             },
 
             submit:function () {

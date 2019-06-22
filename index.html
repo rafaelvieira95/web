@@ -40,9 +40,9 @@
     <div class="row">
         <p class="col-md-2 col-1"></p>
 
-     <input class="text-md-left col-md-4 col-sm-5" type="text" placeholder="Digite um item para pesquisar" required autofocus>
+     <input class="text-md-left col-md-4 col-sm-5" type="text"  v-model="query" placeholder="Digite um item para pesquisar" required autofocus>
         &nbsp;&nbsp;
-    <button class="btn btn-primary btn-group-md col-md-1 col-sm-3 text-md-center"> Pesquisar </button>
+    <a v-if="query !== null || query == ''" class="btn btn-primary btn-group-md col-md-1 col-sm-3 text-md-center" :href=queryParam+query>Pesquisar </a>
 
        <a v-if="logout === true" class="alert-link align-baseline text-md-left col-md-1 col-sm-2" href="register.html">Cadastrar</a>
 
@@ -58,7 +58,7 @@
         <ul id="foto-camisa">
 
             <li v-for="i in picShirt">
-                <a class="card-link" :href=path(i.id)>
+                <a class="card-link" :href=pathShirt(i.id)>
                 <img @mouseover='mouseOver(i,i.id,i.idUser)' @mouseout='mouseOut(i,i.id,i.idUser)' :src=i.source width="200px" height="220px">
                 <span>
                     <p><strong style=color:darkorange;>{{i.title}} </strong></p>
@@ -68,7 +68,7 @@
             </li>
 
             <li v-for="i in picBall">
-                <a class="card-link" href="#">
+                <a class="card-link" :href=pathBall(i.id)>
                     <img @mouseover='mouseOver(i,i.id,i.idUser)' @mouseout='mouseOut(i,i.id,i.idUser)' :src=i.source width="200px" height="220px">
                     <span>
                     <p><strong style=color:darkorange;>{{i.title}} </strong></p>
@@ -78,7 +78,7 @@
             </li>
 
             <li v-for="i in picShort">
-                <a class="card-link" href="#">
+                <a class="card-link" :href=pathShort(i.id)>
                     <img @mouseover='mouseOver(i,i.id,i.idUser)' @mouseout='mouseOut(i,i.id,i.idUser)' :src=i.source width="200px" height="220px">
                     <span>
                     <p><strong style=color:darkorange;>{{i.title}} </strong></p>
@@ -88,7 +88,7 @@
             </li>
 
             <li v-for="i in picBoot">
-                <a class="card-link" href="#">
+                <a class="card-link" :href=pathBoot(i.id)>
                     <img @mouseover='mouseOver(i,i.id,i.idUser)' @mouseout='mouseOut(i,i.id,i.idUser)' :src=i.source width="200px" height="220px">
                     <span>
                     <p><strong style=color:darkorange;>{{i.title}} </strong></p>
@@ -126,6 +126,8 @@
 
             logout: false,
             login: true,
+            query: null,
+            queryParam: 'search.html?query=',
 
             options:
 
@@ -302,8 +304,17 @@
                     });
                 },
 
-                path: function (id) {
-                    return "info.html?id="+id;
+                pathShirt: function (id) {
+                    return "info-shirt.html?id="+id;
+                },
+                pathBall: function (id) {
+                    return "info-ball.html?id="+id;
+                },
+                pathBoot: function (id) {
+                    return "info-boot.html?id="+id;
+                },
+                pathShort: function (id) {
+                    return "info-short.html?id="+id;
                 },
 
                 logoutSession: function () {

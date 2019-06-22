@@ -1,16 +1,15 @@
-
 <template>
 
     <div id="app" class="container-fluid bg-white font-weight-light">
         <nav class="navbar navbar-expand-sm bg-white navbar-dark">
 
             <a class="navbar-brand" href="index.html"><img src="_vue/sport/pictures/logo_temp.png" width="220px" height="120px"></a>
-            <h2 class="align-content-center" style=color:darkorange;> Cadastro  na empresa 1000Sport</h2>
+            <h2 class="align-content-center" style=color:darkorange;> Atualização de cadastro  na empresa 1000Sport</h2>
 
         </nav>
 
-        <div v-if="index === 1" class="row form-group">
-            <div class="col-md-4"></div>
+         <div v-if="index === 1" class="row form-group">
+             <div class="col-md-4"></div>
 
             <fieldset id="1" class="form-group col-md-3">
                 <legend> Dados da Empresa </legend>
@@ -25,7 +24,7 @@
 
             </fieldset>
 
-        </div>
+         </div>
 
         <div v-if="index === 2"  class="row form-group">
             <div class="col-md-4"></div>
@@ -88,8 +87,8 @@
 
                 <div class="row">
                     <div class="col-md-1 col-1"></div>
-                    <button type="submit" class="form-control btn btn-success col-sm-5 col-5" @click="submit" v-show="checkFields()">Cadastrar</button>
-                    <button type="submit" class="form-control btn btn-success col-sm-5 col-5" disabled v-show="!(checkFields()!==false)">Cadastrar</button>
+                    <button type="submit" class="form-control btn btn-success col-sm-5 col-5" @click="submit" v-show="checkFields()">Atualizar</button>
+                    <button type="submit" class="form-control btn btn-success col-sm-5 col-5" disabled v-show="!(checkFields()!==false)"> Atualizar</button>
                     &nbsp;
                     <button type="reset" class="form-control  btn btn-danger col-sm-5 col-5" v-show="checkClear()">Limpar</button>
                     <button type="reset" class="form-control  btn btn-danger disabled col-sm-5 col-5" disabled v-show="checkClear() === false">Limpar</button>
@@ -99,7 +98,7 @@
                     <p style=color:red;>{{msgCep}}</p>
                 </div>
             </fieldset>
-        </div>
+         </div>
         <div class="row">
             <ul class="pagination col-md-10">
 
@@ -111,59 +110,102 @@
             </ul>
         </div>
 
-    </div>
+        </div>
+
 
 </template>
 
 <script>
 
-   module.exports = {
-        name: 'user',
+    module.exports = {
+
+        name: 'user-update',
 
         data(){
-            return{
+            return {
 
-                url: 'http://127.0.0.1:8080/api/users',
-                arrayUsers:[],
-                user:{
+                    url: 'http://127.0.0.1:8080/api/users/',
+                    arrayUsers: [],
 
-                    id: null,
-                    nameFantasy: null,
-                    societyReason: null,
-                    cnpj: null,
-                    name: null,
-                    surname: null,
-                    cpf: null,
-                    city: null,
-                    state: null,
-                    street: null,
-                    neighborhood: null,
-                    cep:null,
-                    number:null,
-                    nameUser:null,
-                    email: null,
-                    password: null},
+                    user: {
 
-                index: 1,
-                next: '#1',
-                previous: '#1',
-                msgCep: '', //msg de erro para cep,cnpj e cpf
-                msgCnpj: '',
-                msgCpf:'',
+                        id: null,
+                        nameFantasy: null,
+                        societyReason: null,
+                        cnpj: null,
+                        name: null,
+                        surname: null,
+                        cpf: null,
+                        city: null,
+                        state: null,
+                        street: null,
+                        neighborhood: null,
+                        cep: null,
+                        number: null,
+                        nameUser: null,
+                        email: null,
+                        password: null
+                    },
 
-                states:[
-                    {name:'Acre'},{name: 'Alagoas'},{name:'Amapá'},{name:'Amazonas'},{name:'Bahia'},{name:'Ceará'},{name:'Distrito Federal'},
-                    {name:'Espírito Santo'},{name:'Goiás'},{name:'Maranhão'},{name: 'Mato Grosso'},{name: 'Mato Grosso do Sul'},
-                    {name: 'Minas Gerais'},{name: 'Pará'},{name: 'Paraíba'},{name: 'Paraná'},{name: 'Pernambuco'},{name: 'Piauí'},
-                    {name: 'Rio de Janeiro'}, {name:'Rio Grande do Norte'},{name:'Rio Grande do Sul'},{name: 'Rondônia'},{name: 'Roraima'},
-                    {name: 'Santa Catarina'}, {name: 'São Paulo'},{name: 'Sergipe' },{name: 'Tocantins'}
-                ]
+                    index: 1,
+                    next: '#1',
+                    previous: '#1',
+                    msgCep: '', //msg de erro para cep,cnpj e cpf
+                    msgCnpj: '',
+                    msgCpf: '',
+
+                    states: [
+                        {name: 'Acre'}, {name: 'Alagoas'}, {name: 'Amapá'}, {name: 'Amazonas'}, {name: 'Bahia'}, {name: 'Ceará'}, {name: 'Distrito Federal'},
+                        {name: 'Espírito Santo'}, {name: 'Goiás'}, {name: 'Maranhão'}, {name: 'Mato Grosso'}, {name: 'Mato Grosso do Sul'},
+                        {name: 'Minas Gerais'}, {name: 'Pará'}, {name: 'Paraíba'}, {name: 'Paraná'}, {name: 'Pernambuco'}, {name: 'Piauí'},
+                        {name: 'Rio de Janeiro'}, {name: 'Rio Grande do Norte'}, {name: 'Rio Grande do Sul'}, {name: 'Rondônia'}, {name: 'Roraima'},
+                        {name: 'Santa Catarina'}, {name: 'São Paulo'}, {name: 'Sergipe'}, {name: 'Tocantins'}
+                    ]
+                }
+            },
+
+        created: function(){
+
+            vm = this;
+
+            if(vm.$session.exists()){
+
+                vm.id = vm.$session.get("id");
+
+                axios.get(vm.url + vm.id).then(function (r) {
+
+                    vm.user.nameFantasy = r.data.nameFantasy;
+                    vm.user.societyReason = r.data.societyReason;
+                    vm.user.cnpj = r.data.cnpj;
+                    vm.user.name = r.data.name;
+                    vm.user.surname = r.data.surname;
+                    vm.user.cpf = r.data.cpf;
+                    vm.user.city = r.data.city;
+                    vm.user.state = r.data.state;
+                    vm.user.street = r.data.street;
+                    vm.user.neighborhood = r.data.neighborhood;
+                    vm.user.cep = r.data.cep;
+                    vm.user.number = r.data.number;
+                    vm.user.nameUser =  r.data.nameUser;
+                    vm.user.email = r.data.email;
+                    vm.user.password = r.data.password;
+
+
+                }).catch(function (erro) {
+
+                    console.log(erro);
+
+                });
+
+            }else{
+                window.location.replace("/sport/");
             }
+
         },
 
-        methods:{
+        methods: {
 
-            checkClear(){
+            checkClear() {
 
                 return !!(this.user.nameFantasy || this.user.societyReason || this.user.cnpj || this.user.name || this.user.surname ||
                     this.user.cpf || this.user.city || this.user.street || this.user.neighborhood || this.user.cep || this.user.number ||
@@ -171,7 +213,7 @@
 
             },
 
-            checkFields(){
+            checkFields() {
 
                 return !!(this.user.nameFantasy && this.user.societyReason && this.user.cnpj && this.user.name &&
                     this.user.surname && this.user.cpf && this.user.city && this.user.street && this.user.neighborhood &&
@@ -179,11 +221,11 @@
 
             },
 
-            cpfValidator: function(cpf){
+            cpfValidator: function (cpf) {
 
                 let regex = new RegExp("[0-9][0-9][0-9].[0-9][0-9][0-9].[0-9][0-9][0-9]-[0-9][0-9]");
 
-                if(!regex.exec(cpf))
+                if (!regex.exec(cpf))
                     this.msgCpf = 'O Cpf passado é inválido!';
                 else this.msgCpf = '';
 
@@ -191,11 +233,11 @@
 
             },
 
-            cnpjValidator: function(cnpj){
+            cnpjValidator: function (cnpj) {
 
                 let regex = new RegExp("[0-9][0-9].[0-9][0-9][0-9].[0-9][0-9][0-9]/[0-9][0-9][0-9][0-9]-[0-9][0-9]");
 
-                if(!regex.exec(cnpj))
+                if (!regex.exec(cnpj))
                     this.msgCnpj = 'O Cnpj passado é inválido!';
                 else this.msgCnpj = '';
 
@@ -203,11 +245,11 @@
 
             },
 
-            cepValidador: function(cep){
+            cepValidador: function (cep) {
 
                 let regex = new RegExp("[0-9][0-9][0-9][0-9][0-9]-[0-9][0-9][0-9]");
 
-                if(!regex.exec(cep))
+                if (!regex.exec(cep))
                     this.msgCep = 'O Cep informado é inválido!';
                 else this.msgCep = '';
 
@@ -217,33 +259,32 @@
 
             submit: function () {
 
-                let cpf =  this.cpfValidator(this.user.cpf);
+                let cpf = this.cpfValidator(this.user.cpf);
                 let cnpj = this.cnpjValidator(this.user.cnpj);
-                let cep =  this.cepValidador(this.user.cep);
+                let cep = this.cepValidador(this.user.cep);
 
-                if (cpf && cnpj && cep){
+                if (cpf && cnpj && cep) {
 
-                    axios.post(this.url, 
-                {
-               
-                    nameFantasy: this.user.nameFantasy,
-                    societyReason: this.user.societyReason,
-                    cnpj :this.user.cnpj, 
-                    name :this.user.name,
-                    surname : this.user.surname,
-                    cpf : this.user.cpf,
-                    city: this.user.city,
-                    state: this.user.state,
-                    street: this.user.street,
-                    neighborhood: this.user.neighborhood,
-                    cep :this.user.cep,
-                    number: this.user.number,
-                    nameUser: this.user.nameUser,
-                    email: this.user.email,
-                    password: this.user.password
-      
+                    axios.put(this.url + this.id,
+                        {
 
-                    }).then(function (r) {
+                            nameFantasy: this.user.nameFantasy,
+                            societyReason: this.user.societyReason,
+                            cnpj: this.user.cnpj,
+                            name: this.user.name,
+                            surname: this.user.surname,
+                            cpf: this.user.cpf,
+                            city: this.user.city,
+                            state: this.user.state,
+                            street: this.user.street,
+                            neighborhood: this.user.neighborhood,
+                            cep: this.user.cep,
+                            number: this.user.number,
+                            nameUser: this.user.nameUser,
+                            email: this.user.email,
+                            password: this.user.password
+
+                        }).then(function (r) {
 
                         console.log(r);
                         window.location.replace("index.html");
@@ -253,14 +294,15 @@
                     });
                 }
             },
-            nextItem:function () {
+
+           nextItem:function () {
 
                 if(this.index < 4){
                     this.index++;
                     this.next = '#'+this.index;
 
                 }
-            },
+           },
             previousItem:function () {
                 if(this.index > 1){
                     this.index--;
