@@ -46,14 +46,6 @@
            vm.id = id;
            vm.isSelected = param;
 
-        },
-
-        methods:{
-
-              clickOnMe: function () {
-                  alert(this.isSelected +' '+this.id);
-              }
-
         }
     }
 </script>

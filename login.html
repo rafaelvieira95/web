@@ -81,8 +81,12 @@
 
                 if (validateForm) {
 
-                    axios.post(vm.url,formData,{
+                    axios.post(vm.url, formData,{
 
+                        auth:{
+                            username: 'admin',
+                            password:'password'
+                        },
                         headers:{'Content-Type':'multipart/form-data'}
 
                     }).then(function (r) {
@@ -93,6 +97,9 @@
 
                             vm.$session.start();
                             vm.$session.set("id", r.data.id);
+                            vm.$session.set("email",r.data.email);
+                            vm.$session.set("password",r.data.password);
+
                             window.location.replace('admin.html');
                         }
 

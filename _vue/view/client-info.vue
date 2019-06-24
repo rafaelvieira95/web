@@ -74,7 +74,7 @@
          <div class="col-md-4 col-sm-4"></div>
                 <a class="btn btn-warning" href="../sport/user-update.html">Atualizar dados</a>
             <div class="col-md-1 col-sm-1"></div>
-                <button class="btn btn-danger">Apagar conta </button>
+                <button class="btn btn-danger" @click="deleteUser(users.id)">Apagar conta </button>
             <div class="col-md-4 col-sm-4"></div>
         </div>
 
@@ -112,7 +112,12 @@
 
                 let id = vm.$session.get("id");
 
-                axios.get(vm.url + id).then(function (r) {
+                axios.get(vm.url + id,{
+                    auth: {
+                        username: 'admin',
+                        password: 'password'
+                    }
+                }).then(function (r) {
                     vm.users = r.data;
 
 
@@ -120,6 +125,33 @@
 
                 console.log(erro);
               });
+            }
+        },
+
+        methods: {
+
+            deleteUser: function () {
+
+                let id = this.$session.get("id");
+
+                if (confirm('Deseja realmente apagar sua conta? \ntodos os produtos e imagens serão removidos de nossos servidores.')) {
+
+                    axios.delete(this.url + id, {
+                        auth: {
+                            username: 'admin',
+                            password: 'password'
+                        }
+
+                    }).then(function (r) {
+
+                        this.$session.destroy();
+
+                        window.location.replace("/sport/");
+
+                    }).catch(function (erro) {
+
+                    });
+                }
             }
         }
     };

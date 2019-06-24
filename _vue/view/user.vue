@@ -223,8 +223,13 @@
 
                 if (cpf && cnpj && cep){
 
-                    axios.post(this.url, 
-                {
+                    axios.post(this.url,{
+
+                            auth: {
+                                username: 'admin',
+                                password: 'password'
+                            }
+                        }, {
                
                     nameFantasy: this.user.nameFantasy,
                     societyReason: this.user.societyReason,

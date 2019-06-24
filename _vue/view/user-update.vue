@@ -172,7 +172,12 @@
 
                 vm.id = vm.$session.get("id");
 
-                axios.get(vm.url + vm.id).then(function (r) {
+                axios.get(vm.url + vm.id,{
+                    auth: {
+                        username: 'admin',
+                        password: 'password'
+                    }
+                }).then(function (r) {
 
                     vm.user.nameFantasy = r.data.nameFantasy;
                     vm.user.societyReason = r.data.societyReason;

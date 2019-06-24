@@ -73,7 +73,14 @@
 
                     this.deleteItem(b);
 
-                   axios.delete(this.urlDelete + b.id).then(function (r) {
+                   axios.delete(this.urlDelete + b.id,{
+
+                       auth: {
+                           username: 'admin',
+                           password: 'password'
+                       }
+
+                   }).then(function (r) {
                       console.log(r);
                    }).catch(function (erro) {
                        console.log(erro);
@@ -102,7 +109,12 @@
 
                 let id = vm.$session.get("id");
 
-                axios.get(vm.url + id).then(function (r) {
+                axios.get(vm.url + id,{
+                    auth: {
+                        username: 'user',
+                        password: 'password'
+                    }
+                }).then(function (r) {
 
                     if (r.data.length >= 1) {
                         vm.balls = r.data;

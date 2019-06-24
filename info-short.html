@@ -129,7 +129,12 @@
                 vm.login = false;
             }
 
-            axios.get(this.url + id).then(function (r){
+            axios.get(this.url + id,{
+                auth: {
+                    username: 'user',
+                    password: 'password'
+                }
+            }).then(function (r){
 
                 vm.dataInfo = r.data;
                 vm.id = id;

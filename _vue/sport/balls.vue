@@ -177,6 +177,11 @@
                     formData.append('field',this.field);
 
                 axios.post(this.url, formData,{
+
+                    auth: {
+                        username: 'admin',
+                        password: 'password'
+                    },
                     headers:{'Content-Type':'multipart/form-data'}
 
                 }).then(function (r) {

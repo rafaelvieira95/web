@@ -172,7 +172,14 @@
                 getShirts: function () {
 
                     vm = this;
-                    axios.get(vm.urlShirts).then(function (r) {
+                    axios.get(vm.urlShirts,{
+
+                        auth:{
+                            username: 'user',
+                            password:'password'
+                        }
+
+                    }).then(function (r) {
 
                         if (r.data.length >= 1) {
 
@@ -203,7 +210,14 @@
 
                     vm = this;
 
-                    axios.get(vm.urlBalls).then(function (r) {
+                    axios.get(vm.urlBalls,{
+
+                        auth:{
+                            username: 'user',
+                            password:'password'
+                        }
+
+                    }).then(function (r) {
 
                         if(r.data.length >= 1) {
 
@@ -239,7 +253,14 @@
 
                     vm = this;
 
-                    axios.get(vm.urlShorts).then(function (r) {
+                    axios.get(vm.urlShorts,{
+
+                        auth:{
+                            username: 'user',
+                            password:'password'
+                        }
+
+                    }).then(function (r) {
 
                         if(r.data.length >= 1) {
 
@@ -272,7 +293,15 @@
 
                     vm = this;
 
-                    axios.get(vm.urlBoots).then(function (r) {
+                    axios.get(vm.urlBoots,
+                        {
+
+                            auth:{
+                                username: 'user',
+                                password:'password'
+                            }
+
+                    }).then(function (r) {
 
                         if (r.data.length >= 1) {
 

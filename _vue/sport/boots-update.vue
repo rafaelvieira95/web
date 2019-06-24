@@ -226,6 +226,11 @@
 
                     axios.put(this.url + vm.idProduct, formData, {
 
+                        auth: {
+                            username: 'admin',
+                            password: 'password'
+                        },
+
                         headers: {'Content-Type': 'multipart/form-data'}
 
                     }).then(function (r) {
