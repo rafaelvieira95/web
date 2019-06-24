@@ -54,8 +54,8 @@
 
             return{
 
-                url: 'http://127.0.0.1:8080/api/balls/all/',
-                urlDelete: 'http://127.0.0.1:8080/api/balls/',
+                url: 'http://milsport.herokuapp.com/api/balls/all/',
+                urlDelete: 'http://milsport.herokuapp.com/api/balls/',
                 balls:[]
             }
         },

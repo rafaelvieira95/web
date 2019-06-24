@@ -149,7 +149,7 @@
     data(){
         return{
 
-            url:'http://127.0.0.1:8080/api/shirts',
+            url:'http://milsport.herokuapp.com/api/shirts',
 
             log:'',
             pic0: null,
@@ -250,7 +250,7 @@
                 }).then(function (r) {
 
                     console.log(r.data);
-                    window.location.replace("/sport/register.html");
+                    window.location.replace("/register.html");
 
                 }).catch(function (erro) {
 

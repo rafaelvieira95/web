@@ -36,11 +36,8 @@
 
     <div class="row">
 
-        <p class="col-md-3"></p>
+        <p class="col-md-9"></p>
 
-        <input class="text-md-left col-md-3" type="text" placeholder="Digite um item para pesquisar" required autofocus>
-        &nbsp;&nbsp;
-        <button class="btn btn-primary btn-group-md col-md-2 text-md-center"> Pesquisar </button>
 
         <a v-if="logout === true" class="alert-link align-baseline text-md-left col-md-1" href="register.html">Cadastrar</a>
 
@@ -99,7 +96,7 @@
 
         data:{
 
-            url:'http://127.0.0.1:8080/api/boots/',
+            url:'http://milsport.herokuapp.com/api/boots/',
             items:[],
             dataInfo: {},
             id: null,

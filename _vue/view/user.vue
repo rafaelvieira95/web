@@ -123,7 +123,7 @@
         data(){
             return{
 
-                url: 'http://127.0.0.1:8080/api/users',
+                url: 'http://milsport.herokuapp.com/api/users',
                 arrayUsers:[],
                 user:{
 
@@ -251,7 +251,7 @@
                     }).then(function (r) {
 
                         console.log(r);
-                        window.location.replace("index.html");
+                        window.location.replace("/");
 
                     }).catch(function (erro) {
                         console.log(erro);

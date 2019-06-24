@@ -54,8 +54,8 @@
 
             return{
 
-                url: 'http://127.0.0.1:8080/api/shorts/all/',
-                urlDelete: 'http://127.0.0.1:8080/api/shorts/',
+                url: 'http://milsport.herokuapp.com/api/shorts/all/',
+                urlDelete: 'http://milsport.herokuapp.com/api/shorts/',
                 shorts:[]
             }
         },

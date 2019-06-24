@@ -58,7 +58,7 @@
         el: "#app",
 
         data:{
-            url: 'http://127.0.0.1:8080/api/login',
+            url: 'http://milsport.herokuapp.com/api/login',
             log: null,
             email: null,
             password:null,
@@ -97,10 +97,8 @@
 
                             vm.$session.start();
                             vm.$session.set("id", r.data.id);
-                            vm.$session.set("email",r.data.email);
-                            vm.$session.set("password",r.data.password);
 
-                            window.location.replace('admin.html');
+                            window.location.replace('/admin.html');
                         }
 
                         if(r.status === 204){

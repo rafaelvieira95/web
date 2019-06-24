@@ -95,7 +95,7 @@
 
                 users:[],
                 sessionActivated: null,
-                url:'http://127.0.0.1:8080/api/users/'
+                url:'http://milsport.herokuapp.com/api/users/'
             }
         },
 
@@ -136,6 +136,8 @@
 
                 if (confirm('Deseja realmente apagar sua conta? \ntodos os produtos e imagens serão removidos de nossos servidores.')) {
 
+                    this.$session.destroy();
+
                     axios.delete(this.url + id, {
                         auth: {
                             username: 'admin',
@@ -144,9 +146,7 @@
 
                     }).then(function (r) {
 
-                        this.$session.destroy();
-
-                        window.location.replace("/sport/");
+                        window.location.replace("/");
 
                     }).catch(function (erro) {
 

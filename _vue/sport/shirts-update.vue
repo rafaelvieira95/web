@@ -151,7 +151,7 @@
 
             return{
 
-                url: 'http://127.0.0.1:8080/api/shirts/',
+                url: 'http://milsport.herokuapp.com/api/shirts/',
                 idProduct: null,
                 idUser: null,
                 log: null,
@@ -210,7 +210,14 @@
             vm.idUser =  vm.$session.get("id");
             vm.loadImages();
 
-                axios.get(vm.url + vm.idProduct).then(function (r) {
+                axios.get(vm.url + vm.idProduct,{
+
+                    auth:{
+                        username:'user',
+                        password: 'password'
+                    }
+
+                }).then(function (r) {
 
                             vm.title = r.data.title;
                             vm.brand = r.data.brand;
@@ -272,7 +279,7 @@
                     }).then(function (r) {
 
                         console.log(r.data);
-                        window.location.replace("/sport/admin.html");
+                        window.location.replace("/admin.html");
 
                     }).catch(function (erro) {
 

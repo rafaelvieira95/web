@@ -80,7 +80,7 @@
         <ul id="foto-camisa">
 
             <li v-for="i in picShirt">
-                <a class="card-link" :href=path(i.id)>
+                <a class="card-link" :href=path('info-shirt',i.id)>
                     <img @mouseover='mouseOver(i,i.id,i.idUser)' @mouseout='mouseOut(i,i.id,i.idUser)' :src=i.source width="200px" height="220px">
                     <span>
                     <p><strong style=color:darkorange;>{{i.title}} </strong></p>
@@ -90,7 +90,7 @@
             </li>
 
             <li v-for="i in picBall">
-                <a class="card-link" href="#">
+                <a class="card-link" :href=path('info-ball',i.id)>
                     <img @mouseover='mouseOver(i,i.id,i.idUser)' @mouseout='mouseOut(i,i.id,i.idUser)' :src=i.source width="200px" height="220px">
                     <span>
                     <p><strong style=color:darkorange;>{{i.title}} </strong></p>
@@ -100,7 +100,7 @@
             </li>
 
             <li v-for="i in picShort">
-                <a class="card-link" href="#">
+                <a class="card-link" :href=path('info-short',i.id)>
                     <img @mouseover='mouseOver(i,i.id,i.idUser)' @mouseout='mouseOut(i,i.id,i.idUser)' :src=i.source width="200px" height="220px">
                     <span>
                     <p><strong style=color:darkorange;>{{i.title}} </strong></p>
@@ -110,7 +110,7 @@
             </li>
 
             <li v-for="i in picBoot">
-                <a class="card-link" href="#">
+                <a class="card-link" :href=path('info-boot',i.id)>
                     <img @mouseover='mouseOver(i,i.id,i.idUser)' @mouseout='mouseOut(i,i.id,i.idUser)' :src=i.source width="200px" height="220px">
                     <span>
                     <p><strong style=color:darkorange;>{{i.title}} </strong></p>
@@ -136,10 +136,10 @@
 
             query: null,
             source: '',
-            urlShirts: 'http://127.0.0.1:8080/api/shirts/search?name=',
-            urlBalls: 'http://127.0.0.1:8080/api/balls/search?name=',
-            urlShorts: 'http://127.0.0.1:8080/api/shorts/search?name=',
-            urlBoots: 'http://127.0.0.1:8080/api/boots/search?name=',
+            urlShirts: 'http://milsport.herokuapp.com/api/shirts/search?name=',
+            urlBalls: 'http://milsport.herokuapp.com/api/balls/search?name=',
+            urlShorts: 'http://milsport.herokuapp.com/api/shorts/search?name=',
+            urlBoots: 'http://milsport.herokuapp.com/api/boots/search?name=',
 
             picShirt:[],
             picBall: [],
@@ -363,8 +363,8 @@
                 });
                 return [];
             },
-            path: function (id) {
-                return "info.html?id="+id;
+            path: function (link,id) {
+                return link+'.html?id='+id;
             }
         }
 

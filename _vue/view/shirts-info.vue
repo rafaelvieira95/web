@@ -60,8 +60,8 @@
 
             return{
 
-                url: 'http://127.0.0.1:8080/api/shirts/all/',
-                urlDelete: 'http://127.0.0.1:8080/api/shirts/',
+                url: 'http://milsport.herokuapp.com/api/shirts/all/',
+                urlDelete: 'http://milsport.herokuapp.com/api/shirts/',
                 shirts:[]    
             }
         },
@@ -110,17 +110,16 @@
 
           get: function(){
 
-              vm = this;
             let id = vm.$session.get("id");
 
-            axios.get(vm.url + id,{
+            axios.get(this.url + id,{
                 auth: {
                     username: 'user',
                     password: 'password'
                 }
             }).then(function (r) {
 
-                vm.shirts = r.data;
+                this.shirts = r.data;
                 console.log(r);
 
             }).catch(function (erro) {

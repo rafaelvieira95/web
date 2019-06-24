@@ -107,7 +107,7 @@
         name: 'balls',
         data(){
             return{
-                url:'http://127.0.0.1:8080/api/balls',
+                url:'http://milsport.herokuapp.com/api/balls',
                 log:'',
                 pic0: null,
                 pic1: null,
@@ -187,7 +187,7 @@
                 }).then(function (r) {
 
                     console.log(r.data);
-                    window.location.replace("/sport/register.html");
+                    window.location.replace("/register.html");
 
                 }).catch(function (erro) {
                     console.log(erro);

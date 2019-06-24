@@ -124,7 +124,7 @@
         data(){
             return {
 
-                    url: 'http://127.0.0.1:8080/api/users/',
+                    url: 'http://milsport.herokuapp.com/api/users/',
                     arrayUsers: [],
 
                     user: {
@@ -203,7 +203,7 @@
                 });
 
             }else{
-                window.location.replace("/sport/");
+                window.location.replace("/admin.html");
             }
 
         },
